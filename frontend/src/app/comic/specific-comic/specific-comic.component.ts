@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Comic, initialComic } from '../comic.model';
+import { Comic, initialComic, notFoundComic } from '../comic.model';
 import { ComicService } from '../comic.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class SpecificComicComponent {
 
     this.comicService.getSpecific(this.id || '').subscribe({
       next: (success: any) => (this.comic = success.specificComic as Comic),
-      error: (error: any) => console.log(error),
+      error: (error: any) => (this.comic = notFoundComic),
     });
   }
 }

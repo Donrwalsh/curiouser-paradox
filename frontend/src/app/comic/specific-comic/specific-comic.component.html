@@ -5,7 +5,7 @@
     title="{{ comic.altText }}"
     style="width: 35%"
   />
-  <p>
+  <p *ngIf="comic.index != -1">
     Permanent Link to this Comic:
     <a href="http://localhost:4200/{{ comic.index }}"
       >http://localhost:4200/{{ comic.index }}</a

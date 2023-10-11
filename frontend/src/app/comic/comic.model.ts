@@ -11,3 +11,10 @@ export const initialComic: Comic = {
   path: '',
   index: 0,
 };
+
+export const notFoundComic: Comic = {
+  title: 'Not Found',
+  altText: `Saying there's no content to find while displaying content; A paradox.`,
+  path: 'not_found.png',
+  index: -1,
+};

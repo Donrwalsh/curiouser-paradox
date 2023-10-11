@@ -28,13 +28,15 @@ I'm reaching my end time for the evening, so let's wrap up. I spent some time pu
 
 There's a weird issue that I can't sort out on the backend. When I try to use the get specific comic route for an index that doesn't exist, it outright throws a 404 and so is somehow failing the try-catch block I added to handle this sort of thing. Perhaps I'm missing an await somewhere? I'll look into it with fresh eyes.
 
-- [ ] Bug with specific comic route when path is invalid.
+- [x] Bug with specific comic route when path is invalid.
 
 Otherwise things are going well. I'm still pulling the basics together, but I'm feeling good about the structure and overall progress of the day!
 
 Started the day off with working on the first checkbox above. The full circle bit was pretty easy to get in place and all it really took was pulling out the mock data and plugging stuff in together. Now a user can access the first comic in two different ways (because it is also the latest comic). I am thinking about the navigation between comics too, so that'll be coming up soon to work on.
 
-Did a little bit of prep work cleaning up the subscribe call to actually handle error responses.
+Did a little bit of prep work cleaning up the subscribe call to actually handle error responses. With a little bit of thought about this, I decided that the 'not_found' comic is really a frontend construct and therefore doesn't need to exist in the database. That's helpful too, because it being in the database is sorta awkward for retrieval operations I have planned, and not having to deal with an omission on nearly every sort is going to be convenient. The current 404 image is a stand-in that nicely demonstrates the extent of my artistic competencies.
+
+That handles the two todos I had identified yesterday, so what's next? The two things that quickly come to mind are unit tests and a restore terminals setup. Ooh, actually the latter will involve reminding myself how to interact with the database so I think I'll set up all 3 with this. I'm thinking too a set of 3x split terminals each of them split between the primary app-runner and a secondary terminal for tests or commands or what have you. That sounds fun, I'm going to do that next.
 
 ## Couldn't Have Done it Without You
 
