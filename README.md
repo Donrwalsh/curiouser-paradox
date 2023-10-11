@@ -4,6 +4,10 @@
 
 `>nest new backend` > npm
 
+## Database
+
+MongoDB server running as a service on my Windows machine. Default configuration, local for now so completely open (i.e. no creds required to access). Lots to do here, but for now the exact snapshot of the database will be represented as json files in the repo by way of manual effort.
+
 ## Frontend
 
 `>npm init @angular frontend` > n > y > SCSS
@@ -16,6 +20,21 @@ So I made a NestJS backend. Easy enough to work with, there's a way to deliver s
 
 Now that the backend can provide images to the frontend in a roundabout way, I went ahead and plugged that in by setting up the LatestComicComponent to read from a 'latest' endpoint that provides a block of data representing what a comic might look like in the database (backed by a simple model file just on the frontened since I want to avoid all the obnoxious casting as `any` nonsense). Now that the frontend has it all, I tossed it on the page and modeled it after xkcd a little bit just to start. I built a 'permanent link to this comic is at ...' hyperlink at the bottom and so I should probably support that type of URL next.
 
+That's what I'm going to work on, but something is funky about the way I'm putting together my comic components. I'm going to need to duplicate a lot of content on this 'specific-comic-component' or whatever and yet nothing springs to mind immediately here, so I'll just go ahead and do the naive approach to get something that's functional. I made the frontend component but then got lost in the sauce on the backend.
+
+I'm reaching my end time for the evening, so let's wrap up. I spent some time putting together the database to hold onto the comics data and then used a simple mongoose connection to pull the data into the API to ultimately make available to the frontend. That last bit isn't complete yet, so first:
+
+[ ] Complete the full-circle database -> backend -> frontend data flow for the single data item in use right now.
+
+There's a weird issue that I can't sort out on the backend. When I try to use the get specific comic route for an index that doesn't exist, it outright throws a 404 and so is somehow failing the try-catch block I added to handle this sort of thing. Perhaps I'm missing an await somewhere? I'll look into it with fresh eyes.
+
+[ ] Bug with specific comic route when path is invalid.
+
+Otherwise things are going well. I'm still pulling the basics together, but I'm feeling good about the structure and overall progress of the day!
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
+- https://stackoverflow.com/questions/12467102/how-to-get-the-latest-and-oldest-record-in-mongoose-js-or-just-the-timespan-bet
+- https://stackoverflow.com/questions/7033331/how-to-use-mongoose-findone
+- https://stackoverflow.com/questions/47344571/how-to-draw-checkbox-or-tick-mark-in-github-markdown-table
