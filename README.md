@@ -24,11 +24,11 @@ That's what I'm going to work on, but something is funky about the way I'm putti
 
 I'm reaching my end time for the evening, so let's wrap up. I spent some time putting together the database to hold onto the comics data and then used a simple mongoose connection to pull the data into the API to ultimately make available to the frontend. That last bit isn't complete yet, so first:
 
-[ ] Complete the full-circle database -> backend -> frontend data flow for the single data item in use right now.
+- [ ] Complete the full-circle database -> backend -> frontend data flow for the single data item in use right now.
 
 There's a weird issue that I can't sort out on the backend. When I try to use the get specific comic route for an index that doesn't exist, it outright throws a 404 and so is somehow failing the try-catch block I added to handle this sort of thing. Perhaps I'm missing an await somewhere? I'll look into it with fresh eyes.
 
-[ ] Bug with specific comic route when path is invalid.
+- [ ] Bug with specific comic route when path is invalid.
 
 Otherwise things are going well. I'm still pulling the basics together, but I'm feeling good about the structure and overall progress of the day!
 
