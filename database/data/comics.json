@@ -4,5 +4,17 @@
     "altText": "Did you know that dolphins are the only other mammal that celebrates Veteran's Day?",
     "path": "so_long.png",
     "index": 0
+  },
+  {
+    "title": "Younglings",
+    "altText": "My mother thinks I'm so bright, she calls me son.",
+    "path": "kids.png",
+    "index": 1
+  },
+  {
+    "title": "Fun Creature",
+    "altText": "Unsurprisingly, Mark Sinclair declined to comment (he was not contacted).",
+    "path": "peccary.png",
+    "index": 2
   }
 ]

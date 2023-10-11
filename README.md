@@ -40,7 +40,13 @@ That handles the two todos I had identified yesterday, so what's next? The two t
 
 Spent more time than necessary with the Mongo portion of my Restore Terminals setup. Can't use `use <db>` commands in a shell script being piped into mongosh because it will suppress all output that follows that command. In any case, I wound up here because I want to run a handful of commands as part of establishing the terminal that handles database interaction. Right now it is outputting the collections and a count of comics but can be expanded to do more as necessary.
 
-Otherwise, I now have the workspace file built with basic Restore Terminal functionality which I've added to the repo.
+Otherwise, I now have the workspace file built with basic Restore Terminal functionality which I've added to the repo. I played around a little bit with adding some buttons for navigation. What I landed on is nice for me, but it's probably too small to be used as the general button suite. I'll use what I made here for now and may retain it for a small screen version of the site later on. As it exists currently, the buttons just always show on the specific-comic component - hang on, I had a thing for this:
+
+- [ ] Sort out the comic component problem. Lots of this content I'm working on needs to be shared in some sort of main component that delegates out the details of if it is specific or latest.
+
+Ok anyway, the buttons don't do anything right now except show up. The logic of knowing how there's a next comic is perplexing, so I'll need to stew on how I'm going to resolve that before tomorrow when I handle it:
+
+- [ ] Add navigation button functionality.
 
 ## Couldn't Have Done it Without You
 
@@ -51,3 +57,4 @@ Otherwise, I now have the workspace file built with basic Restore Terminal funct
 - https://stackoverflow.com/questions/42104629/angular-2-checking-for-server-errors-from-subscribe
 - https://stackoverflow.com/questions/4837673/how-to-execute-mongo-commands-through-shell-scripts
 - https://stackoverflow.com/questions/65806112/pipe-output-from-mongosh-mongodb-shell-to-output-file-windows
+- https://stackoverflow.com/questions/39635474/make-smaller-button-in-bootstrap

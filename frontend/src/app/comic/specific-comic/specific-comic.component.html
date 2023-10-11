@@ -1,10 +1,31 @@
-<div style="text-align: center">
+<div class="d-flex justify-content-center">
   <h1>{{ comic.title }}</h1>
+</div>
+
+<div class="d-flex justify-content-center">
   <img
     src="api/{{ comic.path }}"
     title="{{ comic.altText }}"
     style="width: 35%"
   />
+</div>
+
+<div class="d-flex justify-content-center">
+  <a href="#" class="badge bg-secondary badge-sm">|<</a>
+  <a href="#" class="badge bg-secondary badge-sm"><</a>
+  <a href="#" class="badge bg-secondary badge-sm">></a>
+  <a href="#" class="badge bg-secondary badge-sm">>|</a>
+</div>
+
+<label class="mx-1 text-dark">Buttons:</label>
+<a href="#" class="badge bg-primary badge-sm" data-scale="hour" data-value="1"
+  >1</a
+>
+<a href="#" class="badge bg-danger badge-sm" data-scale="hour" data-value="2"
+  >2</a
+>
+
+<div class="d-flex justify-content-center">
   <p *ngIf="comic.index != -1">
     Permanent Link to this Comic:
     <a href="http://localhost:4200/{{ comic.index }}"
