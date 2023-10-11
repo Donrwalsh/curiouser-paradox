@@ -1,0 +1,52 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "restoreTerminals.artificialDelayMilliseconds": 700,
+    "restoreTerminals.keepExistingTerminalsOpen": false,
+    "restoreTerminals.runOnStartup": true,
+    "restoreTerminals.terminals": [
+      {
+        "splitTerminals": [
+          {
+            "name": "backend",
+            "commands": ["cd backend", "npm run start:dev"]
+          }
+          //   {
+          //     "name": "backend-2",
+          //     "commands": ["echo this space intentionally left blank"]
+          //   }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "database",
+            "commands": [
+              "mongosh curiouserParadox --shell database/local-shell.js"
+            ]
+          }
+          //   {
+          //     "name": "database-2",
+          //     "commands": ["echo this space intentionally left blank"]
+          //   }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "frontend",
+            "commands": ["cd frontend", "npm run start"]
+          }
+          //   {
+          //     "name": "frontend-2",
+          //     "commands": ["echo this space intentionally left blank"]
+          //   }
+        ]
+      }
+    ]
+  }
+}

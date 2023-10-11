@@ -38,6 +38,10 @@ Did a little bit of prep work cleaning up the subscribe call to actually handle 
 
 That handles the two todos I had identified yesterday, so what's next? The two things that quickly come to mind are unit tests and a restore terminals setup. Ooh, actually the latter will involve reminding myself how to interact with the database so I think I'll set up all 3 with this. I'm thinking too a set of 3x split terminals each of them split between the primary app-runner and a secondary terminal for tests or commands or what have you. That sounds fun, I'm going to do that next.
 
+Spent more time than necessary with the Mongo portion of my Restore Terminals setup. Can't use `use <db>` commands in a shell script being piped into mongosh because it will suppress all output that follows that command. In any case, I wound up here because I want to run a handful of commands as part of establishing the terminal that handles database interaction. Right now it is outputting the collections and a count of comics but can be expanded to do more as necessary.
+
+Otherwise, I now have the workspace file built with basic Restore Terminal functionality which I've added to the repo.
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
@@ -45,3 +49,5 @@ That handles the two todos I had identified yesterday, so what's next? The two t
 - https://stackoverflow.com/questions/7033331/how-to-use-mongoose-findone
 - https://stackoverflow.com/questions/47344571/how-to-draw-checkbox-or-tick-mark-in-github-markdown-table
 - https://stackoverflow.com/questions/42104629/angular-2-checking-for-server-errors-from-subscribe
+- https://stackoverflow.com/questions/4837673/how-to-execute-mongo-commands-through-shell-scripts
+- https://stackoverflow.com/questions/65806112/pipe-output-from-mongosh-mongodb-shell-to-output-file-windows
