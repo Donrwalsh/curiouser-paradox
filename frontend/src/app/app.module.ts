@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderModule } from './header/header.module';
@@ -6,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './footer/footer.module';
 import { ComicModule } from './comic/comic.module';
+import { ComicService } from './comic/comic.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,8 +17,9 @@ import { ComicModule } from './comic/comic.module';
     ComicModule,
     FooterModule,
     HeaderModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ComicService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

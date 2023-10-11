@@ -1,1 +1,14 @@
-<p>latest-comic works!</p>
+<div style="text-align: center">
+  <h1>{{ comic.title }}</h1>
+  <img
+    src="api/{{ comic.path }}"
+    title="{{ comic.altText }}"
+    style="width: 35%"
+  />
+  <p>
+    Permanent Link to this Comic:
+    <a href="http://localhost:4200/{{ comic.index }}"
+      >http://localhost:4200/{{ comic.index }}</a
+    >
+  </p>
+</div>
