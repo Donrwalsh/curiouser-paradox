@@ -24,7 +24,7 @@ That's what I'm going to work on, but something is funky about the way I'm putti
 
 I'm reaching my end time for the evening, so let's wrap up. I spent some time putting together the database to hold onto the comics data and then used a simple mongoose connection to pull the data into the API to ultimately make available to the frontend. That last bit isn't complete yet, so first:
 
-- [ ] Complete the full-circle database -> backend -> frontend data flow for the single data item in use right now.
+- [x] Complete the full-circle database -> backend -> frontend data flow for the single data item in use right now.
 
 There's a weird issue that I can't sort out on the backend. When I try to use the get specific comic route for an index that doesn't exist, it outright throws a 404 and so is somehow failing the try-catch block I added to handle this sort of thing. Perhaps I'm missing an await somewhere? I'll look into it with fresh eyes.
 
@@ -32,9 +32,14 @@ There's a weird issue that I can't sort out on the backend. When I try to use th
 
 Otherwise things are going well. I'm still pulling the basics together, but I'm feeling good about the structure and overall progress of the day!
 
+Started the day off with working on the first checkbox above. The full circle bit was pretty easy to get in place and all it really took was pulling out the mock data and plugging stuff in together. Now a user can access the first comic in two different ways (because it is also the latest comic). I am thinking about the navigation between comics too, so that'll be coming up soon to work on.
+
+Did a little bit of prep work cleaning up the subscribe call to actually handle error responses.
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
 - https://stackoverflow.com/questions/12467102/how-to-get-the-latest-and-oldest-record-in-mongoose-js-or-just-the-timespan-bet
 - https://stackoverflow.com/questions/7033331/how-to-use-mongoose-findone
 - https://stackoverflow.com/questions/47344571/how-to-draw-checkbox-or-tick-mark-in-github-markdown-table
+- https://stackoverflow.com/questions/42104629/angular-2-checking-for-server-errors-from-subscribe

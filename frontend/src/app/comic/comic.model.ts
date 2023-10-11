@@ -4,3 +4,10 @@ export interface Comic {
   path: string;
   index: number;
 }
+
+export const initialComic: Comic = {
+  title: '',
+  altText: '',
+  path: '',
+  index: 0,
+};

@@ -1,6 +1,5 @@
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
 import { ComicsService } from './comics.service';
-import { Comic } from './schema';
 
 @Controller('comics')
 export class ComicsController {
@@ -28,7 +27,9 @@ export class ComicsController {
         specificComic,
       });
     } catch (err) {
-      return response.status(err.status).json(err.rsponse);
+      console.log('sup');
+      console.log(err);
+      return response.status(err.status).json(err.response);
     }
   }
 }

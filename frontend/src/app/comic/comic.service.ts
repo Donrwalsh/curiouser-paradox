@@ -11,6 +11,10 @@ export class ComicService {
   constructor(private http: HttpClient) {}
 
   getLatest() {
-    return this.http.get(`api/latest`).pipe(map((res) => res));
+    return this.http.get(`api/comics/latest`).pipe(map((res) => res));
+  }
+
+  getSpecific(id: string) {
+    return this.http.get(`api/comics/${id}`).pipe(map((res) => res));
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ComicService } from '../comic.service';
-import { map } from 'rxjs/operators';
 import { Comic } from '../comic.model';
+import { ComicService } from '../comic.service';
+import { initialComic } from '../comic.model';
 
 @Component({
   selector: 'app-latest-comic',
@@ -11,16 +11,11 @@ import { Comic } from '../comic.model';
 export class LatestComicComponent {
   constructor(private comicService: ComicService) {}
 
-  comic: Comic = {
-    title: '',
-    altText: '',
-    path: '',
-    index: 0,
-  };
+  comic = { ...initialComic };
 
   ngOnInit() {
     this.comicService.getLatest().subscribe((data) => {
-      this.comic = data as Comic;
+      this.comic = (data as any).latestComic as Comic;
     });
   }
 }

@@ -19,8 +19,6 @@ export class ComicsService {
   async getById(id: number): Promise<IComic> {
     const comic = await this.comicModel.findOne({ index: { $eq: id } });
 
-    console.log(comic);
-
     if (!comic) {
       throw new NotFoundException('Comic not found!');
     }
