@@ -48,6 +48,8 @@ Ok anyway, the buttons don't do anything right now except show up. The logic of 
 
 - [ ] Add navigation button functionality.
 
+Oh my god I had a typo in the repo name >\_<. Anyway, I added swagger to the backend because my idea for navigation is to have the specific-comic API call (and latest, I guess) contain the necessary information for navigation. Just prev/next because first and last are implicit either by way of being a static index forever or being the comic with the highest index out of all of them.
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
