@@ -54,6 +54,18 @@ I'm adding a bunch of hard-coded `http://localhost:4200` that will need to chang
 
 Ah yeah, I did a small thing prior to this where I created a single component (MainComic) to handle all comic rendering responsibilities - which is to say I removed the 2 separate components I had charged with this previously. I had imagined there would still be some differentiation between the two components based on the slight differences between latest/specific. In fact, it was much simpler because I can just piggy-back on the code that reads the id param from the URL to determine which comic to show. Interestingly, this only works because I happen to be passing around the route param as a string until the API casts it into a number (causing 500 errors if I route to a path that isn't an integer). This is awkward but I'm not exactly sure where the best point is for the conversion to take place. I know this will cause problems because somewhere else I had a check for truthiness that failed when the id is `0` the number, but here it succeeds because `0` the string is truthy. Neat.
 
+I slapped a header and footer on the site. Using just some basic bootstrap stuff to get something on the page to start and then go from there. In the process of adding the header, I noticed that what was on my app didn't match what I saw on the example, so I dug a bit deeper and it was a version difference. My browser likes to default to returning v4.0 bootstrap docs and I'm using 5.3.0 or whatever. I got that changed, but along the way I modified the way in which I was pulling in bootstrap. Originally I had some lines in the `index.html` that pulled down the bootstrap css and minified js but that's not very angular-ish is it? Instead, I'm pulling in the bootstrap package itself and I also grabbed bootstrap-icons to try it out while I was there. I like this approach a lot better and am curious if it's new? Or maybe I've been sticking with an outdated approach for a while now - not without precedent.
+
+As is tradition, let's think a bit about what comes next. Probably the most important is to attend to the size of the comics themselves. Right now I used an inline style granting a width of `35%` which makes the comic roughly the size I think it should be on half of my giant screen. Any other screen size and it looks bad in some way, so let's sort that out. (Interestingly, the newly added `container` class convention across most of the elements on the page handles the upper bound of this, but smaller screens still suffer)
+
+- [ ] Consider image sizing.
+
+Another thing that jumps out at me is the navigation buttons. They don't really look that good and with the different icon stuff I've been messing with today (bootstrap-icons, https://www.toptal.com/designers/htmlarrows/arrows/, https://thenounproject.com/, one other that I forgot to bookmark), I feel like I can do better than what I've got here right now. Random button would be cool too.
+
+- [ ] Make navigation buttons look better.
+
+- [ ] Add random comic button.
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
@@ -64,3 +76,4 @@ Ah yeah, I did a small thing prior to this where I created a single component (M
 - https://stackoverflow.com/questions/4837673/how-to-execute-mongo-commands-through-shell-scripts
 - https://stackoverflow.com/questions/65806112/pipe-output-from-mongosh-mongodb-shell-to-output-file-windows
 - https://stackoverflow.com/questions/39635474/make-smaller-button-in-bootstrap
+- https://thenounproject.com/
