@@ -8,7 +8,8 @@ export class ComicsService {
   constructor(@InjectModel('Comic') private comicModel: Model<IComic>) {}
 
   async getLatest(): Promise<IComic> {
-    const latestComics = await this.comicModel.find().sort({ id: -1 });
+    const latestComics = await this.comicModel.find().sort({ index: -1 });
+    console.log(latestComics);
 
     if (!latestComics || latestComics.length == 0) {
       throw new NotFoundException('Latest comic not found!');
