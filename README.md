@@ -66,6 +66,8 @@ Another thing that jumps out at me is the navigation buttons. They don't really 
 
 - [ ] Add random comic button.
 
+I also swapped the order of the navigation arrows as a special request from the Product Owner.
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs

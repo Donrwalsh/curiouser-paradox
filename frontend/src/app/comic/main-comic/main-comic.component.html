@@ -12,26 +12,26 @@
 
 <div class="d-flex justify-content-center">
   <a
-    *ngIf="comic.prevIndex != null"
-    href="http://localhost:4200/0"
+    *ngIf="comic.nextIndex != null"
+    href="http://localhost:4200"
     class="badge bg-secondary badge-sm"
     >|<</a
-  >
-  <a
-    *ngIf="comic.prevIndex != null"
-    href="http://localhost:4200/{{ comic.prevIndex }}"
-    class="badge bg-secondary badge-sm"
-    ><</a
   >
   <a
     *ngIf="comic.nextIndex != null"
     href="http://localhost:4200/{{ comic.nextIndex }}"
     class="badge bg-secondary badge-sm"
+    ><</a
+  >
+  <a
+    *ngIf="comic.prevIndex != null"
+    href="http://localhost:4200/{{ comic.prevIndex }}"
+    class="badge bg-secondary badge-sm"
     >></a
   >
   <a
-    *ngIf="comic.nextIndex != null"
-    href="http://localhost:4200"
+    *ngIf="comic.prevIndex != null"
+    href="http://localhost:4200/0"
     class="badge bg-secondary badge-sm"
     >>|</a
   >
