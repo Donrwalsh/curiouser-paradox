@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LatestComicComponent } from './latest-comic/latest-comic.component';
-import { SpecificComicComponent } from './specific-comic/specific-comic.component';
+import { MainComicComponent } from './main-comic/main-comic.component';
 
 @NgModule({
-  declarations: [LatestComicComponent, SpecificComicComponent],
+  declarations: [MainComicComponent],
   imports: [CommonModule],
-  exports: [LatestComicComponent],
+  exports: [],
 })
 export class ComicModule {}

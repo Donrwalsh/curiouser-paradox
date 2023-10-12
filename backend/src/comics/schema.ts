@@ -12,6 +12,9 @@ export class Comic {
 
   @Prop()
   index: number;
+
+  prevIndex: number;
+  nextIndex: number;
 }
 export const ComicSchema = SchemaFactory.createForClass(Comic);
 
@@ -21,4 +24,6 @@ export interface IComic extends Document {
   readonly altText: string;
   readonly path: string;
   readonly index: number;
+  readonly prevIndex: number;
+  readonly nextIndex: number;
 }

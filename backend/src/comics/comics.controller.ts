@@ -27,8 +27,6 @@ export class ComicsController {
         specificComic,
       });
     } catch (err) {
-      console.log('sup');
-      console.log(err);
       return response.status(err.status).json(err.response);
     }
   }

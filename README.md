@@ -1,4 +1,4 @@
-# curioser-paradox
+# curiouser-paradox
 
 ## Backend
 
@@ -42,13 +42,17 @@ Spent more time than necessary with the Mongo portion of my Restore Terminals se
 
 Otherwise, I now have the workspace file built with basic Restore Terminal functionality which I've added to the repo. I played around a little bit with adding some buttons for navigation. What I landed on is nice for me, but it's probably too small to be used as the general button suite. I'll use what I made here for now and may retain it for a small screen version of the site later on. As it exists currently, the buttons just always show on the specific-comic component - hang on, I had a thing for this:
 
-- [ ] Sort out the comic component problem. Lots of this content I'm working on needs to be shared in some sort of main component that delegates out the details of if it is specific or latest.
+- [x] Sort out the comic component problem. Lots of this content I'm working on needs to be shared in some sort of main component that delegates out the details of if it is specific or latest.
 
 Ok anyway, the buttons don't do anything right now except show up. The logic of knowing how there's a next comic is perplexing, so I'll need to stew on how I'm going to resolve that before tomorrow when I handle it:
 
-- [ ] Add navigation button functionality.
+- [x] Add navigation button functionality.
 
 Oh my god I had a typo in the repo name >\_<. Anyway, I added swagger to the backend because my idea for navigation is to have the specific-comic API call (and latest, I guess) contain the necessary information for navigation. Just prev/next because first and last are implicit either by way of being a static index forever or being the comic with the highest index out of all of them.
+
+I'm adding a bunch of hard-coded `http://localhost:4200` that will need to change later, but I'm not too concerned right now. I added to the API response for any singular comic a pair of attributes that describe the next and previous comics in terms of index which is enough to route and that's exactly what I need. As for the first and last buttons, the logic of whether or not to show them matches with the step-by-1 buttons and so that's handled. As for where these buttons route to, both are special cases which won't ever change (there is a very minor assumption here that index 0 will always be the first comic. This to me is acceptable, but a fix would be to have the getLatest calls simply return the comic with the lowest index) and so their routing is known by the frontend without input from the backend.
+
+Ah yeah, I did a small thing prior to this where I created a single component (MainComic) to handle all comic rendering responsibilities - which is to say I removed the 2 separate components I had charged with this previously. I had imagined there would still be some differentiation between the two components based on the slight differences between latest/specific. In fact, it was much simpler because I can just piggy-back on the code that reads the id param from the URL to determine which comic to show. Interestingly, this only works because I happen to be passing around the route param as a string until the API casts it into a number (causing 500 errors if I route to a path that isn't an integer). This is awkward but I'm not exactly sure where the best point is for the conversion to take place. I know this will cause problems because somewhere else I had a check for truthiness that failed when the id is `0` the number, but here it succeeds because `0` the string is truthy. Neat.
 
 ## Couldn't Have Done it Without You
 

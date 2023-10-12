@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <h1>{{ comic.title }}</h1>
+</div>
+
+<div class="d-flex justify-content-center">
+  <img
+    src="api/{{ comic.path }}"
+    title="{{ comic.altText }}"
+    style="width: 35%"
+  />
+</div>
+
+<div class="d-flex justify-content-center">
+  <a
+    *ngIf="comic.prevIndex != null"
+    href="http://localhost:4200/0"
+    class="badge bg-secondary badge-sm"
+    >|<</a
+  >
+  <a
+    *ngIf="comic.prevIndex != null"
+    href="http://localhost:4200/{{ comic.prevIndex }}"
+    class="badge bg-secondary badge-sm"
+    ><</a
+  >
+  <a
+    *ngIf="comic.nextIndex != null"
+    href="http://localhost:4200/{{ comic.nextIndex }}"
+    class="badge bg-secondary badge-sm"
+    >></a
+  >
+  <a
+    *ngIf="comic.nextIndex != null"
+    href="http://localhost:4200"
+    class="badge bg-secondary badge-sm"
+    >>|</a
+  >
+</div>
+
+<div class="d-flex justify-content-center">
+  <p *ngIf="comic.index != -1">
+    Permanent Link to this Comic:
+    <a href="http://localhost:4200/{{ comic.index }}"
+      >http://localhost:4200/{{ comic.index }}</a
+    >
+  </p>
+</div>
