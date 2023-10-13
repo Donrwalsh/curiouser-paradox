@@ -91,3 +91,4 @@ There's another comic layout style for me to work with: tall. That's a solid tod
 - https://stackoverflow.com/questions/39635474/make-smaller-button-in-bootstrap
 - https://thenounproject.com/
 - https://stackoverflow.com/questions/38792005/how-to-change-the-bootstrap-primary-color
+- https://stackoverflow.com/questions/65359474/angular-unit-test-stuck-on-github-action-ci
