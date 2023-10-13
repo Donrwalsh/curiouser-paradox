@@ -48,9 +48,9 @@ As is tradition, let's think a bit about what comes next. Probably the most impo
 
 Another thing that jumps out at me is the navigation buttons. They don't really look that good and with the different icon stuff I've been messing with today (bootstrap-icons, https://www.toptal.com/designers/htmlarrows/arrows/, https://thenounproject.com/, one other that I forgot to bookmark), I feel like I can do better than what I've got here right now. Random button would be cool too.
 
-- [ ] Make navigation buttons look better.
+- [x] Make navigation buttons look better.
 
-- [ ] Add random comic button.
+- [x] Add random comic button.
 
 I also swapped the order of the navigation arrows as a special request from the Product Owner.
 
@@ -66,6 +66,18 @@ Notes from a chat with the product owner:
 I came up with a simple approach for the image sizing. At the xxl breakpoint (>= 1400px) our 1280 x 1280 image looks a bit too big, so I reduced it to 80% which makes it 1024 x 1024 which looks nice. I then continued this approach and for each breakpoing step, I reduced it to 80% again and rounded to a full integer. This looks decent enough from a brief spot-check, but only for the square comics. Wide comics (based on the Peccary one, which has a lot of text) probably want to hug the edges at a smaller breakpoint, and would maybe want to step down by 90% or something less intense? Either way, I'm going to want to differentiate based on comic layout, so it makes sense to me to make that a part of the comic entity. It could be derived from the attributes of the image I suppose, but that feels sloppy and the efort incurred by expanding the entity is well justified in this case.
 
 That was easy to add, and honestly for the wide comic it just makes sense to stick a max of 1280 width and then just set it to 100%. After the 1280 point, I want it to just reduce with the window size so that it is touching the edges on any screen beneath the native size of the image. Feels nice and I like that the experience is tailored to the specifics of the comic image itself.
+
+I moved on to the buttons. Whatever I had originally is long gone, and what I ended up going with is using bootstrap-icons for simplicity. There's been some interactive feedback going on about color scheme and such, so I setup the project with the bootstrap primary color overridden to be the chosen pink color which is awesome! The buttons themselves are going to be SVGs long-term, but for now these icon standins are just fine. They have a primary color fill when hovered, and the navigation is all based on `<a>` tags except in the case of the random button. Which, yeah, I added a random button that takes advantage of a (fake) API call that gives a full list of all the indexes of comics in the database.
+
+- [ ] remove the mock portion of the allIndexes call.
+
+Otherwise I went with similar media breakpoint strategies to get a proportional (step by 4px actually, but who's counting?) reduction in size that feels natural, at least with the square layout which is in my mind the default. Let's see, I used the `*ngIf ... else` approach for the dividers which I think is pretty cool. On the frontend thing, the random button selecting from that list was straightforward, but for a while at the start it didn't really feel like it was actually navigating. Thinking about it for a moment, it's because this navigation is really just changing details about this particular component and we're not really going anywhere. That means that I need to trigger a re-fetch of the comic data in question, which I did by extracting the `getComic` activities from the component so that they can be invoked by both ngOnInit as well as the random click. I do want to confirm what I need to do accessibility-wise to account for changing this (it isn't an `<a>` tag anymore) and I'm sure there's more to consider here, so maybe I can work on establishing a long-term approach for these nav buttons that is cognizant of the plan to turn them into custom SVGs if that is relevant.
+
+- [ ] Button polish: accessibility concerns?
+
+There's another comic layout style for me to work with: tall. That's a solid todo as well:
+
+- [ ] Add the tall sample and setup styling for it.
 
 ## Couldn't Have Done it Without You
 

@@ -7,6 +7,10 @@ import { IComic } from './schema';
 export class ComicsService {
   constructor(@InjectModel('Comic') private comicModel: Model<IComic>) {}
 
+  async getAllIndexes(): Promise<number[]> {
+    return [0, 1, 2];
+  }
+
   async getLatest(): Promise<IComic> {
     const latestComics = await this.comicModel
       .find()

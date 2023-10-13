@@ -12,37 +12,58 @@
 </div>
 
 <div class="d-flex justify-content-center">
-  <a
-    *ngIf="comic.nextIndex != null"
-    href="http://localhost:4200"
-    class="badge bg-secondary badge-sm"
-    >|<</a
-  >
-  <a
-    *ngIf="comic.nextIndex != null"
-    href="http://localhost:4200/{{ comic.nextIndex }}"
-    class="badge bg-secondary badge-sm"
-    ><</a
-  >
-  <a
-    *ngIf="comic.prevIndex != null"
-    href="http://localhost:4200/{{ comic.prevIndex }}"
-    class="badge bg-secondary badge-sm"
-    >></a
-  >
-  <a
-    *ngIf="comic.prevIndex != null"
-    href="http://localhost:4200/0"
-    class="badge bg-secondary badge-sm"
-    >>|</a
-  >
-</div>
-
-<div class="d-flex justify-content-center">
   <p *ngIf="comic.index != -1">
-    Permanent Link to this Comic:
     <a href="http://localhost:4200/{{ comic.index }}"
       >http://localhost:4200/{{ comic.index }}</a
     >
   </p>
+</div>
+
+<div class="d-flex justify-content-center mb-4">
+  <div class="navigate">
+    <a
+      *ngIf="comic.nextIndex != null; else dividerLL"
+      class="icon-link"
+      href="http://localhost:4200"
+      ><i class="bi bi-caret-left-square-fill nav-button"></i
+    ></a>
+    <ng-template #dividerLL><div class="divider"></div></ng-template>
+  </div>
+
+  <div class="navigate">
+    <a
+      *ngIf="comic.nextIndex != null; else dividerL"
+      class="icon-link"
+      href="http://localhost:4200/{{ comic.nextIndex }}"
+      ><i class="bi bi-caret-left-fill nav-button"></i
+    ></a>
+    <ng-template #dividerL><div class="divider"></div></ng-template>
+  </div>
+
+  <div class="navigate">
+    <i
+      (click)="randomComic()"
+      class="bi bi-question-diamond-fill nav-button"
+    ></i>
+  </div>
+
+  <div class="navigate">
+    <a
+      *ngIf="comic.prevIndex != null; else dividerR"
+      class="icon-link"
+      href="http://localhost:4200/{{ comic.prevIndex }}"
+      ><i class="bi bi-caret-right-fill nav-button"></i
+    ></a>
+    <ng-template #dividerR><div class="divider"></div></ng-template>
+  </div>
+
+  <div class="navigate">
+    <a
+      *ngIf="comic.prevIndex != null; else dividerRR"
+      class="icon-link"
+      href="http://localhost:4200/0"
+      ><i class="bi bi-caret-right-square-fill nav-button"></i
+    ></a>
+    <ng-template #dividerRR><div class="divider"></div></ng-template>
+  </div>
 </div>

@@ -10,6 +10,10 @@ export class ComicService {
 
   constructor(private http: HttpClient) {}
 
+  getIndexes() {
+    return this.http.get(`api/comics/indexes`).pipe(map((res) => res));
+  }
+
   getLatest() {
     return this.http.get(`api/comics/latest`).pipe(map((res) => res));
   }

@@ -1,18 +1,4 @@
-.badge-sm {
-  min-width: 1.8em;
-  padding-bottom: 0.25em;
-  padding-left: 0.25em;
-  padding-right: 0.25em;
-  padding-top: 0.1em;
-  margin-left: 0.3em;
-  margin-right: 0.3em;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-sml {
-  height: 4vh;
-}
+@import "../../../styles.scss";
 
 #comic.square {
   max-width: 336px; //335.54432
@@ -36,4 +22,81 @@
 #comic.wide {
   width: 100%;
   max-width: 1280px;
+}
+
+.nav-button:hover {
+  color: $primary;
+}
+
+.nav-button {
+  color: $text;
+  text-decoration: none;
+  cursor: pointer;
+
+  font-size: 18px;
+  @media (min-width: 576px) {
+    font-size: 22px;
+  }
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (min-width: 992px) {
+    font-size: 28px;
+  }
+  @media (min-width: 1200px) {
+    font-size: 32px;
+  }
+  @media (min-width: 1400px) {
+    font-size: 36px;
+  }
+}
+
+.navigate {
+  width: 18px;
+  margin-left: 18px;
+  margin-right: 18px;
+  @media (min-width: 576px) {
+    width: 22px;
+    margin-left: 22px;
+    margin-right: 22px;
+  }
+  @media (min-width: 768px) {
+    width: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+  @media (min-width: 992px) {
+    width: 28px;
+    margin-left: 28px;
+    margin-right: 28px;
+  }
+  @media (min-width: 1200px) {
+    width: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+  @media (min-width: 1400px) {
+    width: 36px;
+    margin-left: 36px;
+    margin-right: 36px;
+  }
+}
+
+.divider {
+  width: 18px;
+  @media (min-width: 576px) {
+    width: 22px;
+  }
+  @media (min-width: 768px) {
+    width: 24px;
+  }
+  @media (min-width: 992px) {
+    width: 28px;
+  }
+  @media (min-width: 1200px) {
+    width: 32px;
+  }
+  @media (min-width: 1400px) {
+    width: 36px;
+  }
 }
