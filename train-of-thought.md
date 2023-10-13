@@ -44,7 +44,7 @@ I slapped a header and footer on the site. Using just some basic bootstrap stuff
 
 As is tradition, let's think a bit about what comes next. Probably the most important is to attend to the size of the comics themselves. Right now I used an inline style granting a width of `35%` which makes the comic roughly the size I think it should be on half of my giant screen. Any other screen size and it looks bad in some way, so let's sort that out. (Interestingly, the newly added `container` class convention across most of the elements on the page handles the upper bound of this, but smaller screens still suffer)
 
-- [ ] Consider image sizing.
+- [x] Consider image sizing.
 
 Another thing that jumps out at me is the navigation buttons. They don't really look that good and with the different icon stuff I've been messing with today (bootstrap-icons, https://www.toptal.com/designers/htmlarrows/arrows/, https://thenounproject.com/, one other that I forgot to bookmark), I feel like I can do better than what I've got here right now. Random button would be cool too.
 
@@ -58,8 +58,14 @@ Kicking off today with moving out all this nonsense from the README so it can fo
 
 I've got 3 different comics so far, and they represent two sizes for comics: square and not-square. Perhaps it's better to be accurate here, so I'll say instead that I have two comics that are of dimensions 1280 x 1280 and 1748 x 1181. It makes sense to me that I would want to handle the different sizes uniquely, so that makes me want to start with a deep dive on the square case and use that as a template.
 
+Notes from a chat with the product owner:
+
 - header/footer to the edge until high breakpoint then bs-container style
 - image itself maxing out at at some proportion of its dimension, needs to bottom out
+
+I came up with a simple approach for the image sizing. At the xxl breakpoint (>= 1400px) our 1280 x 1280 image looks a bit too big, so I reduced it to 80% which makes it 1024 x 1024 which looks nice. I then continued this approach and for each breakpoing step, I reduced it to 80% again and rounded to a full integer. This looks decent enough from a brief spot-check, but only for the square comics. Wide comics (based on the Peccary one, which has a lot of text) probably want to hug the edges at a smaller breakpoint, and would maybe want to step down by 90% or something less intense? Either way, I'm going to want to differentiate based on comic layout, so it makes sense to me to make that a part of the comic entity. It could be derived from the attributes of the image I suppose, but that feels sloppy and the efort incurred by expanding the entity is well justified in this case.
+
+That was easy to add, and honestly for the wide comic it just makes sense to stick a max of 1280 width and then just set it to 100%. After the 1280 point, I want it to just reduce with the window size so that it is touching the edges on any screen beneath the native size of the image. Feels nice and I like that the experience is tailored to the specifics of the comic image itself.
 
 ## Couldn't Have Done it Without You
 

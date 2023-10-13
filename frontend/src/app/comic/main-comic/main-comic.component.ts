@@ -18,9 +18,6 @@ export class MainComicComponent {
 
   comic = { ...initialComic };
 
-  nextComicIndex = null;
-  prevComicIndex = null;
-
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -29,6 +26,7 @@ export class MainComicComponent {
         next: (success: any) => {
           const comicDto = success as ComicDTO;
           this.comic = comicDto.specificComic as Comic;
+          console.log(this.comic);
         },
         error: (error: any) => (this.comic = notFoundComic),
       });

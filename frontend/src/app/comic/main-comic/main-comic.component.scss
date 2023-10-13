@@ -1,13 +1,39 @@
 .badge-sm {
-    min-width: 1.8em;
-    padding-bottom: .25em;
-    padding-left: .25em;
-    padding-right: .25em;
-    padding-top: .1em;
-    margin-left: .3em;
-    margin-right: .3em;
-    text-decoration: none;
-    cursor: pointer;
+  min-width: 1.8em;
+  padding-bottom: 0.25em;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  padding-top: 0.1em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.btn-sml { height: 4vh; }
+.btn-sml {
+  height: 4vh;
+}
+
+#comic.square {
+  max-width: 336px; //335.54432
+  @media (min-width: 576px) {
+    max-width: 419px; //419.40304
+  }
+  @media (min-width: 768px) {
+    max-width: 524px; //524.288
+  }
+  @media (min-width: 992px) {
+    max-width: 655px; //655.36
+  }
+  @media (min-width: 1200px) {
+    max-width: 820px; //819.2
+  }
+  @media (min-width: 1400px) {
+    max-width: 1024px;
+  }
+}
+
+#comic.wide {
+  width: 100%;
+  max-width: 1280px;
+}

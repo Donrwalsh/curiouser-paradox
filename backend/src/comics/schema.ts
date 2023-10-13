@@ -8,6 +8,9 @@ export class Comic {
   altText: string;
 
   @Prop()
+  layout: string;
+
+  @Prop()
   path: string;
 
   @Prop()
@@ -22,6 +25,7 @@ import { Document } from 'mongoose';
 export interface IComic extends Document {
   readonly title: string;
   readonly altText: string;
+  readonly layout: string;
   readonly path: string;
   readonly index: number;
   readonly prevIndex: number;
