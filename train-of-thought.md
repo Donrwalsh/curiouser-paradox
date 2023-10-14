@@ -83,6 +83,10 @@ Added some build automation through github actions that run unit tests on the fr
 
 - [ ] Continue the Github actions workflow to the point of deployment upon successful completion of previous steps.
 
+Adventures in Docker! Deployment of the app won't be on a Raspberry Pi forever, so containerization is appealing. Found a generic Dockerfile and am building with the `docker build -t frontend .` command. Note that Docker Desktop needs to be running for `>docker ...` commands to work at all. Turned that on as a startup app. Had some trouble with any and all build commands because importing the bootstrap styles to override the primary color makes the size of my styles file exceed allowed budgets, so I tweaked that setting. Interested if there's a way to sidestep this, because it kinda kills the purpose of having this budget setting - though I wasn't aware of it until now, so idk.
+
+Lots of trouble with this one. Seems that it all boiled down to an issue with running the start command with a `.` at the end that lead to all these cryptic permission errors in the logs on the container which would immediately exit without fail. In any case, the result works locally and runs the docker image with a combo platter of the new `>npm run build:docker` and `>npm run start:docker` scripts. With this commit, I'm also going to try having github actions do the docker version of build!
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
@@ -96,3 +100,7 @@ Added some build automation through github actions that run unit tests on the fr
 - https://thenounproject.com/
 - https://stackoverflow.com/questions/38792005/how-to-change-the-bootstrap-primary-color
 - https://stackoverflow.com/questions/65359474/angular-unit-test-stuck-on-github-action-ci
+- https://jasonwatmore.com/angular-15-16-free-course-8-dockerize-app-with-nginx
+- https://stackoverflow.com/questions/29535015/error-cannot-start-container-stat-bin-sh-no-such-file-or-directory
+- https://stackoverflow.com/questions/37634483/default-docker-entrypoint
+- https://stackoverflow.com/questions/38882654/docker-entrypoint-running-bash-script-gets-permission-denied
