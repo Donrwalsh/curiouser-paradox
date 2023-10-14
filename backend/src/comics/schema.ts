@@ -2,6 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema()
 export class Comic {
   @Prop()
+  state: string;
+
+  @Prop()
   title: string;
 
   @Prop()
@@ -23,6 +26,7 @@ export const ComicSchema = SchemaFactory.createForClass(Comic);
 
 import { Document } from 'mongoose';
 export interface IComic extends Document {
+  readonly state: string;
   readonly title: string;
   readonly altText: string;
   readonly layout: string;

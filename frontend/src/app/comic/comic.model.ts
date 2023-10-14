@@ -1,4 +1,5 @@
 export interface Comic {
+  state: 'draft' | 'published';
   title: string;
   altText: string;
   layout: 'square' | 'wide' | 'tall';
@@ -14,6 +15,7 @@ export interface ComicDTO {
 }
 
 export const initialComic: Comic = {
+  state: 'published',
   title: '',
   altText: '',
   layout: 'square',
@@ -24,6 +26,7 @@ export const initialComic: Comic = {
 };
 
 export const notFoundComic: Comic = {
+  state: 'published',
   title: 'Not Found',
   altText: `Saying there's no content to find while displaying content; A paradox.`,
   layout: 'square',
