@@ -6,15 +6,15 @@
   <img
     id="comic"
     class="{{ comic.layout }}"
-    src="api/{{ comic.path }}"
+    src="{{ apiHost }}/{{ comic.path }}"
     title="{{ comic.altText }}"
   />
 </div>
 
 <div class="d-flex justify-content-center">
   <p *ngIf="comic.index != -1">
-    <a href="http://localhost:4200/{{ comic.index }}"
-      >http://localhost:4200/{{ comic.index }}</a
+    <a href="{{ selfHost }}/{{ comic.index }}"
+      >{{ selfHost }}/{{ comic.index }}</a
     >
   </p>
 </div>
@@ -24,7 +24,7 @@
     <a
       *ngIf="comic.nextIndex != null; else dividerLL"
       class="icon-link"
-      href="http://localhost:4200"
+      href="{{ selfHost }}"
       ><i class="bi bi-caret-left-square-fill nav-button"></i
     ></a>
     <ng-template #dividerLL><div class="divider"></div></ng-template>
@@ -34,7 +34,7 @@
     <a
       *ngIf="comic.nextIndex != null; else dividerL"
       class="icon-link"
-      href="http://localhost:4200/{{ comic.nextIndex }}"
+      href="{{ selfHost }}/{{ comic.nextIndex }}"
       ><i class="bi bi-caret-left-fill nav-button"></i
     ></a>
     <ng-template #dividerL><div class="divider"></div></ng-template>
@@ -51,7 +51,7 @@
     <a
       *ngIf="comic.prevIndex != null; else dividerR"
       class="icon-link"
-      href="http://localhost:4200/{{ comic.prevIndex }}"
+      href="{{ selfHost }}/{{ comic.prevIndex }}"
       ><i class="bi bi-caret-right-fill nav-button"></i
     ></a>
     <ng-template #dividerR><div class="divider"></div></ng-template>
@@ -61,7 +61,7 @@
     <a
       *ngIf="comic.prevIndex != null; else dividerRR"
       class="icon-link"
-      href="http://localhost:4200/0"
+      href="{{ selfHost }}/0"
       ><i class="bi bi-caret-right-square-fill nav-button"></i
     ></a>
     <ng-template #dividerRR><div class="divider"></div></ng-template>

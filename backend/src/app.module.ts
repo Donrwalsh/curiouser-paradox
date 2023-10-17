@@ -5,11 +5,15 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComicsModule } from './comics/comics.module';
+import { ConfigModule } from '@nestjs/config';
+
+const CONTAINERIZED = process.env.CONTAINERIZED === 'true';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ComicsModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/', {
+    MongooseModule.forRoot(process.env.CONNECTION_STRING, {
       dbName: 'curiouserParadox',
     }),
     ServeStaticModule.forRoot({

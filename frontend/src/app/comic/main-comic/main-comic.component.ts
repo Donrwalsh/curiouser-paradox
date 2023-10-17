@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComicService } from '../comic.service';
 import { Comic, ComicDTO, initialComic, notFoundComic } from '../comic.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main-comic',
@@ -10,6 +11,8 @@ import { Comic, ComicDTO, initialComic, notFoundComic } from '../comic.model';
 })
 export class MainComicComponent {
   id: string | null = '';
+  apiHost = environment.apiHost;
+  selfHost = environment.selfHost;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +24,7 @@ export class MainComicComponent {
   indexes = [];
 
   ngOnInit() {
+    console.log(this.apiHost);
     this.obtainComicInfo(this.route.snapshot.paramMap.get('id'));
 
     this.comicService.getIndexes().subscribe((data) => {

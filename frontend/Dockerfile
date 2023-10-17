@@ -10,7 +10,7 @@ RUN npm install
 
 COPY . .
 ENTRYPOINT ["bash", "/docker-entrypoint.sh"]
-RUN npm run build
+RUN npm run build:docker:dev
 
 # ----------------------------
 # run with nginx

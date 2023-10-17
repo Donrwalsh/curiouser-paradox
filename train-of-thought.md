@@ -87,6 +87,24 @@ Adventures in Docker! Deployment of the app won't be on a Raspberry Pi forever, 
 
 Lots of trouble with this one. Seems that it all boiled down to an issue with running the start command with a `.` at the end that lead to all these cryptic permission errors in the logs on the container which would immediately exit without fail. In any case, the result works locally and runs the docker image with a combo platter of the new `>npm run build:docker` and `>npm run start:docker` scripts. With this commit, I'm also going to try having github actions do the docker version of build!
 
+That Github action was successful, btw. I'm coming in a bit late here on containerization since it's been a bit of a nonstop stream of error & trial (in order of frequency). In any case, I have the frontend and the database both running in a container, and am currently working on establishing the backend nestjs API in between the two of them. This is still pretty trivial stuff, so I'm in the swirl of finding a tutorial and determining by myself if it is out of date. Silly things get mixed in too, like I just had an issue where my container was failing on the `npm install` step because of the difference between `COPY package*.json .` and `COPY package*.json ./`. And then shortly after the command I was using to restart the whole container operation (`docker compose down && docker compose up -d`) didn't _actually_ restart in the way I wanted to and I needed to intentionally rebuild the container images with `docker compose down -v && docker compose up -d`. With NestJS running in a container, I need to route it to the database via the connection string that takes into account the container name: `mongodb://mongo:27017/mongodb://mongo:27017/`. . . And then, SUCCESS! Woo, gonna take a victory lap and then get down to polish on this.
+
+Ok, let's go. First things first (alphabetical-wise): I don't have a top-level .gitignore so I added one for the new volume persistence stuff, but I may as well migrate out anything that should be shared across the entire project (or everything? idk the convention on this). Ok, I looked into this and changed my mind. I'll be adding the persistence stuff to a database-specific .gitignore which is more clear on what's going on.
+
+- [ ] I need an actual entrypoint with seed data (from code) for the database. I did it by hand to start.
+
+- [ ] As a separate task from all the stuff I'm doing right now: clean up the readme and make it accurate RE: both run methods.
+
+Ok, so I worked my way through to app.module.ts in the backend. This is where I changed the connection string so that it could connect to the dockerized version of things, but what I really want is to have that be environment-specific so I'm going to go ahead and take a detour on this one before proceeding. `@nestjs/config` handles this nicely and so that's what I wound up going with here. I had a detour's-detour with the docker commands not fully rebuilding the API as I saw (or perhaps just thought I saw) them do before. This lets me drop the exact mongo connection string into a .env file and do that rather than mess with booleans which is how I started in on this originally. ~ From there I thought it would be cool to add an endpoint to the base app.controller that lets me review what environment values are currently active for diagnostic purposes (ties direcly back to the issue of docker not updating the way I thought it was). I'm going to keep `comics.module.ts`'s import of the ConfigModule for later use.
+
+And now we're onto frontend, let's go. Didn't really take notes here because there's been a lot of bouncing around going on. The short of it is I need to know if I'm running locally or in a container on the backend and the frontend (I've decided a while ago but am now saying just saying it that the database should always run in a container) and so this requires messing with environment files on both the angular and nestjs side of things. So for the backend you can configure the port and the mongo connection string while with the frontend you can configure the backend host and the frontend host (for purposes of showing permalinks and such). These two approaches are fairly standard, so I'm not exactly sure what to say about them here beyond that they exist and I established them here and plan to use them moving forward. Ok, I can also say that currently I've got some naming issues with what's going on and that the concept of they will always connect to the samely located database is not reflected in the code at all.
+
+- [ ] Clarify naming of build and run commands as well as configuration options for frontend and backend.
+
+- [ ] Establish and properly represent how the database should and will always be run in a container.
+
+Overall this has been quite the adventure. Ideally this would have been a separate couple of commits, but as I was working through it I think I chose to bite off a little more here and there until it made more sense to just collapse in and do all the things together. The end result is a fairly reliable starter docker-compose file with room to grow. A fantastic place to start!
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
@@ -104,3 +122,13 @@ Lots of trouble with this one. Seems that it all boiled down to an issue with ru
 - https://stackoverflow.com/questions/29535015/error-cannot-start-container-stat-bin-sh-no-such-file-or-directory
 - https://stackoverflow.com/questions/37634483/default-docker-entrypoint
 - https://stackoverflow.com/questions/38882654/docker-entrypoint-running-bash-script-gets-permission-denied
+- https://www.mongodb.com/compatibility/docker
+- https://www.tomray.dev/nestjs-docker-production
+- https://stackoverflow.com/questions/66042897/docker-build-fails-at-npm-install
+- https://stackoverflow.com/questions/42040317/cannot-find-module-for-a-node-js-app-running-in-a-docker-compose-environment
+- https://stackoverflow.com/questions/61083094/connecting-to-mongo-docker-container-from-mongo-compass-on-local-machine
+- https://github.com/docker/awesome-compose/blob/master/react-express-mongodb/compose.yaml
+- https://stackoverflow.com/questions/60924576/cors-is-somehow-stopping-my-angular-and-nestjs-apps-from-communicating
+- https://pallavbh23.medium.com/setting-up-docker-and-docker-compose-for-nest-js-and-mongodb-1cd972d97ef7
+- https://medium.com/@parvej.code/how-to-setup-nestjs-project-with-mongodb-as-the-database-in-docker-84db8963d26
+- https://stackoverflow.com/questions/63122399/connecting-using-mongodb-compass-to-docker-mongo-image
