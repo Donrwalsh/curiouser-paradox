@@ -52,6 +52,14 @@
               ],
               "outputHashing": "all"
             },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "docker": {
               "buildOptimizer": false,
               "optimization": false,

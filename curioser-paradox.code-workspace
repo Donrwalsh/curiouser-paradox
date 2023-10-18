@@ -12,14 +12,6 @@
       {
         "splitTerminals": [
           {
-            "name": "backend",
-            "commands": ["cd backend", "npm run test:watch"]
-          }
-        ]
-      },
-      {
-        "splitTerminals": [
-          {
             "name": "database",
             "commands": [
               "mongosh curiouserParadox --shell database/local-shell.js"
@@ -30,21 +22,37 @@
       {
         "splitTerminals": [
           {
-            "name": "frontend",
-            "commands": ["cd frontend", "npm run test"]
+            "name": "backend",
+            "commands": ["cd backend", "npm run start:dev"]
+          },
+          {
+            "name": "test-backend",
+            "commands": ["cd backend", "npm run test:watch"]
           }
         ]
       },
       {
         "splitTerminals": [
           {
-            "name": "docker",
-            "commands": [
-              "docker compose down -v frontend backend && docker compose up -d frontend backend --build"
-            ]
+            "name": "frontend",
+            "commands": ["cd frontend", "npm run start"]
+          },
+          {
+            "name": "test-frontend",
+            "commands": ["cd frontend", "npm run test"]
           }
         ]
       }
+      // {
+      //   "splitTerminals": [
+      //     {
+      //       "name": "docker",
+      //       "commands": [
+      //         "docker compose down -v frontend backend && docker compose up -d frontend backend --build"
+      //       ]
+      //     }
+      //   ]
+      // }
     ]
   }
 }

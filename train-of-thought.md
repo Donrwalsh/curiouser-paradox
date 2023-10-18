@@ -105,6 +105,10 @@ And now we're onto frontend, let's go. Didn't really take notes here because the
 
 Overall this has been quite the adventure. Ideally this would have been a separate couple of commits, but as I was working through it I think I chose to bite off a little more here and there until it made more sense to just collapse in and do all the things together. The end result is a fairly reliable starter docker-compose file with room to grow. A fantastic place to start!
 
+Getting started on the day, the earliest TODO is a frontend one. Tackling that with the current setup of containerization that requires a build before showing updates isn't ideal, so I ended up rebuilding the restore terminals setup to return to a run-locally strategy. This was tricky because the `.env` file for the API runs the show, and so I need to manually change it to swap between the deployment strategies. I actually prefer the angular approach here and I wonder if there's a way to build something similar for the backend.
+
+- [ ] Backend environment management such that I can deploy both styles without an environment file change?
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
