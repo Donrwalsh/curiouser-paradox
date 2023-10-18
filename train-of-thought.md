@@ -109,6 +109,16 @@ Getting started on the day, the earliest TODO is a frontend one. Tackling that w
 
 - [ ] Backend environment management such that I can deploy both styles without an environment file change?
 
+Spending some time exploring button concepts. I really enjoy the simple svg icon that you can click on, but I concede that it doesn't necessarily present as a button to the general user's eye. It's like this: somewhere along the way I stumbled across the concept of a FAB/"floating action button" which is just an icon inside a tiny-icon-holding-button. The advantage of this is that the button is a button with all of these button-like behaviors that are ideal for what is going on here. There is only one maddening issue that I'm going to document here and then let it exit my brain for a while.
+
+- [ ] Compare app with <https://material.angular.io/components/button/examples> and figure out why when the button is focused there are two layers of fill and one expands all the way out to a square around the FAB which is unsightly. This only happens on this app and is not present in the example. I've tried a bunch of things, but nothing seems to impact this. It's gonna be something in the synthetic elements or sub-elements that bootstrap or something unique to this app is interfering with.
+
+I am not completely sold on switching the navigation buttons around fully yet, so I'm going to play with this in a way that isn't too disruptive. I'll add a second row for these new buttons and then I can run two sets of navigation buttons simultaneously. That worked well. So now I've got two rows of buttons that (let's hedge with a should) both do the same thing. I'm seeing advantages to both and I'm still not ready to get rid of either just yet, so they'll chill for a while. Something like different buttons on some comics and not others is a cool thing to consider doing here. Anyway, I'm enjoying how fresh Angular Material feels which is probably on account of my bootstrap blinders. I have some other plans today, so this was never going to be a massive update but I am pleased with what I was able to get done.
+
+For the commit, I'm seeing some additions to the `angular.json` file that have to do with specifying this indigo-pink.css style. I'm going to leave those because I believe it is necessary for Angular Material in general and doesn't seem to interfere with anything I have. No TODO on this one, just making a note. It also seems worthwhile to note that a fair chunk of the updates with this commit were actually performed automatically by the setup of Angular Material itself. (Specifically changes to the `index.html`, `styles.scss` and as usual `app.module.ts`)
+
+Last thing I want to drop here is that I'm flabbergasted by what's going on with my test suites. Something I did yesterday with containerization complicated the node types across a couple of projects and I've needed to plug a few holes here and there. It's mostly fine, but for some reason all my frontend spec files (both, rather) are foreign to the IDE for some reason. Granted I haven't restarted in a while, so hopefully that's it but it's strange and I'm out of time but at least I fixed the busted unit test!
+
 ## Couldn't Have Done it Without You
 
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs

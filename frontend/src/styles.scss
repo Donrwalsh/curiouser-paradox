@@ -4,3 +4,19 @@ $primary: #ff42ff;
 $text: #070707;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+span:focus {
+  outline: none;
+  border: 0;
+}
+button:focus {
+  outline: none !important;
+}

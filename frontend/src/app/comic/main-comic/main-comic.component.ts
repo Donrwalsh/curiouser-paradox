@@ -24,7 +24,6 @@ export class MainComicComponent {
   indexes = [];
 
   ngOnInit() {
-    console.log(this.apiHost);
     this.obtainComicInfo(this.route.snapshot.paramMap.get('id'));
 
     this.comicService.getIndexes().subscribe((data) => {

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './footer/footer.module';
 import { ComicModule } from './comic/comic.module';
 import { ComicService } from './comic/comic.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { ComicService } from './comic/comic.service';
     FooterModule,
     HeaderModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [ComicService],
   bootstrap: [AppComponent],
