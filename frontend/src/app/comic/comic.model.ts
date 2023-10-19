@@ -2,7 +2,10 @@ export interface Comic {
   state: 'draft' | 'published';
   title: string;
   altText: string;
-  layout: 'square' | 'wide' | 'tall';
+  layout:
+    | 'square' // 1280x1280
+    | 'wide' // 1748x1181
+    | 'tall'; // 1240x1754
   path: string;
   index: number;
   prevIndex: number | null;

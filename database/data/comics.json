@@ -17,16 +17,16 @@
   },
   {
     "state": "published",
-    "title": "Fun Creature",
+    "title": "Fun Creatures I",
     "altText": "Unsurprisingly, Mark Sinclair declined to comment (he was not contacted).",
     "layout": "wide",
     "path": "peccary.png",
     "index": 2
   },
   {
-    "state": "draft",
-    "title": "idk",
-    "altText": "no idea",
+    "state": "published",
+    "title": "Bad Words I",
+    "altText": "Last chance to lose control - Context: Absolution",
     "layout": "tall",
     "path": "hysteria.png",
     "index": 3

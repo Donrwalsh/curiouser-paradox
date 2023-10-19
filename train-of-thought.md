@@ -73,11 +73,11 @@ I moved on to the buttons. Whatever I had originally is long gone, and what I en
 
 Otherwise I went with similar media breakpoint strategies to get a proportional (step by 4px actually, but who's counting?) reduction in size that feels natural, at least with the square layout which is in my mind the default. Let's see, I used the `*ngIf ... else` approach for the dividers which I think is pretty cool. On the frontend thing, the random button selecting from that list was straightforward, but for a while at the start it didn't really feel like it was actually navigating. Thinking about it for a moment, it's because this navigation is really just changing details about this particular component and we're not really going anywhere. That means that I need to trigger a re-fetch of the comic data in question, which I did by extracting the `getComic` activities from the component so that they can be invoked by both ngOnInit as well as the random click. I do want to confirm what I need to do accessibility-wise to account for changing this (it isn't an `<a>` tag anymore) and I'm sure there's more to consider here, so maybe I can work on establishing a long-term approach for these nav buttons that is cognizant of the plan to turn them into custom SVGs if that is relevant.
 
-- [ ] Button polish: accessibility concerns?
+- [x] Button polish: accessibility concerns?
 
 There's another comic layout style for me to work with: tall. That's a solid todo as well:
 
-- [ ] Add the tall sample and setup styling for it.
+- [x] Add the tall sample and setup styling for it.
 
 Added some build automation through github actions that run unit tests on the frontend and backend. Fixed up the existing unit tests so they pass. Fixed up the title in routing so it no longer just says `frontend`. Used a `.distinct()` approach to remove the mocked allIndexes stuff easily. Then I decided to add a `state` attribute to the comic entity. This represents if something is published or still in draft mode. Only published comics are considered for things like navigation and latest and random and such - all things that `comics.service.ts` handles retrieval of from the database, so I added the condition that the comic must be published to be included in all those queries and added a draft comic to take it for a spin and it works just great. Did a little more cleanup on the frontend workflow file because I have grand plans to setup the deployment aspect tomorrow and I have a couple of resources that look promising.
 
@@ -119,8 +119,11 @@ For the commit, I'm seeing some additions to the `angular.json` file that have t
 
 Last thing I want to drop here is that I'm flabbergasted by what's going on with my test suites. Something I did yesterday with containerization complicated the node types across a couple of projects and I've needed to plug a few holes here and there. It's mostly fine, but for some reason all my frontend spec files (both, rather) are foreign to the IDE for some reason. Granted I haven't restarted in a while, so hopefully that's it but it's strange and I'm out of time but at least I fixed the busted unit test!
 
+I worked on the layout for the tall version of comics. Added a few links from previous work to the links section as I clean up and prepare for some work on deploying this app on the raspberry pi that is patiently sitting next to me.
+
 ## Couldn't Have Done it Without You
 
+- https://www.markdownguide.org/extended-syntax/
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
 - https://stackoverflow.com/questions/12467102/how-to-get-the-latest-and-oldest-record-in-mongoose-js-or-just-the-timespan-bet
 - https://stackoverflow.com/questions/7033331/how-to-use-mongoose-findone
@@ -146,3 +149,7 @@ Last thing I want to drop here is that I'm flabbergasted by what's going on with
 - https://pallavbh23.medium.com/setting-up-docker-and-docker-compose-for-nest-js-and-mongodb-1cd972d97ef7
 - https://medium.com/@parvej.code/how-to-setup-nestjs-project-with-mongodb-as-the-database-in-docker-84db8963d26
 - https://stackoverflow.com/questions/63122399/connecting-using-mongodb-compass-to-docker-mongo-image
+- https://stackoverflow.com/questions/41427405/navigate-to-another-page-with-a-button-in-angular-2
+- https://stackoverflow.com/questions/76239590/how-to-move-mat-icon-button-focus-effect
+- https://stackoverflow.com/questions/53741232/angular-material-button-remove-autofocus
+- https://material.angular.io/components/button/examples
