@@ -36,7 +36,7 @@ services:
     volumes:
       - ./database/docker-data:/data/db
     restart: always
-    image: mongo:latest
+    image: mongo:4.4.8
     networks:
       - data-network
     healthcheck:

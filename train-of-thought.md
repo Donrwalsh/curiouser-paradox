@@ -121,7 +121,17 @@ Last thing I want to drop here is that I'm flabbergasted by what's going on with
 
 I worked on the layout for the tall version of comics. Added a few links from previous work to the links section as I clean up and prepare for some work on deploying this app on the raspberry pi that is patiently sitting next to me.
 
-## Couldn't Have Done it Without You
+## Deployment
+
+Making this a separate section in the interest of taking _extremely_ detailed notes on this. I like where <https://dev.to/hnrq/using-github-actions-to-deploy-a-web-page-to-raspberry-pi-46bi> starts by establishing a reachable host pi via ngninx, so I'll do that first. Oh yeah, I already did this haha. I left off at the port-forwarding setup because there was a distraction with setting up some new hardware and I forgot! I also spent a good deal of time considering and prepping for a full reinstall of the pi because I couldn't remember the password I had set it up with a month or two ago. Turns out it's trivial to reset passwords even without knowledge of the old one via the GUI. Good to know!
+
+I'm looking at some alternative approaches and examples of the CICD flow I have in mind. There's some stuff about Github Container Registry, but really I don't need to host these containers and would rather go with some sort of direct pipeline. Suppose instead I use this to run tests and confirm a go-no-go decision leveraging Github servers, but once I decide to deploy I perform most of the actions necessary to do so on the Pi. This is duplicative, like I'll be running npm install twice but whatever with that. This is more scalable but a little tedious. I'll try it out with the frontend and take another look at feasibility then.
+
+- [ ] Pi has the 'every docker command requires sudo' problem.
+
+I'm trying to do a deploy by hand to see what it's like. The idea is that I'll just clone the repo and run docker compose up. That works to the point of the frontend is reachable, but nothing on the backend works correctly. Been working to untangle that and there's a lot going on here to consider. Right when I thought I had it in the bag, I got hit with a version issue: <https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291/16>, but bumping things down was no problem and I'm taking a swing with this commit to try out this new IP address update in the docker environment since the running frontend is still trying to access localhost resources through the browser from the Pi.
+
+# Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
 - https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
