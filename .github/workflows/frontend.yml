@@ -14,6 +14,13 @@ jobs:
         working-directory: frontend
 
     steps:
+      - name: Set commit status as pending
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          token: ${{ secrets.API_TOKEN }}
+          status: pending
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -30,5 +37,10 @@ jobs:
       - name: Run tests
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Build
-        run: npm run build:docker
+      - name: Set final commit status
+        uses: myrotvorets/set-commit-status-action@master
+        if: always()
+        with:
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          token: ${{ secrets.API_TOKEN }}
+          status: ${{ job.status }}

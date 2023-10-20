@@ -131,6 +131,8 @@ I'm looking at some alternative approaches and examples of the CICD flow I have 
 
 I'm trying to do a deploy by hand to see what it's like. The idea is that I'll just clone the repo and run docker compose up. That works to the point of the frontend is reachable, but nothing on the backend works correctly. Been working to untangle that and there's a lot going on here to consider. Right when I thought I had it in the bag, I got hit with a version issue: <https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291/16>, but bumping things down was no problem and I'm taking a swing with this commit to try out this new IP address update in the docker environment since the running frontend is still trying to access localhost resources through the browser from the Pi.
 
+I'm playing around this morning with automating more of the deployment process. I've got a folder called `server` locally with a couple of script iterations that I'll commit later on. For now, I'm going to work with github statuses because interestingly actions aren't linked to commits directly (based on what I'm reading) so this is a way to sorta synthetically achieve the same thing. So this commit here is just to try out the stamping of statuses via the additions to the workflow files.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
