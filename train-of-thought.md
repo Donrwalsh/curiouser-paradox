@@ -133,6 +133,12 @@ I'm trying to do a deploy by hand to see what it's like. The idea is that I'll j
 
 I'm playing around this morning with automating more of the deployment process. I've got a folder called `server` locally with a couple of script iterations that I'll commit later on. For now, I'm going to work with github statuses because interestingly actions aren't linked to commits directly (based on what I'm reading) so this is a way to sorta synthetically achieve the same thing. So this commit here is just to try out the stamping of statuses via the additions to the workflow files.
 
+Alrighty, so the thing that's been on my mind is automating the deployment of stable code. The full automation is possible (it's running right now!) but it requires too much manual intervention. The thing is, I don't want to open the Pi up to the internet just yet, and so using Github actions to push updates onto the device isn't going to work. This got me thinking about how I can achieve the same thing with a closed off deployment target. What I'm thinking is the Pi (or whatever the device is, I'm calling it `server`) polls github to answer two questions: 1) "Is there newer code than what I have?" and 2) "Did that code succeed all previous steps in the build process?". If the answer to both these questions is yes, then the server downloads, builds and runs that code.
+
+With this idea in mind, I worked on two different poll scripts. The first was a shell script and I got to the point of obtaining data from an API call but then needed to sort out how to make object structure work nicely in that syntax and so I said 'nah' and went with a javascript script file instead. I played with doing a typescript approach like I've done before, but the build step is tedious and I'm not going to be taking lots of advantage of typing concepts here (that I can think of atm). Despite having been mercilessly discarded, I stuck with the shell script idea to the point of being able to work with a `.env` file which might be helpful in the future.
+
+The script also checks the local system for the current commit SHA. I'm doing a commit now to try running the script on the Pi. Worth noting that I needed to make 2x Github personal access tokens in order to facilitate all these shenanigans. I made one for reading and then another specifically for writing the status updates. The reader is used by the poll script and the writer is used by the github action workflow.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -165,3 +171,9 @@ I'm playing around this morning with automating more of the deployment process. 
 - https://stackoverflow.com/questions/76239590/how-to-move-mat-icon-button-focus-effect
 - https://stackoverflow.com/questions/53741232/angular-material-button-remove-autofocus
 - https://material.angular.io/components/button/examples
+- https://www.w3docs.com/snippets/javascript/colors-in-javascript-console.html
+- https://stackoverflow.com/questions/29653989/git-commands-in-nodejs
+- https://stackoverflow.com/questions/72596035/how-to-associate-status-of-a-github-action-workflow-with-a-commit-or-pr
+- https://docs.github.com/en/rest/commits/statuses?apiVersion=2022-11-28
+- https://stackoverflow.com/questions/949314/how-do-i-get-the-hash-for-the-current-commit-in-git
+- https://stackoverflow.com/questions/36546860/require-nodejs-child-process-with-typescript-systemjs-and-electron

@@ -1,0 +1,10 @@
+{
+    "name": "poll",
+    "version": "0.0.0",
+    "main": "poll.js",
+    "type": "module",
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "octokit": "^3.1.1"
+    }
+}
