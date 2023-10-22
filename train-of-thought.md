@@ -145,7 +145,7 @@ Trying to simulate being behind the repo by checking out previous commits but I 
 
 I had this cool idea about using a fibonacci timeout approach (<https://medium.com/developers-writing/fibonacci-sequence-algorithm-in-javascript-b253dc7e320e>) but I'll be exploring that later on because I can't really do much with pending right now except for the obvious way around this, which is to just do nothing on pending and wait for the next run. This won't work in awkward cases where commit A is stable but is shortly followed by the unstable commit B within that specific window where A remains stable but doesn't reach the checkpoint and therefore get pulled and run. This is a silly edge-case and not enough to prevent this from being a decent option for the time being.
 
-Before I forget, I learned this new handy tool of something to the effect of `git stash && git pull && git pop stash` to quickly pull down changes while you have annoying lingering environmental data changes that you haven't appropriately managed. . . for example. potato
+Before I forget, I learned this new handy tool of something to the effect of `git stash && git pull && git pop stash` to quickly pull down changes while you have annoying lingering environmental data changes that you haven't appropriately managed. . . for example.
 
 # Couldn't Have Done it Without You
 
