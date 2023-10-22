@@ -79,7 +79,7 @@ async function main() {
     }
     console.log("Seeing this is a good thing");
     exec(
-      "git pull && docker compose down -v && docker compose up -d ",
+      "git pull && docker compose down -v && docker compose up -d --build",
       (error, stdout, stderr) => {
         if (error) {
           console.error(`Failed: ${error.message}`);
