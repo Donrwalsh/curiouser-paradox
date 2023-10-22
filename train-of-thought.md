@@ -149,6 +149,8 @@ Before I forget, I learned this new handy tool of something to the effect of `gi
 
 So tonight I spent some time with the polling script, and I'll tell ya I got things to where I believe we are sitting pretty nicely - minus this absolutely infuriating bug that I'll get into. Overall, I spent some time working on a better structure and then on establishing a path directly to the ultimate payoff which is the running of the git pull and then docker compose commands resulting in a fully deployed app. Getting to this point was easiest when the Pi was on a commit that was older than the latest, hence the empty commits and then tweaking of the server files. This almost worked, but then I botched a command that interrupted the docker compose command and so I re-ran it one more time when all of a sudden the bug appeared: The Pi is no longer able to reach the github api. For real, I have two computers right next to one another and one can visit this URL while the other can't: https://api.github.com/repos/Donrwalsh/curiouser-paradox/commits. I've tried all the different things I can think of and none of them have lead anywhere. The plan is to come back to it with fresh eyes because this is truly bewildering and it's late.
 
+For real, I hopped on and re-ran the poll script without touching anything else and it worked without issue. Happy birthday to me!
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
