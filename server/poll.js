@@ -71,12 +71,27 @@ async function main() {
     return;
   } else {
     console.log(`${MAGENTA}Local doesn't match Remote.`);
-    if (latestStatus != "success") {
+    if (latestStatus.data.state != "success") {
       console.log(
         `${RED}Latest commit from remote is unstable. Nothing to do here!`
       );
       return;
     }
+    console.log("Seeing this is a good thing");
+    exec(
+      "git pull && docker compose down -v && docker compose up -d ",
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Failed: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          console.error(`Error: ${stderr}`);
+          return;
+        }
+        console.log(stdout);
+      }
+    );
   }
 }
 
