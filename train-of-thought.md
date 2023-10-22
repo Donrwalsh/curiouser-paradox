@@ -141,6 +141,12 @@ The script also checks the local system for the current commit SHA. I'm doing a 
 
 Trying to simulate being behind the repo by checking out previous commits but I am not really able to get it to work. So I'm going to make a tiny commit that will make my prod server behind and I should be able to run stuff from there. Although, let me make sure it can run the script. Yup, no problem. And actually now that I think about it I can just go ahead and work on the success case first. Moved some stuff around and added a little bit of code that clarifies what it sees when comparing the current code with the latest code seen on the remote.
 
+- [ ] Shoot, it occurs to me that my thing with github workflows won't be marking something when it has failed. Hm, I'll need to figure that out.
+
+I had this cool idea about using a fibonacci timeout approach (<https://medium.com/developers-writing/fibonacci-sequence-algorithm-in-javascript-b253dc7e320e>) but I'll be exploring that later on because I can't really do much with pending right now except for the obvious way around this, which is to just do nothing on pending and wait for the next run. This won't work in awkward cases where commit A is stable but is shortly followed by the unstable commit B within that specific window where A remains stable but doesn't reach the checkpoint and therefore get pulled and run. This is a silly edge-case and not enough to prevent this from being a decent option for the time being.
+
+Before I forget, I learned this new handy tool of something to the effect of `git stash && git pull && git pop stash` to quickly pull down changes while you have annoying lingering environmental data changes that you haven't appropriately managed. . . for example.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

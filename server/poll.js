@@ -45,17 +45,18 @@ async function main() {
     }
   );
 
-  const result2 = await octokit.request(
+  let latestStatus = await octokit.request(
     `GET /repos/Donrwalsh/curiouser-paradox/commits/${last30Commits.data[0].sha}/status`
   );
+
   const statusText =
-    result2.data.state == "success"
+    latestStatus.data.state == "success"
       ? `${GREEN}SUCCESS${RESET}`
-      : result2.data.state == "pending"
+      : latestStatus.data.state == "pending"
       ? `${YELLOW}PENDING${RESET}`
-      : `${RED}${result2.data.state.toUpperCase()}${RESET}`;
+      : `${RED}${latestStatus.data.state.toUpperCase()}${RESET}`;
   console.log(
-    `-=[(Latest) status: ${statusText}]=-  ` +
+    `-=[(Latest Remote) status: ${statusText}]=-  ` +
       `@ "${CYAN}${last30Commits.data[0].html_url}${RESET}" ` +
       `-m "${YELLOW}${last30Commits.data[0].commit.message}${RESET}" ` +
       `-sha "${YELLOW}${last30Commits.data[0].sha}${RESET}" ` +
@@ -67,8 +68,15 @@ async function main() {
     last30Commits.data[0].sha.replace(/(\r\n|\n|\r)/gm, "")
   ) {
     console.log(`${GREEN}Local matches Remote. Nothing to do here!`);
+    return;
   } else {
-    console.log(`${RED}Local doesn't match Remote. Time to pull and redeploy!`);
+    console.log(`${MAGENTA}Local doesn't match Remote.`);
+    if (latestStatus != "success") {
+      console.log(
+        `${RED}Latest commit from remote is unstable. Nothing to do here!`
+      );
+      return;
+    }
   }
 }
 
