@@ -139,6 +139,8 @@ With this idea in mind, I worked on two different poll scripts. The first was a 
 
 The script also checks the local system for the current commit SHA. I'm doing a commit now to try running the script on the Pi. Worth noting that I needed to make 2x Github personal access tokens in order to facilitate all these shenanigans. I made one for reading and then another specifically for writing the status updates. The reader is used by the poll script and the writer is used by the github action workflow.
 
+Trying to simulate being behind the repo by checking out previous commits but I am not really able to get it to work. So I'm going to make a tiny commit that will make my prod server behind and I should be able to run stuff from there. Although, let me make sure it can run the script. Yup, no problem. And actually now that I think about it I can just go ahead and work on the success case first. Moved some stuff around and added a little bit of code that clarifies what it sees when comparing the current code with the latest code seen on the remote.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

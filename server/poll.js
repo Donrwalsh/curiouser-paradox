@@ -16,6 +16,26 @@ const WHITE = "\u001b[37m";
 const YELLOW = "\u001b[33m";
 
 async function main() {
+  let localSha;
+
+  exec("git rev-parse HEAD", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Failed: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`Error: ${stderr}`);
+      return;
+    }
+    localSha = stdout;
+    console.log(
+      `Found local HEAD sha: "${YELLOW}${stdout.replace(
+        /(\r\n|\n|\r)/gm,
+        ""
+      )}${RESET}"`
+    );
+  });
+
   const last30Commits = await octokit.request(
     "GET /repos/Donrwalsh/curiouser-paradox/commits",
     {
@@ -24,6 +44,7 @@ async function main() {
       },
     }
   );
+
   const result2 = await octokit.request(
     `GET /repos/Donrwalsh/curiouser-paradox/commits/${last30Commits.data[0].sha}/status`
   );
@@ -40,25 +61,15 @@ async function main() {
       `-sha "${YELLOW}${last30Commits.data[0].sha}${RESET}" ` +
       `on "${YELLOW}${last30Commits.data[0].commit.committer.date}${RESET}" `
   );
-  //   console.log(last30Commits);
 
-  // Check local system HEAD sha
-  exec("git rev-parse HEAD", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Failed: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`Error: ${stderr}`);
-      return;
-    }
-    console.log(
-      `Found local HEAD sha: "${YELLOW}${stdout.replace(
-        /(\r\n|\n|\r)/gm,
-        ""
-      )}${RESET}"`
-    );
-  });
+  if (
+    localSha.replace(/(\r\n|\n|\r)/gm, "") ==
+    last30Commits.data[0].sha.replace(/(\r\n|\n|\r)/gm, "")
+  ) {
+    console.log(`${GREEN}Local matches Remote. Nothing to do here!`);
+  } else {
+    console.log(`${RED}Local doesn't match Remote. Time to pull and redeploy!`);
+  }
 }
 
 await main();
