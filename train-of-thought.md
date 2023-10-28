@@ -151,6 +151,10 @@ So tonight I spent some time with the polling script, and I'll tell ya I got thi
 
 For real, I hopped on and re-ran the poll script without touching anything else and it worked without issue. Happy birthday to me!
 
+So I'm back after a bit of time being distracted by other things. I'm working on the script and playing around with making it a bit more readable by breaking apart the multi-step commands and using some common messaging functions. I'm not sure how things work with the broken apart commands because of some silly back and forth with typos and such (any script updates incur 2x commits because I don't care to deal with copying a latest version of the script manually). This frequency of commits should drop off once the script is in a somewhat stable state.
+
+Oh yeah, briefly I want to mention that I originally tried to make a sort of generic `exec()` function to handle all these command line things, but I couldn't figure out how to be able to run arbitrary code via a callback into the `stdout` portion of the exec. Granted, I tried to solve this first thing before I was totally awake so maybe I missed something simple, but I'm happy with what I have currently for now.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
