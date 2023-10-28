@@ -70,7 +70,7 @@ async function main() {
   );
 
   if (
-    localSha.replace(/(\r\n|\n|\r)/gm, "") !=
+    localSha.replace(/(\r\n|\n|\r)/gm, "") ==
     last30Commits.data[0].sha.replace(/(\r\n|\n|\r)/gm, "")
   ) {
     console.log(`${GREEN}Local matches Remote. Nothing to do here!`);
