@@ -16,8 +16,14 @@ const WHITE = "\u001b[37m";
 const YELLOW = "\u001b[33m";
 
 function cmdFailure(msg, which) {
-  console.error(`${RED}-=[runCmd Failed (${which})]=- ${RESET}${msg}`);
-  process.exit(1);
+  isError = which == "error";
+
+  console.error(
+    `${isError ? RED : YELLOW}-=[runCmd ${
+      isError ? "Failed" : "Warning"
+    }]=- ${RESET}${msg}`
+  );
+  isError && process.exit(1);
 }
 
 async function main() {
@@ -64,7 +70,7 @@ async function main() {
   );
 
   if (
-    localSha.replace(/(\r\n|\n|\r)/gm, "") ==
+    localSha.replace(/(\r\n|\n|\r)/gm, "") !=
     last30Commits.data[0].sha.replace(/(\r\n|\n|\r)/gm, "")
   ) {
     console.log(`${GREEN}Local matches Remote. Nothing to do here!`);
