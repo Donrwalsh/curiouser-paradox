@@ -161,6 +161,30 @@ Success! Somewhere along the way with my durdles today, I ran the script such th
 
 Hang on, Potato toggle is actually backwards? Whew. It was cached or something. I confirmed that the code on the pi has potato toggle off, and when I'm looking at current deployed code (correctly) I do see that the actual title shows. In that case, I'll change something else to confirm the successful run. Meh, I'll just use a potato toggle.
 
+Hm, my script failed on the docker compose up command. Smells like a synchronicity issue. Interesting to think about how if this script fails past the git pull part that there's no clean way to redeploy outside of a manual hop-on to the server and running a command. For this particular issue, I'd like to redeploy everything if I see that I've obtained the latest code. Hm. Maybe the deploy portion of this belongs in a separate script.
+
+Ok, I'm going to think in the space of what's left to do with this script. I'm intending to use the script in a hands-off way, so the way I'm running it through the terminal these days is not going to be the intended implementation. That's a lot of words to say I want to log this to a file, and so I'm interested in getting timestamps on every log I make. Found a really nice stackoverflow post that describes a clean and simple way to do what I want to do. Running the script to output to file on a Windows machine doesn't work through bash for an annoying reason, but it appears to work just fine in a CMD prompt.
+
+Ok, so I want this to run as a CRON job so let's see what it takes to make that happen. Blegh, this was so much harder than it had any right to be. Let's start with the doozie that is the 500 errors which cropped up again. Turns out I wasn't actually authenticating with octokit and I was facing down the unauth'd rate limit (60/hr). Dang, that's a huge load off (assuming that the 500 errors I'm seeing are what happens when you run out of requests) and the 5,000 requests/hr they give to those who are auth'd is insanely high and this script will need to expand quite a bit before that limit is at risk of being hit. This is EXCELLENT because I really don't want to discard the run-every-minute idea right now. Last thing on this: Due to how I'm using `process.env.~` in the script, any import failures here won't show up. Further complicated by the fact that this key is never exposed through running the script and this sort of thing is kinda guaranteed to happen. This is a good lesson to keep in mind for the future because it's a fairly simple mistake to make that can and will cause super annoying issues.
+
+Let's see, I modified the `poll.js` file on the server to have a node shebang line, but I'll be removing that since I don't think it's necessary. Good to consider that though. Another thing, for a while at the start, the issue was that `poll.js` wasn't executable! Due to the pi not having an email program involved (and even giving me some guff when I tried to install it!) it would seem that errors in executing the script weren't being shown at all. Run `grep CRON /var/log/syslog` shows attempts to run commands, but it'll say `(No MTA installed, discarding output)` rather than output anything useful in this log about the error experienced. That's obnoxious. Anyway, I'm seeing that the `poll.js` on my local is already executable, so perhaps this issue is something I should account for on the server.
+
+- [ ] `poll.js` not executable on server. Will this happen again?
+
+~These notes came later~ so, poll.js is _not_ executable on my local. So that better explains what's going on, Windows must care less about this. Ok, good to know.
+
+I'm adding 'log.txt' to the `.gitignore` because that's where I'm piping the output from the script via cron. Here's the cronjob that I came up with:
+
+`* *    * * *   syndicate    cd ~/curiouser-paradox/server/ && sudo /usr/bin/node ~/curiouser-paradox/server/poll.js &>> log.txt`
+
+I'm running the script as syndicate because that's the user I established the repo on this server with. Unsure on this, seems like using root would be a bad idea but whatever for now. I'm unclear if that `&>>` is necessary since I was trying it out before I understood why the cron job was failing (executability of the script) but it works, so I'll leave it in I suppose.
+
+- [ ] How to include logic that handles starting up docker containers when the script sees that they are down or missing?
+
+- [ ] Clean up the rate limit output that's in the script.
+
+- [ ] Correct how not all of the logs have a `${RESET}` at the end which results in colors bleeding between logs.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -199,3 +223,4 @@ Hang on, Potato toggle is actually backwards? Whew. It was cached or something. 
 - https://docs.github.com/en/rest/commits/statuses?apiVersion=2022-11-28
 - https://stackoverflow.com/questions/949314/how-do-i-get-the-hash-for-the-current-commit-in-git
 - https://stackoverflow.com/questions/36546860/require-nodejs-child-process-with-typescript-systemjs-and-electron
+- https://stackoverflow.com/questions/12008120/console-log-timestamps-in-chrome
