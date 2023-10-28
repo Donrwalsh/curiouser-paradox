@@ -16,7 +16,7 @@ const WHITE = "\u001b[37m";
 const YELLOW = "\u001b[33m";
 
 function cmdFailure(msg, which) {
-  isError = which == "error";
+  let isError = which == "error";
 
   console.error(
     `${isError ? RED : YELLOW}-=[runCmd ${

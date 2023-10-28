@@ -155,7 +155,7 @@ So I'm back after a bit of time being distracted by other things. I'm working on
 
 Oh yeah, briefly I want to mention that I originally tried to make a sort of generic `exec()` function to handle all these command line things, but I couldn't figure out how to be able to run arbitrary code via a callback into the `stdout` portion of the exec. Granted, I tried to solve this first thing before I was totally awake so maybe I missed something simple, but I'm happy with what I have currently for now.
 
-I learned that `stderr` seems to be warnings, at least it is in the case of the git pull command that tells me I need to specify how to reconcile divergenet branches. I don't really care about that warning, but it's helpful that it's hitting the stderr part of the code which I hadn't hit until now. Let me see if I can work with this locally somehow.
+I learned that `stderr` seems to be warnings, at least it is in the case of the git pull command that tells me I need to specify how to reconcile divergenet branches. I don't really care about that warning, but it's helpful that it's hitting the stderr part of the code which I hadn't hit until now. Let me see if I can work with this locally somehow. The absent `let` that I added on line 19 of poll.js gives me an error on the pi but not on my local. Interesting.
 
 # Couldn't Have Done it Without You
 
