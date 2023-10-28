@@ -157,6 +157,10 @@ Oh yeah, briefly I want to mention that I originally tried to make a sort of gen
 
 I learned that `stderr` seems to be warnings, at least it is in the case of the git pull command that tells me I need to specify how to reconcile divergenet branches. I don't really care about that warning, but it's helpful that it's hitting the stderr part of the code which I hadn't hit until now. Let me see if I can work with this locally somehow. The absent `let` that I added on line 19 of poll.js gives me an error on the pi but not on my local. Interesting.
 
+Success! Somewhere along the way with my durdles today, I ran the script such that it took down only the frontend. After the successful run, the frontend is up and has the current potato toggle all from the script. This is very exciting! I'm going to commit these notes and undo the potato toggle and then I'm going to watch it run again...
+
+Hang on, Potato toggle is actually backwards? Whew. It was cached or something. I confirmed that the code on the pi has potato toggle off, and when I'm looking at current deployed code (correctly) I do see that the actual title shows. In that case, I'll change something else to confirm the successful run. Meh, I'll just use a potato toggle.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
