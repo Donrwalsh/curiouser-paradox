@@ -47,7 +47,9 @@ async function main() {
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });
-  console.log(rateLimit.data.rate.remaining);
+  console.log(
+    `Beginning Poll Script (${rateLimit.data.rate.remaining}/${rateLimit.data.rate.limit} remaining API calls)`
+  );
   let localSha;
 
   exec("git rev-parse HEAD", (error, stdout, stderr) => {
@@ -99,18 +101,18 @@ async function main() {
     localSha.replace(/(\r\n|\n|\r)/gm, "") ==
     last30Commits.data[0].sha.replace(/(\r\n|\n|\r)/gm, "")
   ) {
-    console.log(`${GREEN}Local matches Remote. Nothing to do here!`);
+    console.log(`${GREEN}Local matches Remote. Nothing to do here!${RESET}`);
     return;
   } else {
-    console.log(`${MAGENTA}Local doesn't match Remote.`);
+    console.log(`${MAGENTA}Local doesn't match Remote.${RESET}`);
     if (latestStatus.data.state != "success") {
       console.log(
-        `${RED}Latest commit from remote is unstable. Nothing to do here!`
+        `${RED}Latest commit from remote is unstable. Nothing to do here!${RESET}`
       );
       return;
     }
 
-    console.log(`${MAGENTA}Latest commit is stable. Pulling.`);
+    console.log(`${MAGENTA}Latest commit is stable. Pulling.${RESET}`);
 
     exec("git pull", (error, stdout, stderr) => {
       error && cmdFailure(error.message, "error");

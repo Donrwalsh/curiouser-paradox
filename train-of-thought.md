@@ -181,9 +181,9 @@ I'm running the script as syndicate because that's the user I established the re
 
 - [ ] How to include logic that handles starting up docker containers when the script sees that they are down or missing?
 
-- [ ] Clean up the rate limit output that's in the script.
+- [x] Clean up the rate limit output that's in the script.
 
-- [ ] Correct how not all of the logs have a `${RESET}` at the end which results in colors bleeding between logs.
+- [x] Correct how not all of the logs have a `${RESET}` at the end which results in colors bleeding between logs.
 
 # Couldn't Have Done it Without You
 
@@ -223,4 +223,11 @@ I'm running the script as syndicate because that's the user I established the re
 - https://docs.github.com/en/rest/commits/statuses?apiVersion=2022-11-28
 - https://stackoverflow.com/questions/949314/how-do-i-get-the-hash-for-the-current-commit-in-git
 - https://stackoverflow.com/questions/36546860/require-nodejs-child-process-with-typescript-systemjs-and-electron
+- https://stackoverflow.com/questions/12008120/console-log-timestamps-in-chrome
+- https://stackoverflow.com/questions/65953381/how-to-use-env-with-es6-module-with-node-js-and-express-application
+- https://www.endorlabs.com/blog/how-to-get-the-most-out-of-github-api-rate-limits
+- https://askubuntu.com/questions/1277883/cron-is-running-executing-jobs-but-wont-output-to-a-log-file
+- https://stackoverflow.com/questions/36882991/how-to-view-a-cron-job-running-currently
+- https://stackoverflow.com/questions/6207573/how-to-append-output-to-the-end-of-a-text-file
+- https://stackoverflow.com/questions/8899737/crontab-run-in-directory
 - https://stackoverflow.com/questions/12008120/console-log-timestamps-in-chrome
