@@ -80,14 +80,14 @@ async function main() {
 
     console.log(`${MAGENTA}Latest commit is stable. Pulling.`);
 
-    exec("git pull", (err, stdout, stderr) => {
+    exec("git pull", (error, stdout, stderr) => {
       error && cmdFailure(error.message, "error");
       stderr && cmdFailure(stderr, "stderr");
 
       console.log(stdout);
     });
 
-    exec("docker compose down -v", (err, stdout, stderr) => {
+    exec("docker compose down -v", (error, stdout, stderr) => {
       error && cmdFailure(error.message, "error");
       stderr && cmdFailure(stderr, "stderr");
 
