@@ -1,6 +1,21 @@
 import { Octokit } from "octokit";
-
 import { exec } from "child_process";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+console.logCopy = console.log.bind(console);
+console.errorCopy = console.error.bind(console);
+
+console.log = function (data) {
+  var currentDate = "[" + new Date().toUTCString() + "] ";
+  this.logCopy(currentDate, data);
+};
+
+console.error = function (data) {
+  var currentDate = "[" + new Date().toUTCString() + "] ";
+  this.errorCopy(currentDate, data);
+};
 
 const octokit = new Octokit({
   auth: process.env.API_KEY,
@@ -27,6 +42,12 @@ function cmdFailure(msg, which) {
 }
 
 async function main() {
+  const rateLimit = await octokit.request("GET /rate_limit", {
+    headers: {
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+  });
+  console.log(rateLimit.data.rate.remaining);
   let localSha;
 
   exec("git rev-parse HEAD", (error, stdout, stderr) => {
@@ -52,7 +73,12 @@ async function main() {
   );
 
   let latestStatus = await octokit.request(
-    `GET /repos/Donrwalsh/curiouser-paradox/commits/${last30Commits.data[0].sha}/status`
+    `GET /repos/Donrwalsh/curiouser-paradox/commits/${last30Commits.data[0].sha}/status`,
+    {
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    }
   );
 
   const statusText =
@@ -93,19 +119,22 @@ async function main() {
       console.log(stdout);
     });
 
-    exec("docker compose down -v", (error, stdout, stderr) => {
-      error && cmdFailure(error.message, "error");
-      stderr && cmdFailure(stderr, "stderr");
+    exec(
+      "docker compose down -v && docker compose up -d --build",
+      (error, stdout, stderr) => {
+        error && cmdFailure(error.message, "error");
+        stderr && cmdFailure(stderr, "stderr");
 
-      console.log(stdout);
-    });
+        console.log(stdout);
+      }
+    );
 
-    exec("docker compose up -d --build", (error, stdout, stderr) => {
-      error && cmdFailure(error.message, "error");
-      stderr && cmdFailure(stderr, "stderr");
+    // exec("docker compose up -d --build", (error, stdout, stderr) => {
+    //   error && cmdFailure(error.message, "error");
+    //   stderr && cmdFailure(stderr, "stderr");
 
-      console.log(stdout);
-    });
+    //   console.log(stdout);
+    // });
   }
 }
 
