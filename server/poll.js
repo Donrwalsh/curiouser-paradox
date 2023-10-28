@@ -15,18 +15,18 @@ const RESET = "\u001b[0m";
 const WHITE = "\u001b[37m";
 const YELLOW = "\u001b[33m";
 
+function cmdFailure(msg, which) {
+  console.error(`${RED}-=[runCmd Failed (${which})]=- ${RESET}${msg}`);
+  process.exit(1);
+}
+
 async function main() {
   let localSha;
 
   exec("git rev-parse HEAD", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Failed: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`Error: ${stderr}`);
-      return;
-    }
+    error && cmdFailure(error.message, "error");
+    stderr && cmdFailure(stderr, "stderr");
+
     localSha = stdout;
     console.log(
       `Found local HEAD sha: "${YELLOW}${stdout.replace(
@@ -77,21 +77,29 @@ async function main() {
       );
       return;
     }
-    console.log("Seeing this is a good thing");
-    exec(
-      "git pull && docker compose down -v && docker compose up -d --build",
-      (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Failed: ${error.message}`);
-          return;
-        }
-        if (stderr) {
-          console.error(`Error: ${stderr}`);
-          return;
-        }
-        console.log(stdout);
-      }
-    );
+
+    console.log(`${MAGENTA}Latest commit is stable. Pulling.`);
+
+    exec("git pull", (err, stdout, stderr) => {
+      error && cmdFailure(error.message, "error");
+      stderr && cmdFailure(stderr, "stderr");
+
+      console.log(stdout);
+    });
+
+    exec("docker compose down -v", (err, stdout, stderr) => {
+      error && cmdFailure(error.message, "error");
+      stderr && cmdFailure(stderr, "stderr");
+
+      console.log(stdout);
+    });
+
+    exec("docker compose up -d --build", (error, stdout, stderr) => {
+      error && cmdFailure(error.message, "error");
+      stderr && cmdFailure(stderr, "stderr");
+
+      console.log(stdout);
+    });
   }
 }
 
