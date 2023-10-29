@@ -203,6 +203,8 @@ Keeping it in right now, but I think it's awkward that I still have the `.env` f
 
 I changed the structure of the ComicDTO to be more generic rather than calling out `specificComic` or whatever it was. I updated all the API responses to match this new direction.
 
+Oops, those changes I made to the `.env` make the deployed version not work so I'll do that now.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
