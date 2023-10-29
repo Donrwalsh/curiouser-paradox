@@ -189,6 +189,20 @@ Shoot. I checked the log this morning and I'm still getting periodic 500 errors.
 
 So let's think about this. I'm in a state currently where two devices are performing the same action but receiving different results. While I think about this I'm going to commit the change that decouples the beginning announcement and the rate-limit call. I'm also going to add a basic try-catch to the initial API call in case I'm missing some useful information from the exception output.
 
+I spent some time working on a 'gallery' for all the comics that have been published. I chose to use bootstrap cards after exploring Angular Material cards and finding them pretty basic in comparison. I don't really know how this should look overall, but I think this is a good starting point. Pagination is a consideration, so too is the fact that I'm just using the full images and not actual thumbnails.
+
+- [ ] /all pagination
+
+- [ ] /all thumbnails
+
+Other than those two, it has mostly just been a bit of wrangling with the frontend to get it to do what I want. I had started with a bunch of unnecesarily precise pixel values that I ended up turning into as-close-to raw percentages as possible. Even the percentages are awkward, but the end result is pretty: 5px or more of margin for every image and some casual styling but I'm really not sure what the dummy text should be replaced with.
+
+Keeping it in right now, but I think it's awkward that I still have the `.env` file exposed to git for the backend. This upcoming commit includes a detail that was necessary to configure my local properly, so it seems premature to wholly omit it right now, so:
+
+- [ ] Adopt a standardized approach for the backend .env file
+
+I changed the structure of the ComicDTO to be more generic rather than calling out `specificComic` or whatever it was. I updated all the API responses to match this new direction.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

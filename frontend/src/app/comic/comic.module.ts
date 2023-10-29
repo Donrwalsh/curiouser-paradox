@@ -5,9 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { MainComicComponent } from './main-comic/main-comic.component';
+import { AllComicsComponent } from './all-comics/all-comics.component';
 
 @NgModule({
-  declarations: [MainComicComponent],
+  declarations: [MainComicComponent, AllComicsComponent],
   imports: [
     CommonModule,
     MatIconModule,

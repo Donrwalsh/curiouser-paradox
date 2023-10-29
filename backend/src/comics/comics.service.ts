@@ -7,6 +7,13 @@ import { IComic } from './schema';
 export class ComicsService {
   constructor(@InjectModel('Comic') private comicModel: Model<IComic>) {}
 
+  async getAllComics(): Promise<IComic[]> {
+    const allComics = await this.comicModel.find({
+      state: { $eq: 'published' },
+    });
+    return allComics;
+  }
+
   async getAllIndexes(): Promise<number[]> {
     const indexes = await this.comicModel
       .find({ state: { $eq: 'published' } })

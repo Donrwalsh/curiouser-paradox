@@ -5,13 +5,26 @@ import { ComicsService } from './comics.service';
 export class ComicsController {
   constructor(private readonly comicsService: ComicsService) {}
 
+  @Get('all')
+  async getAllComics(@Res() response) {
+    try {
+      const allComics = await this.comicsService.getAllComics();
+      return response.status(HttpStatus.OK).json({
+        message: 'Comics obtained successfully',
+        payload: allComics,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
   @Get('/indexes')
   async getAllIndexes(@Res() response) {
     try {
       const allIndexes = await this.comicsService.getAllIndexes();
       return response.status(HttpStatus.OK).json({
         message: 'Comic Indexes obtained successfully',
-        allIndexes,
+        payload: allIndexes,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);
@@ -24,7 +37,7 @@ export class ComicsController {
       const latestComic = await this.comicsService.getLatest();
       return response.status(HttpStatus.OK).json({
         message: 'Comic obtained successfully',
-        latestComic,
+        payload: latestComic,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);
@@ -37,7 +50,7 @@ export class ComicsController {
       const specificComic = await this.comicsService.getById(parseInt(id));
       return response.status(HttpStatus.OK).json({
         message: 'Comic obtained successfully',
-        specificComic,
+        payload: specificComic,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);

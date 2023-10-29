@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row card-deck">
+    <div class="col-xl-3 col-lg-4 col-6 mt-3 mb-3" *ngFor="let comic of comics">
+      <div class="card border-primary">
+        <div class="img-holder">
+          <a href="{{ apiHost }}/{{ comic.path }}"
+            ><img
+              class="card-img-top {{ comic.layout }}"
+              src="{{ apiHost }}/{{ comic.path }}"
+              alt="Card image cap"
+          /></a>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ comic.title }}</h5>
+          <p class="card-text text-start">Lorem Ipsum? I hardly knowum!</p>
+          <p class="card-text text-end">
+            <a href="{{ selfHost }}/{{ comic.index }}"
+              ><small>{{ selfHost }}/{{ comic.index }}</small></a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

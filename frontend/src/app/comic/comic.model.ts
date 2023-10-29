@@ -14,7 +14,7 @@ export interface Comic {
 
 export interface ComicDTO {
   message: string;
-  specificComic: Comic;
+  payload: any;
 }
 
 export const initialComic: Comic = {

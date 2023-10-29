@@ -37,13 +37,13 @@ export class MainComicComponent {
       this.comicService.getSpecific(this.id).subscribe({
         next: (success: any) => {
           const comicDto = success as ComicDTO;
-          this.comic = comicDto.specificComic as Comic;
+          this.comic = comicDto.payload as Comic;
         },
         error: (error: any) => (this.comic = notFoundComic),
       });
     } else {
       this.comicService.getLatest().subscribe((data) => {
-        this.comic = (data as any).latestComic as Comic;
+        this.comic = (data as any).payload as Comic;
         this.id = this.comic.index.toString();
       });
     }

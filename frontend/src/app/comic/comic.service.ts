@@ -9,6 +9,12 @@ import { environment } from '../../environments/environment';
 export class ComicService {
   constructor(private http: HttpClient) {}
 
+  getAllComics() {
+    return this.http
+      .get(`${environment.apiHost}/comics/all`)
+      .pipe(map((res) => res));
+  }
+
   getIndexes() {
     return this.http
       .get(`${environment.apiHost}/comics/indexes`)
@@ -16,7 +22,6 @@ export class ComicService {
   }
 
   getLatest() {
-    console.log(environment.apiHost);
     return this.http
       .get(`${environment.apiHost}/comics/latest`)
       .pipe(map((res) => res));
