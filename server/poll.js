@@ -44,8 +44,9 @@ function cmdFailure(msg, which) {
 async function main() {
   console.log("Beginning poll.js Script");
 
+  let rateLimit;
   try {
-    const rateLimit = await octokit.request("GET /rate_limit", {
+    rateLimit = await octokit.request("GET /rate_limit", {
       headers: {
         "X-GitHub-Api-Version": "2022-11-28",
       },
