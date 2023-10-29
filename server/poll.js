@@ -42,13 +42,26 @@ function cmdFailure(msg, which) {
 }
 
 async function main() {
-  const rateLimit = await octokit.request("GET /rate_limit", {
-    headers: {
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  });
+  console.log("Beginning poll.js Script");
+
+  try {
+    const rateLimit = await octokit.request("GET /rate_limit", {
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
+  } catch (error) {
+    if (error.status) {
+      console.log(`${RED}Octokit Error:${RESET}`);
+      console.log(error);
+    } else {
+      console.log(`${RED}Non-Octokit Error:${RESET}`);
+      console.log(error);
+    }
+  }
+
   console.log(
-    `Beginning Poll Script (${rateLimit.data.rate.remaining}/${rateLimit.data.rate.limit} remaining API calls)`
+    `(${rateLimit.data.rate.remaining}/${rateLimit.data.rate.limit} remaining API calls)`
   );
   let localSha;
 

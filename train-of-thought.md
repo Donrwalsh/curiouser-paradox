@@ -185,6 +185,10 @@ I'm running the script as syndicate because that's the user I established the re
 
 - [x] Correct how not all of the logs have a `${RESET}` at the end which results in colors bleeding between logs.
 
+Shoot. I checked the log this morning and I'm still getting periodic 500 errors. One thing that I didn't think about is because I looped the rate limit information into the initial kick-off message, I see nothing when that API call has an error, so I don't get the timestamps of the failures. I can infer from the gaps, but yeah I'm not sure what good that'll do for now.
+
+So let's think about this. I'm in a state currently where two devices are performing the same action but receiving different results. While I think about this I'm going to commit the change that decouples the beginning announcement and the rate-limit call. I'm also going to add a basic try-catch to the initial API call in case I'm missing some useful information from the exception output.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
