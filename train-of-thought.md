@@ -199,11 +199,13 @@ Other than those two, it has mostly just been a bit of wrangling with the fronte
 
 Keeping it in right now, but I think it's awkward that I still have the `.env` file exposed to git for the backend. This upcoming commit includes a detail that was necessary to configure my local properly, so it seems premature to wholly omit it right now, so:
 
-- [ ] Adopt a standardized approach for the backend .env file
+- [x] Adopt a standardized approach for the backend .env file
 
 I changed the structure of the ComicDTO to be more generic rather than calling out `specificComic` or whatever it was. I updated all the API responses to match this new direction.
 
 Oops, those changes I made to the `.env` make the deployed version not work so I'll do that now.
+
+Last night before bed, I noticed that the random button wasn't working. Easy fix, just needed to update the logic that gets the list of indexes (to facilitate a random selection) to adhere to the new ComicDTO structure.
 
 # Couldn't Have Done it Without You
 

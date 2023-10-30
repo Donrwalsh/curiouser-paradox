@@ -27,7 +27,7 @@ export class MainComicComponent {
     this.obtainComicInfo(this.route.snapshot.paramMap.get('id'));
 
     this.comicService.getIndexes().subscribe((data) => {
-      this.indexes = (data as any).allIndexes;
+      this.indexes = (data as ComicDTO).payload;
     });
   }
 
