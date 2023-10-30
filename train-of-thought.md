@@ -207,6 +207,8 @@ Oops, those changes I made to the `.env` make the deployed version not work so I
 
 Last night before bed, I noticed that the random button wasn't working. Easy fix, just needed to update the logic that gets the list of indexes (to facilitate a random selection) to adhere to the new ComicDTO structure.
 
+I don't recall if I mentioned this, but there was a small problem with sharing common colors across the frontend app. Over on `main-comic.component.scss` I was pulling in the entire main `styles.scss` file which awkwardly also happens to include all of bootstrap! I don't think this was actually a problem now, but when I started in on this ~20min ago I could've sworn this awkwardness prevented me from using Angular Material and Bootstrap together in the same component. That's not the case, as far as I can tell, so I'm not sure how I had gotten that impression. Nevertheless, this new approach is cleaner with all the color values existing in a dedicated scss file that can be pulled in wherever (including the primary `styles.scss` for bootstrap color overrides and such). I also slid out the two core scss files into a dedicated folder so I can scale that without muddying up the src folder.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -253,3 +255,4 @@ Last night before bed, I noticed that the random button wasn't working. Easy fix
 - https://stackoverflow.com/questions/6207573/how-to-append-output-to-the-end-of-a-text-file
 - https://stackoverflow.com/questions/8899737/crontab-run-in-directory
 - https://stackoverflow.com/questions/12008120/console-log-timestamps-in-chrome
+- https://www.liquidlight.co.uk/blog/use-and-import-rules-in-scss/

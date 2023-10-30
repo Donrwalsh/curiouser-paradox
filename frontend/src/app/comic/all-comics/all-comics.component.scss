@@ -1,3 +1,5 @@
+@use "../../../styles/colors.scss";
+
 .card-title {
   font-weight: bold;
 }
@@ -32,7 +34,7 @@ img.tall {
 }
 
 .img-holder {
-  background-color: #ffdcff;
+  background-color: colors.$card-background;
   height: 100%;
   width: 100%;
 }
