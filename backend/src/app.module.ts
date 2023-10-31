@@ -6,8 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ComicsModule } from './comics/comics.module';
 import { ConfigModule } from '@nestjs/config';
-
-const CONTAINERIZED = process.env.CONTAINERIZED === 'true';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -19,6 +19,8 @@ const CONTAINERIZED = process.env.CONTAINERIZED === 'true';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

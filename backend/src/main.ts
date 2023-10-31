@@ -12,6 +12,7 @@ async function bootstrap() {
     .setDescription('The Curiouser Paradox API')
     .setVersion('1.0')
     .addTag('API')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

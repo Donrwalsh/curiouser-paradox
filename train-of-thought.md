@@ -219,6 +219,24 @@ I'm watching the github actions run off my last commit, and I'm pleased to see t
 
 It occurs to me that I don't need to import bootstrap at the `angular.json` level because I am importing it in my primary styles file in order to override colors. Unclear if this optimization actually gains anything, but I'm going to do it as a demonstration of niftiness anyway.
 
+Working through https://docs.nestjs.com/security/authentication and setting things up with plaintext passwords to start. Can't read in a .env value without some effort, so I'll make that a todo:
+
+- [ ] put JWT secret in .env and read it as described in https://stackoverflow.com/questions/55673424/nestjs-unable-to-read-env-variables-in-module-files-but-able-in-service-files and https://stackoverflow.com/questions/54361685/nestjs-typeorm-configuration-using-env-files/54364907#54364907.
+
+Cool, so I have the thing working in an _extremely_ basic form. I have the above problem to solve, but then also there's the passwords to consider:
+
+- [ ] passwords in database rather than js code
+
+- [ ] also, no plaintext passwords (nestjs docs suggest bcrypt)
+
+Got some tests to clean up here too. Hm. Default imports aren't working. `import { UsersService } from 'src/users/users.service';` gives me the following error: Cannot find module 'src/users/users.service' from 'auth/auth.controller.spec.ts'. I'd like to fix this at the source, but for now a relative path seems to sidestep this issue. Might just be an IDE setting, but I recall having issues with this in NestJS before. Seems worth a deep-dive. Actually, does the same problem apply to non-test files? Did a quick smoke test and didn't have any issues, so it would seem tests only. WHOA actually an absolute import in the service causes the test to fail. That is hilarious.
+
+- [ ] Why don't absolute imports work for NestJS tests?
+
+I am perplexed. The current state of `app.controller.spec.ts` should not be passing to my eyes. I'm doing nothing to override `AuthGuard` which should be guarding the endpoint from unauth requests, but the test doesn't seem to care. Confirmed after several restarts and swagger calls that the endpoint will throw a 401 without a JWT included in the request, so yeah, I'm perplexed. My best guess is that the test is bypassing the guard for me, but that's not what's happened in my experience previously, and also. . . isn't that a bad idea? My brain is running out of steam here, and it's almost dinner time so I will make this a task and take a closer look at a later time.
+
+- [ ] What's the deal with the app.controller test seemingly not caring about my AuthGuard?
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -269,3 +287,5 @@ It occurs to me that I don't need to import bootstrap at the `angular.json` leve
 - https://stackoverflow.com/questions/71430668/how-to-run-a-github-actions-job-on-workflow-failure
 - https://stackoverflow.com/questions/60453924/running-a-github-actions-step-only-if-previous-step-has-run
 - https://medium.com/tradeling/how-to-achieve-parallel-execution-using-github-actions-d534404702fb
+- https://docs.nestjs.com/security/authentication
+- https://stackoverflow.com/questions/55848238/nestjs-unit-test-mock-method-guard

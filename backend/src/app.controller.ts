@@ -1,6 +1,8 @@
-import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AppService } from './app.service';
+import { AuthGuard } from './auth/auth.guard';
 
 @Controller()
 export class AppController {
@@ -9,6 +11,8 @@ export class AppController {
     private configService: ConfigService,
   ) {}
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get()
   getHello(): string {
     return this.appService.getHello();
@@ -16,7 +20,6 @@ export class AppController {
 
   @Get('/env')
   getEnvConnectionString(): string {
-    // console.log(process.env.CONNECTION_STRING);
     return this.configService.get<string>('CONNECTION_STRING');
   }
 }
