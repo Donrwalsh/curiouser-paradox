@@ -11,12 +11,12 @@ jobs:
     timeout-minutes: 120
     runs-on: ubuntu-latest
     steps:
-      name: Pending Status
-      uses: myrotvorets/set-commit-status-action@master
-      with:
-        sha: ${{ steps.comment-branch.outputs.head_sha }}
-        token: ${{ secrets.API_TOKEN }}
-        status: pending
+      - name: Pending Status
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          token: ${{ secrets.API_TOKEN }}
+          status: pending
   Angular-Tests:
     timeout-minutes: 120
     runs-on: ubuntu-latest
