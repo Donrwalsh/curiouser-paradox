@@ -217,6 +217,8 @@ Pulled this one down. I've been reading a bit about github workflows and this is
 
 I'm watching the github actions run off my last commit, and I'm pleased to see that the Angular and NestJS tests are being run in parallel. Score! I feel like this is doing what I want it to do right now, so I'm going to go ahead and mark this task as a success for now, but naturally I expect to continue returning to this as the project grows.
 
+It occurs to me that I don't need to import bootstrap at the `angular.json` level because I am importing it in my primary styles file in order to override colors. Unclear if this optimization actually gains anything, but I'm going to do it as a demonstration of niftiness anyway.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
