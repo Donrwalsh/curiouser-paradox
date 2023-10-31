@@ -211,9 +211,11 @@ Last night before bed, I noticed that the random button wasn't working. Easy fix
 
 I don't recall if I mentioned this, but there was a small problem with sharing common colors across the frontend app. Over on `main-comic.component.scss` I was pulling in the entire main `styles.scss` file which awkwardly also happens to include all of bootstrap! I don't think this was actually a problem now, but when I started in on this ~20min ago I could've sworn this awkwardness prevented me from using Angular Material and Bootstrap together in the same component. That's not the case, as far as I can tell, so I'm not sure how I had gotten that impression. Nevertheless, this new approach is cleaner with all the color values existing in a dedicated scss file that can be pulled in wherever (including the primary `styles.scss` for bootstrap color overrides and such). I also slid out the two core scss files into a dedicated folder so I can scale that without muddying up the src folder.
 
-- [ ] Shoot, it occurs to me that my thing with github workflows won't be marking something when it has failed. Hm, I'll need to figure that out.
+- [x] Shoot, it occurs to me that my thing with github workflows won't be marking something when it has failed. Hm, I'll need to figure that out.
 
 Pulled this one down. I've been reading a bit about github workflows and this is something that looks straightforward. The thing I noticed though is that all the github status logic is in the frontend workflow, and well it doesn't really make sense to keep them separate since with the CI/CD situation I have going right now I really want the github status to be based on the result of all apps - if one app fails tests, the commit should fail and the deploy shouldn't go through. So yeah, I'm going to work on a monolith workflow file and see if I can still accomplish some parallel running of tests which was honestly the only reason I wanted them separate in the first place (to the best of my recollection).
+
+I'm watching the github actions run off my last commit, and I'm pleased to see that the Angular and NestJS tests are being run in parallel. Score! I feel like this is doing what I want it to do right now, so I'm going to go ahead and mark this task as a success for now, but naturally I expect to continue returning to this as the project grows.
 
 # Couldn't Have Done it Without You
 
@@ -262,3 +264,6 @@ Pulled this one down. I've been reading a bit about github workflows and this is
 - https://stackoverflow.com/questions/8899737/crontab-run-in-directory
 - https://stackoverflow.com/questions/12008120/console-log-timestamps-in-chrome
 - https://www.liquidlight.co.uk/blog/use-and-import-rules-in-scss/
+- https://stackoverflow.com/questions/71430668/how-to-run-a-github-actions-job-on-workflow-failure
+- https://stackoverflow.com/questions/60453924/running-a-github-actions-step-only-if-previous-step-has-run
+- https://medium.com/tradeling/how-to-achieve-parallel-execution-using-github-actions-d534404702fb
