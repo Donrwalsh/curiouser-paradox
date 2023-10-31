@@ -33,14 +33,34 @@ jobs:
           node-version: "18"
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
       - name: Run tests
         run: npm test -- --watch=false --browsers=ChromeHeadless
+  NestJS-Tests:
+    timeout-minutes: 120
+    runs-on: ubuntu-latest
+    needs: Initial-Commit-Status
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
   Workflow-Success:
     timeout-minutes: 120
     runs-on: ubuntu-latest
-    needs: [Angular-Tests, Initial-Commit-Status]
+    needs: [Initial-Commit-Status, Angular-Tests, NestJS-Tests]
     steps:
       - name: Success Status
         uses: myrotvorets/set-commit-status-action@master
@@ -51,7 +71,8 @@ jobs:
   Workflow-Failure:
     timeout-minutes: 120
     runs-on: ubuntu-latest
-    needs: [Angular-Tests, Initial-Commit-Status, Workflow-Success]
+    needs:
+      [Initial-Commit-Status, Angular-Tests, NestJS-Tests, Workflow-Success]
     if: ${{ always() && contains(needs.*.result, 'failure') }}
     steps:
       - name: Failure Status
