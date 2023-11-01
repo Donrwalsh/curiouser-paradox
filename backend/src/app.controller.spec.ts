@@ -1,16 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigService } from '@nestjs/config';
-import { AuthGuard } from './auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { AppService } from 'src/app.service';
+import { AppController } from 'src/app.controller';
 
 describe('AppController', () => {
   let appController: AppController;
 
   beforeEach(async () => {
-    const mock_AuthGuard = { CanActive: jest.fn(() => true) };
-
     const FakeConfigService = {
       provide: ConfigService,
       useValue: {

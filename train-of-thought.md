@@ -231,11 +231,13 @@ Cool, so I have the thing working in an _extremely_ basic form. I have the above
 
 Got some tests to clean up here too. Hm. Default imports aren't working. `import { UsersService } from 'src/users/users.service';` gives me the following error: Cannot find module 'src/users/users.service' from 'auth/auth.controller.spec.ts'. I'd like to fix this at the source, but for now a relative path seems to sidestep this issue. Might just be an IDE setting, but I recall having issues with this in NestJS before. Seems worth a deep-dive. Actually, does the same problem apply to non-test files? Did a quick smoke test and didn't have any issues, so it would seem tests only. WHOA actually an absolute import in the service causes the test to fail. That is hilarious.
 
-- [ ] Why don't absolute imports work for NestJS tests?
+- [x] Why don't absolute imports work for NestJS tests?
 
 I am perplexed. The current state of `app.controller.spec.ts` should not be passing to my eyes. I'm doing nothing to override `AuthGuard` which should be guarding the endpoint from unauth requests, but the test doesn't seem to care. Confirmed after several restarts and swagger calls that the endpoint will throw a 401 without a JWT included in the request, so yeah, I'm perplexed. My best guess is that the test is bypassing the guard for me, but that's not what's happened in my experience previously, and also. . . isn't that a bad idea? My brain is running out of steam here, and it's almost dinner time so I will make this a task and take a closer look at a later time.
 
 - [ ] What's the deal with the app.controller test seemingly not caring about my AuthGuard?
+
+Enforce default 'absolute' imports across all typescript files: `"typescript.preferences.importModuleSpecifier": "non-relative",` in vsCode settings.json and now I'm gonna go through everything in the NestJS project and update them to be non-relative because I like consistency. In order to make this easier I added an additional VScode configuration to the settings that auto adds imports on save: `"editor.codeActionsOnSave": { "source.addMissingImports": "always" },` which I'm digging right now, but I'm a bit hesitant on how this is going to work long-term so I'll keep an eye on it. Unclear if this will have an effect on Angular, but that'll be another thing to watch out for. For right now, I'm enjoying how all the imports are standard and that I shouldn't have to worry about improperly formed imports for now (or ever again?) Oh yeah, and based on the link that I added below, the culprit is how the starter files are generated from creating a new nest project. Curious.
 
 # Couldn't Have Done it Without You
 
@@ -289,3 +291,4 @@ I am perplexed. The current state of `app.controller.spec.ts` should not be pass
 - https://medium.com/tradeling/how-to-achieve-parallel-execution-using-github-actions-d534404702fb
 - https://docs.nestjs.com/security/authentication
 - https://stackoverflow.com/questions/55848238/nestjs-unit-test-mock-method-guard
+- https://stackoverflow.com/questions/52926371/vscode-typescript-add-all-missing-imports-shortcut

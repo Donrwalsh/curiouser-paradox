@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IComic } from './schema';
+import { IComic } from 'src/comics/schema';
 
 @Injectable()
 export class ComicsService {

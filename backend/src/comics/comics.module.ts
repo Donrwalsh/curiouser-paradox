@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ComicsController } from './comics.controller';
-import { ComicsService } from './comics.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ComicSchema } from './schema';
-import { ConfigModule } from '@nestjs/config';
+import { ComicsController } from 'src/comics/comics.controller';
+import { ComicsService } from 'src/comics/comics.service';
+import { ComicSchema } from 'src/comics/schema';
 
 @Module({
   imports: [
-    //Currently unused
-    ConfigModule,
     MongooseModule.forFeature([{ name: 'Comic', schema: ComicSchema }]),
   ],
   controllers: [ComicsController],

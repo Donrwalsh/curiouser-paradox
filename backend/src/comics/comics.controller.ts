@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
-import { ComicsService } from './comics.service';
+import { ComicsService } from 'src/comics/comics.service';
 
 @Controller('comics')
 export class ComicsController {
