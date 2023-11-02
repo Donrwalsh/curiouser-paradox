@@ -239,6 +239,10 @@ I am perplexed. The current state of `app.controller.spec.ts` should not be pass
 
 Enforce default 'absolute' imports across all typescript files: `"typescript.preferences.importModuleSpecifier": "non-relative",` in vsCode settings.json and now I'm gonna go through everything in the NestJS project and update them to be non-relative because I like consistency. In order to make this easier I added an additional VScode configuration to the settings that auto adds imports on save: `"editor.codeActionsOnSave": { "source.addMissingImports": "always" },` which I'm digging right now, but I'm a bit hesitant on how this is going to work long-term so I'll keep an eye on it. Unclear if this will have an effect on Angular, but that'll be another thing to watch out for. For right now, I'm enjoying how all the imports are standard and that I shouldn't have to worry about improperly formed imports for now (or ever again?) Oh yeah, and based on the link that I added below, the culprit is how the starter files are generated from creating a new nest project. Curious.
 
+- [ ] `poll.js` runs while previous runs haven't completed. I'm not sure if this is a problem, but it'd be a fun thing to solve regardless.
+
+I woke up this morning with a hankering to secure the database. I'll start by pulling the initial set of 2 users out of the code and putting them into a simple Users table in the database. Only thing I changed here is the source of the user data, next step will be to attend to the implementation so it is proper.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
