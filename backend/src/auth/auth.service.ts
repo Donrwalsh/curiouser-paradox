@@ -30,20 +30,14 @@ export class AuthService {
     };
   }
 
-  // Make this return actual content rather than log
-  async hashPass(password: string) {
-    let result = [];
-    for (let saltRounds = 10; saltRounds < 21; saltRounds++) {
-      var begin = Date.now();
-      // console.time(`bcrypt | cost: ${saltRounds}, time to hash`);
-      bcrypt.hashSync(password, saltRounds);
-      // console.timeEnd(`bcrypt | cost: ${saltRounds}, time to hash`);
-      var end = Date.now();
-      result.push({
-        saltRounds: saltRounds,
-        time: (end - begin) / 1000 + ' seconds',
-      });
-    }
+  async hashTime(password: string, saltRounds: number) {
+    var begin = Date.now();
+    bcrypt.hashSync(password, saltRounds);
+    var end = Date.now();
+    let result = {
+      saltRounds: saltRounds,
+      time: (end - begin) / 1000 + ' seconds',
+    };
     return result;
   }
 }

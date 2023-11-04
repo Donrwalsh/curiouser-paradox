@@ -21,16 +21,20 @@ export class AuthController {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
-  @Post('hashPass')
+  @Post('hashTime')
   @ApiBody({
     description: 'login',
     schema: {
       example: {
         password: 'Pass',
+        saltRounds: 10,
       },
     },
   })
-  hashPass(@Body() passwordDto: Record<string, any>) {
-    return this.authService.hashPass(passwordDto.password);
+  hashTime(@Body() passwordDto: Record<string, any>) {
+    return this.authService.hashTime(
+      passwordDto.password,
+      passwordDto.saltRounds,
+    );
   }
 }

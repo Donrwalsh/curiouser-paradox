@@ -245,6 +245,8 @@ I woke up this morning with a hankering to secure the database (and then I pivot
 
 Did some reading about bcrypt last night and today, and it's quite interesting. The question on my mind is how many saltRounds should I be going with? The answer to this question has to do with risk tolerance, because no amount of saltRounds is going to make things completely secure. So it's a balancing act between security and time spent hashing. Following the suggestion from a resource that I've since lost, I implemented a counter that describes how long hashing takes for saltRounds between 10-20. I added this as an actual endpoint (it was console logs first) because I'm actually most interested in seeing the performance numbers on the Pi - which is to say the actual device that will be handling the hashing long-term. In addition to this, I'm probably going to aim for something a bit higher than the standard recommendation because of the nature of how I'm using it here.
 
+The hashPass endpoint worked well, but I disliked the static 10-20 test rounds, so I updated it slightly to also take in a saltRound value and report back just one time. So I can still achieve the same output with 10x calls if I want to, and more importantly I can play some more with specific values without having to wait several minutes thanks to the topend taking quite a while on the Pi.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
