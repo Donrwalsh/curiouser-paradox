@@ -20,4 +20,17 @@ export class AuthController {
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
+
+  @Post('hashPass')
+  @ApiBody({
+    description: 'login',
+    schema: {
+      example: {
+        password: 'Pass',
+      },
+    },
+  })
+  hashPass(@Body() passwordDto: Record<string, any>) {
+    return this.authService.hashPass(passwordDto.password);
+  }
 }

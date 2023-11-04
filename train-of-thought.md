@@ -241,7 +241,9 @@ Enforce default 'absolute' imports across all typescript files: `"typescript.pre
 
 - [ ] `poll.js` runs while previous runs haven't completed. I'm not sure if this is a problem, but it'd be a fun thing to solve regardless.
 
-I woke up this morning with a hankering to secure the database. I'll start by pulling the initial set of 2 users out of the code and putting them into a simple Users table in the database. Only thing I changed here is the source of the user data, next step will be to attend to the implementation so it is proper.
+I woke up this morning with a hankering to secure the database (and then I pivoted to authentication for users on the frontend first rather than adding a password to the database, but that is still on my mind). I'll start by pulling the initial set of 2 users out of the code and putting them into a simple Users table in the database. Only thing I changed here is the source of the user data, next step will be to attend to the implementation so it is proper.
+
+Did some reading about bcrypt last night and today, and it's quite interesting. The question on my mind is how many saltRounds should I be going with? The answer to this question has to do with risk tolerance, because no amount of saltRounds is going to make things completely secure. So it's a balancing act between security and time spent hashing. Following the suggestion from a resource that I've since lost, I implemented a counter that describes how long hashing takes for saltRounds between 10-20. I added this as an actual endpoint (it was console logs first) because I'm actually most interested in seeing the performance numbers on the Pi - which is to say the actual device that will be handling the hashing long-term. In addition to this, I'm probably going to aim for something a bit higher than the standard recommendation because of the nature of how I'm using it here.
 
 # Couldn't Have Done it Without You
 
@@ -296,3 +298,4 @@ I woke up this morning with a hankering to secure the database. I'll start by pu
 - https://docs.nestjs.com/security/authentication
 - https://stackoverflow.com/questions/55848238/nestjs-unit-test-mock-method-guard
 - https://stackoverflow.com/questions/52926371/vscode-typescript-add-all-missing-imports-shortcut
+- https://codahale.com/how-to-safely-store-a-password/
