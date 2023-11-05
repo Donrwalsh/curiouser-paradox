@@ -221,13 +221,13 @@ It occurs to me that I don't need to import bootstrap at the `angular.json` leve
 
 Working through https://docs.nestjs.com/security/authentication and setting things up with plaintext passwords to start. Can't read in a .env value without some effort, so I'll make that a todo:
 
-- [ ] put JWT secret in .env and read it as described in https://stackoverflow.com/questions/55673424/nestjs-unable-to-read-env-variables-in-module-files-but-able-in-service-files and https://stackoverflow.com/questions/54361685/nestjs-typeorm-configuration-using-env-files/54364907#54364907.
+- [x] put JWT secret in .env and read it as described in https://stackoverflow.com/questions/55673424/nestjs-unable-to-read-env-variables-in-module-files-but-able-in-service-files and https://stackoverflow.com/questions/54361685/nestjs-typeorm-configuration-using-env-files/54364907#54364907.
 
 Cool, so I have the thing working in an _extremely_ basic form. I have the above problem to solve, but then also there's the passwords to consider:
 
-- [ ] passwords in database rather than js code
+- [x] passwords in database rather than js code
 
-- [ ] also, no plaintext passwords (nestjs docs suggest bcrypt)
+- [x] also, no plaintext passwords (nestjs docs suggest bcrypt)
 
 Got some tests to clean up here too. Hm. Default imports aren't working. `import { UsersService } from 'src/users/users.service';` gives me the following error: Cannot find module 'src/users/users.service' from 'auth/auth.controller.spec.ts'. I'd like to fix this at the source, but for now a relative path seems to sidestep this issue. Might just be an IDE setting, but I recall having issues with this in NestJS before. Seems worth a deep-dive. Actually, does the same problem apply to non-test files? Did a quick smoke test and didn't have any issues, so it would seem tests only. WHOA actually an absolute import in the service causes the test to fail. That is hilarious.
 
@@ -246,6 +246,8 @@ I woke up this morning with a hankering to secure the database (and then I pivot
 Did some reading about bcrypt last night and today, and it's quite interesting. The question on my mind is how many saltRounds should I be going with? The answer to this question has to do with risk tolerance, because no amount of saltRounds is going to make things completely secure. So it's a balancing act between security and time spent hashing. Following the suggestion from a resource that I've since lost, I implemented a counter that describes how long hashing takes for saltRounds between 10-20. I added this as an actual endpoint (it was console logs first) because I'm actually most interested in seeing the performance numbers on the Pi - which is to say the actual device that will be handling the hashing long-term. In addition to this, I'm probably going to aim for something a bit higher than the standard recommendation because of the nature of how I'm using it here.
 
 The hashPass endpoint worked well, but I disliked the static 10-20 test rounds, so I updated it slightly to also take in a saltRound value and report back just one time. So I can still achieve the same output with 10x calls if I want to, and more importantly I can play some more with specific values without having to wait several minutes thanks to the topend taking quite a while on the Pi.
+
+Switching gears for whatever reason onto the JWT secret. This is currently hardcoded in the auth.module and that's no good. I had some bookmarks that explained (poorly, IMO) how to pull this secret value from the env, but as the parenthetical above suggests, I did not find success with this. Not to worry! The README for `nestjs/jwt` lays it out quite nicely in the `secretOrKeyProvider` function for retrieving dynamic values. Right now I don't really care about anything except just providing the secret value that is ripped from the env file, but I definitely noticed the ability to have more control with this. I'm going to add a breadcrumb comment right next to it so I don't completely forget that thread. Oh yeah, and I was able to verify that the correct `JWT_SECRET` value is being pulled in because when I change it to something new (and pithy, I might add) the produced JWT is not recognized as valid by the Pi's version of the code which stil has the old value.
 
 # Couldn't Have Done it Without You
 
