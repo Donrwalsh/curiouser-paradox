@@ -249,6 +249,12 @@ The hashPass endpoint worked well, but I disliked the static 10-20 test rounds, 
 
 Switching gears for whatever reason onto the JWT secret. This is currently hardcoded in the auth.module and that's no good. I had some bookmarks that explained (poorly, IMO) how to pull this secret value from the env, but as the parenthetical above suggests, I did not find success with this. Not to worry! The README for `nestjs/jwt` lays it out quite nicely in the `secretOrKeyProvider` function for retrieving dynamic values. Right now I don't really care about anything except just providing the secret value that is ripped from the env file, but I definitely noticed the ability to have more control with this. I'm going to add a breadcrumb comment right next to it so I don't completely forget that thread. Oh yeah, and I was able to verify that the correct `JWT_SECRET` value is being pulled in because when I change it to something new (and pithy, I might add) the produced JWT is not recognized as valid by the Pi's version of the code which stil has the old value.
 
+Looking to get into this next: https://blog.angular-university.io/angular-jwt-authentication/. https://stackoverflow.com/questions/65458062/angular-httpclient-property-sharereplay-does-not-exist-on-type-observable was helpful in recreating the AuthService code correctly. `shareReplay()` is new to me, but looks very helpful. Got distracted a little bit by toasts, so I made a todo.
+
+- [ ] I like the idea of a ToastService as described by https://betterprogramming.pub/how-to-create-a-toast-service-using-angular-13-and-bootstrap-5-494e5c66627 and in code at https://github.com/svierk/angular-bootstrap-toast-service/tree/main
+
+So I've got a login component that takes a username and password and lobs it off to the auth endpoint that I created. Not much happens after that, but the response from the backend is interpreted as either a success or failure appropriately and so there's some obvious steps forward from here.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

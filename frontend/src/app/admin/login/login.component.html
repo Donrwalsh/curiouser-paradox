@@ -1,0 +1,33 @@
+<div class="container">
+  <form [formGroup]="form">
+    <div class="form-field mt-3 col-md-4 mx-auto">
+      <label for="usernameInput">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="username"
+        id="usernameInput"
+        placeholder="AzureDiamond"
+      />
+    </div>
+    <div class="form-field mt-3 col-4 mx-auto">
+      <label for="exampleInputPassword1">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="password"
+        id="exampleInputPassword1"
+        placeholder="hunter2"
+      />
+    </div>
+    <div class="text-center mb-4">
+      <button
+        (click)="login()"
+        type="submit"
+        class="btn btn-primary mt-3 mx-auto"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
