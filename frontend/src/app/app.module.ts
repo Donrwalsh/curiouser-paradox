@@ -1,16 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderModule } from './header/header.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from 'src/app/admin/admin.module';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/common/services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComicModule } from './comic/comic.module';
 import { FooterModule } from './footer/footer.module';
-import { ComicService } from './services/comic.service';
+import { ComicService } from './common/services/comic.service';
+import { AuthInterceptor } from 'src/app/common/services/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,11 @@ import { ComicService } from './services/comic.service';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [ComicService, AuthService],
+  providers: [
+    ComicService,
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

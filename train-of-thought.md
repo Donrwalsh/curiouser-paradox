@@ -255,6 +255,20 @@ Looking to get into this next: https://blog.angular-university.io/angular-jwt-au
 
 So I've got a login component that takes a username and password and lobs it off to the auth endpoint that I created. Not much happens after that, but the response from the backend is interpreted as either a success or failure appropriately and so there's some obvious steps forward from here.
 
+I'm gonna skip the addition of expires_at on the JWT response, because I'm not sure I see the usefulness of it just yet. And so the way I'm going about it is to write the JWT that is received from the backend into localStorage and I've created a basic interceptor that will (when it is present) add that JWT onto all outgoing HTTP requests. So there's still a lot that needs to happen here:
+
+- [ ] navigate to a secure landing page (dashboard) on success
+
+- [ ] seems like it might be important to have the expiration details as part of the jwt that is stored.
+
+- [ ] handle token expiry
+
+- [ ] failed login notification (toast, or something else)
+
+- [ ] visual indicator when logged in, and perhaps even more where it gives you the option to navigate around a variety of authGuarded locations. (includes logout)
+
+- [ ] remove the temporary 'Try it out' button when the full and accurate form of logging in is available.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -309,3 +323,4 @@ So I've got a login component that takes a username and password and lobs it off
 - https://stackoverflow.com/questions/55848238/nestjs-unit-test-mock-method-guard
 - https://stackoverflow.com/questions/52926371/vscode-typescript-add-all-missing-imports-shortcut
 - https://codahale.com/how-to-safely-store-a-password/
+- https://www.freecodecamp.org/news/pipe-and-compose-in-javascript-5b04004ac937/

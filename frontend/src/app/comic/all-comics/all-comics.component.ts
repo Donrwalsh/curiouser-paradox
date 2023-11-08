@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ComicService } from '../../services/comic.service';
+import { ComicService } from '../../common/services/comic.service';
 import { Comic, ComicDTO } from '../comic.model';
 
 @Component({

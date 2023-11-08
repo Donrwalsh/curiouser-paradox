@@ -1,16 +1,40 @@
-import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { ComicsService } from 'src/comics/comics.service';
 
 @Controller('comics')
 export class ComicsController {
   constructor(private readonly comicsService: ComicsService) {}
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Get('admin/all')
+  async getAllComicsAdmin(@Res() response) {
+    try {
+      const allAdminComics = await this.comicsService.getAllComics();
+      return response.status(HttpStatus.OK).json({
+        message: 'All Comics obtained successfully',
+        payload: allAdminComics,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
   @Get('all')
   async getAllComics(@Res() response) {
     try {
-      const allComics = await this.comicsService.getAllComics();
+      const allComics = await this.comicsService.getAllPublishedComics();
       return response.status(HttpStatus.OK).json({
-        message: 'Comics obtained successfully',
+        message: 'Published Comics obtained successfully',
         payload: allComics,
       });
     } catch (err) {

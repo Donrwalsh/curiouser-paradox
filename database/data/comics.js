@@ -34,6 +34,14 @@ db.comics.insertMany(
       path: "hysteria.png",
       index: 3,
     },
+    {
+      state: "draft",
+      title: "TBD",
+      altText: "To Be Determined",
+      layout: "",
+      path: "",
+      index: 4,
+    },
   ],
   { ordered: false }
 );

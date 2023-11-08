@@ -8,10 +8,15 @@ export class ComicsService {
   constructor(@InjectModel('Comic') private comicModel: Model<IComic>) {}
 
   async getAllComics(): Promise<IComic[]> {
-    const allComics = await this.comicModel.find({
+    const allComics = await this.comicModel.find({});
+    return allComics;
+  }
+
+  async getAllPublishedComics(): Promise<IComic[]> {
+    const allPublishedComics = await this.comicModel.find({
       state: { $eq: 'published' },
     });
-    return allComics;
+    return allPublishedComics;
   }
 
   async getAllIndexes(): Promise<number[]> {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -31,5 +31,11 @@ export class LoginComponent {
         console.log('Success!');
       });
     }
+  }
+
+  tryItOut() {
+    this.authService.tryItOut().subscribe(() => {
+      console.log('It worked!');
+    });
   }
 }
