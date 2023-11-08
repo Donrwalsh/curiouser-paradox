@@ -3,7 +3,7 @@
   <!-- <h1>Potato</h1> -->
 </div>
 
-<div class="d-flex justify-content-center mt-4">
+<div *ngIf="comic.path" class="d-flex justify-content-center mt-4">
   <img
     id="comic"
     class="{{ comic.layout }}"
