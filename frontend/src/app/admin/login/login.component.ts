@@ -22,15 +22,22 @@ export class LoginComponent {
     });
   }
 
-  //TODO
   login() {
     const val = this.form.value;
 
     if (val.username && val.password) {
       this.authService.login(val.username, val.password).subscribe(() => {
-        console.log('Success!');
+        console.log('Successfully logged in!');
       });
     }
+  }
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      console.log('Successfully logged out!');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+    });
   }
 
   tryItOut() {

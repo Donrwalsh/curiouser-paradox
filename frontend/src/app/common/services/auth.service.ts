@@ -10,7 +10,8 @@ export interface User {
 }
 
 export interface AuthResult {
-  access_token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 @Injectable({
@@ -37,11 +38,20 @@ export class AuthService {
       );
   }
 
+  refresh(token: string) {
+    return this.http
+      .post<AuthResult>(`${environment.apiHost}/auth/refresh`, {
+        refreshToken: token,
+      })
+      .pipe(tap((data: AuthResult) => this.setSession(data)));
+  }
+
   setSession(authResult: AuthResult) {
-    localStorage.setItem('jwt', authResult.access_token);
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('refresh_token', authResult.refreshToken);
   }
 
   logout() {
-    localStorage.removeItem('jwt');
+    return this.http.get<any>(`${environment.apiHost}/auth/logout`, {});
   }
 }

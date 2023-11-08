@@ -1,28 +1,50 @@
 import {
+  HttpClient,
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from, lastValueFrom } from 'rxjs';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService, private http: HttpClient) {}
+
+  isRefreshing = false;
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const idToken = localStorage.getItem('jwt');
+    return from(this.handle(req, next));
+  }
 
-    if (idToken) {
-      const cloned = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + idToken),
-      });
+  async handle(req: HttpRequest<any>, next: HttpHandler) {
+    const refresh_token = localStorage.getItem('refresh_token');
+    let access_token = localStorage.getItem('access_token');
 
-      return next.handle(cloned);
-    } else {
-      return next.handle(req);
+    if (!req.url.includes('auth/refresh')) {
+      if (access_token) {
+        if (this.isTokenExpired(access_token)) {
+          await lastValueFrom(this.authService.refresh(refresh_token!));
+          access_token = localStorage.getItem('access_token');
+        }
+        const cloned = req.clone({
+          headers: req.headers.set('Authorization', 'Bearer ' + access_token),
+        });
+        return lastValueFrom(next.handle(cloned));
+      }
     }
+
+    return await lastValueFrom(next.handle(req));
+  }
+
+  private isTokenExpired(token: string) {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    console.log(`${(expiry * 1000 - Date.now()) / 1000} seconds remaining`);
+    return expiry * 1000 < Date.now();
   }
 }

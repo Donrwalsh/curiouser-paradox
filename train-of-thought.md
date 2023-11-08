@@ -269,6 +269,16 @@ I'm gonna skip the addition of expires_at on the JWT response, because I'm not s
 
 - [ ] remove the temporary 'Try it out' button when the full and accurate form of logging in is available.
 
+Woke up this morning thinking about JWT-based authentication and did some reading about refresh tokens. Found this https://www.elvisduru.com/blog/nestjs-jwt-authentication-refresh-token particularly useful.
+
+Dang, this is ending up being a pretty big undertaking. I am planning on working off a single interceptor that is smart enough to know when to append the bearer token and then also will recognize if the access_token is expired and then quickly dispatch an attempt to refresh the token, but that then introduces an async requirement that really threw everything for a loop.
+
+Alrighty, I got it working. Ultimately the interceptor was fairly simple. The async http calls not firing was a big hassle, but once that was solved things fell nicely into place. There needs to be a logout option that wipes the refresh token from the database. Cool, I made that. So at this point, the roundtrip operation of {logging in and receiving 2x tokens > then http interceptor handles application of access_token to the request > UNLESS access_token is expired, then interceptor handles refreshing the access_token before handling the application of access_token to the request > user can logout to invalidate existing refreshToken} seems to work great! I imagine there are some issues with error handling and such because of how hyper-focused I was on getting the core functionality in place, but for now this is a great win.
+
+- [ ] `password` should be `passwordHash` in the database
+
+- [ ] Just do an overall pass looking for consistency in this pile of work from today.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -324,3 +334,12 @@ I'm gonna skip the addition of expires_at on the JWT response, because I'm not s
 - https://stackoverflow.com/questions/52926371/vscode-typescript-add-all-missing-imports-shortcut
 - https://codahale.com/how-to-safely-store-a-password/
 - https://www.freecodecamp.org/news/pipe-and-compose-in-javascript-5b04004ac937/
+- https://stackoverflow.com/questions/44383387/typescript-error-property-user-does-not-exist-on-type-request
+- https://stackoverflow.com/questions/48294197/angular-5-http-interceptors-error-when-injecting-service
+- https://stackoverflow.com/questions/45345354/how-use-async-service-into-angular-httpclient-interceptor
+- https://medium.com/@an.sajinsatheesan/refresh-token-interceptor-angular-10-d876d01561be
+- https://stackoverflow.com/questions/57833669/how-to-get-jwt-token-from-headers-in-controller
+- https://www.bezkoder.com/logout-when-token-expired-angular-14/
+- https://www.elvisduru.com/blog/nestjs-jwt-authentication-refresh-token
+- https://jasonwatmore.com/post/2021/09/24/angular-http-interceptor-to-set-auth-header-for-api-requests-if-user-logged-in
+- https://stackoverflow.com/questions/69359599/best-way-to-check-jwt-token-expire-status-if-stored-in-localstorage

@@ -1,4 +1,8 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+  HttpClient,
+} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderModule } from './header/header.module';
@@ -28,7 +32,12 @@ import { AuthInterceptor } from 'src/app/common/services/interceptors/auth.inter
   providers: [
     ComicService,
     AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+      deps: [AuthService, HttpClient],
+    },
   ],
   bootstrap: [AppComponent],
 })

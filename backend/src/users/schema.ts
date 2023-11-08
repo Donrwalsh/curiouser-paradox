@@ -10,6 +10,9 @@ export class User {
 
   @Prop()
   password: string;
+
+  @Prop()
+  refreshHash: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 
@@ -18,4 +21,9 @@ export interface IUser extends Document {
   readonly userId: number;
   readonly username: string;
   readonly password: string;
+  readonly refreshHash: string;
+}
+
+export class UpdateUserDto {
+  readonly refreshHash: string;
 }

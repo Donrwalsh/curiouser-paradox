@@ -18,4 +18,34 @@ export class UsersService {
 
     return user;
   }
+
+  async updateRefreshHash(userId: number, refreshHash: string) {
+    const user = await this.userModel.findOneAndUpdate(
+      { userId: { $eq: userId } },
+      {
+        refreshHash,
+      },
+    );
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
+  }
+
+  async clearRefreshHash(userId) {
+    const user = await this.userModel.findOneAndUpdate(
+      { userId: { $eq: userId } },
+      {
+        refreshHash: '',
+      },
+    );
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
+  }
 }

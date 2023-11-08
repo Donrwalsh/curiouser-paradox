@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 
-const saltRounds = 10;
+const saltRounds = 12;
 
 @Injectable()
 export class AuthService {
@@ -13,21 +13,25 @@ export class AuthService {
   ) {}
 
   async signIn(username: string, pass: string): Promise<any> {
-    //Manually generate hash:
-    // const hash = await bcrypt.hash(pass, saltRounds, function (err, hash) {
-    //   console.log(hash);
-    // });
-
     const user = await this.usersService.findOne(username);
     const match = await bcrypt.compareSync(pass, user?.password);
     if (!match) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.userId, username: user.username };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    const tokens = await this.getTokens(user.userId, user.username);
+
+    //Store active refresh token in database here
+
+    const hashedRefreshToken = bcrypt.hashSync(tokens.refreshToken, saltRounds);
+    this.usersService.updateRefreshHash(user.userId, hashedRefreshToken);
+
+    return tokens;
+  }
+
+  async signOut(accessToken: string) {
+    const decoded = await this.jwtService.verifyAsync(accessToken);
+    this.usersService.clearRefreshHash(decoded.sub);
   }
 
   async hashTime(password: string, saltRounds: number) {
@@ -39,5 +43,47 @@ export class AuthService {
       time: (end - begin) / 1000 + ' seconds',
     };
     return result;
+  }
+
+  async getTokens(userId: number, username: string) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          username,
+        },
+        {
+          secret: process.env.JWT_SECRET,
+          expiresIn: '5m',
+        },
+      ),
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          username,
+        },
+        {
+          secret: process.env.JWT_SECRET,
+          expiresIn: '2h',
+        },
+      ),
+    ]);
+
+    return { accessToken, refreshToken };
+  }
+
+  async refreshTokens(refreshToken: string) {
+    try {
+      const decoded = await this.jwtService.verifyAsync(refreshToken);
+      const user = await this.usersService.findOne(decoded.username);
+      const match = await bcrypt.compareSync(refreshToken, user?.refreshHash);
+      if (!match) {
+        throw new UnauthorizedException();
+      }
+      const tokens = await this.getTokens(decoded.sub, decoded.username);
+      return tokens;
+    } catch {
+      throw new UnauthorizedException();
+    }
   }
 }

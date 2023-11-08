@@ -22,6 +22,7 @@ describe('AuthService', () => {
                   userId: -1,
                   username: 'potato',
                   password: 'secret-potato',
+                  refreshHash: '',
                 }),
               ),
           },
