@@ -12,6 +12,7 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    AuthModule,
     ComicsModule,
     MongooseModule.forRoot(process.env.CONNECTION_STRING, {
       dbName: 'curiouserParadox',
@@ -19,7 +20,7 @@ import { UsersModule } from 'src/users/users.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    AuthModule,
+
     UsersModule,
   ],
   controllers: [AppController],

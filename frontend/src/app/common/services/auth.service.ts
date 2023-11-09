@@ -28,7 +28,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http
-      .post<AuthResult>(`${environment.apiHost}/auth/login`, {
+      .post<AuthResult>(`${environment.apiHost}/auth/sign-in`, {
         username,
         password,
       })
@@ -57,6 +57,6 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get<any>(`${environment.apiHost}/auth/logout`, {});
+    return this.http.get<any>(`${environment.apiHost}/auth/sign-out`, {});
   }
 }

@@ -81,7 +81,7 @@ There's another comic layout style for me to work with: tall. That's a solid tod
 
 Added some build automation through github actions that run unit tests on the frontend and backend. Fixed up the existing unit tests so they pass. Fixed up the title in routing so it no longer just says `frontend`. Used a `.distinct()` approach to remove the mocked allIndexes stuff easily. Then I decided to add a `state` attribute to the comic entity. This represents if something is published or still in draft mode. Only published comics are considered for things like navigation and latest and random and such - all things that `comics.service.ts` handles retrieval of from the database, so I added the condition that the comic must be published to be included in all those queries and added a draft comic to take it for a spin and it works just great. Did a little more cleanup on the frontend workflow file because I have grand plans to setup the deployment aspect tomorrow and I have a couple of resources that look promising.
 
-- [ ] Continue the Github actions workflow to the point of deployment upon successful completion of previous steps.
+- [x] Continue the Github actions workflow to the point of deployment upon successful completion of previous steps.
 
 Adventures in Docker! Deployment of the app won't be on a Raspberry Pi forever, so containerization is appealing. Found a generic Dockerfile and am building with the `docker build -t frontend .` command. Note that Docker Desktop needs to be running for `>docker ...` commands to work at all. Turned that on as a startup app. Had some trouble with any and all build commands because importing the bootstrap styles to override the primary color makes the size of my styles file exceed allowed budgets, so I tweaked that setting. Interested if there's a way to sidestep this, because it kinda kills the purpose of having this budget setting - though I wasn't aware of it until now, so idk.
 
@@ -283,6 +283,12 @@ It occurred to me last night that if I use the same secret for both access and r
 
 - [ ] Note that if the app starts up without the JWT signing secrets, it won't complain until it tries to sign/verify something at which point, nothing will work
 
+- [ ] Consistent language of 'Sign In' over 'Login' ('Sign Out' over 'Logout' too)
+
+After a very minor amount of consideration, I'm going to go with kebab-case as a standard for my URLs.
+
+- [ ] Consider moving the hash-time endpoint out of the Auth Controller and into ~something else~
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -347,3 +353,4 @@ It occurred to me last night that if I use the same secret for both access and r
 - https://www.elvisduru.com/blog/nestjs-jwt-authentication-refresh-token
 - https://jasonwatmore.com/post/2021/09/24/angular-http-interceptor-to-set-auth-header-for-api-requests-if-user-logged-in
 - https://stackoverflow.com/questions/69359599/best-way-to-check-jwt-token-expire-status-if-stored-in-localstorage
+- https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X#apioperation

@@ -1,25 +1,27 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AppService } from 'src/app.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
+  @Get()
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @Get()
+  @ApiOperation({
+    summary: 'Hello World',
+    description: 'A basic auth-guarded endpoint for diagnostic usage.',
+  })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiOkResponse({ description: 'Hello World!' })
   getHello(): string {
     return this.appService.getHello();
-  }
-
-  @Get('/env')
-  getEnvConnectionString(): string {
-    return this.configService.get<string>('CONNECTION_STRING');
   }
 }

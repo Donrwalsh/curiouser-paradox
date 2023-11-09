@@ -6,10 +6,11 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ComicsService } from 'src/comics/comics.service';
 
+@ApiTags('comics')
 @Controller('comics')
 export class ComicsController {
   constructor(private readonly comicsService: ComicsService) {}

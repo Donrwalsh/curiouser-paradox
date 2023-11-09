@@ -8,64 +8,95 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { HashTimeDTO, SignInDTO, TokenDTO, Tokens } from 'src/auth/auth.model';
 import { AuthService } from 'src/auth/auth.service';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @HttpCode(HttpStatus.OK)
-  @Post('login')
-  @ApiBody({
-    description: 'login',
-    schema: {
-      example: {
-        username: 'User',
-        password: 'Pass',
-      },
-    },
+  @Post('sign-in')
+  @ApiOperation({
+    summary: 'Begin a user session',
   })
-  signIn(@Body() signInDto: Record<string, any>) {
+  @ApiOkResponse({
+    description: 'Sign in was successful.',
+    type: Tokens,
+  })
+  @ApiNotFoundResponse({
+    description: 'Invalid user.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid password.',
+  })
+  @HttpCode(HttpStatus.OK)
+  signIn(@Body() signInDto: SignInDTO) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
-  @HttpCode(HttpStatus.OK)
+  @Get('sign-out')
   @UseGuards(AuthGuard)
-  @Get('logout')
-  logout(@Req() req: Request) {
-    const rawToken = req.headers['authorization'].split(' ')[1];
-    this.authService.signOut(rawToken);
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'End an existing user session',
+  })
+  @ApiOkResponse({
+    description: 'Sign out was successful.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @HttpCode(HttpStatus.OK)
+  signOut(@Req() req: Request) {
+    const accessToken = req.headers['authorization'].split(' ')[1];
+    this.authService.signOut(accessToken);
   }
 
-  @Post('hashTime')
+  @Post('refresh')
+  @ApiOperation({
+    summary: 'End an existing user session',
+  })
+  refreshTokens(@Body() token: TokenDTO) {
+    return this.authService.refreshTokens(token.refreshToken);
+  }
+
+  @Post('hash-time')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Measure hash time with dynamic saltRounds',
+  })
+  @ApiOkResponse({
+    description: 'Hash-Time was successful.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @HttpCode(HttpStatus.OK)
   @ApiBody({
-    description: 'login',
     schema: {
       example: {
-        password: 'Pass',
-        saltRounds: 10,
+        password:
+          'sample-password-that-can-be-anything-really-because-the-hashed-value-gets-discarded',
+        saltRounds: 12,
       },
     },
   })
-  hashTime(@Body() passwordDto: Record<string, any>) {
+  hashTime(@Body() passwordDto: HashTimeDTO) {
     return this.authService.hashTime(
       passwordDto.password,
       passwordDto.saltRounds,
     );
-  }
-
-  @Post('refresh')
-  @ApiBody({
-    description: 'refresh token',
-    schema: {
-      example: {
-        refreshToken: 'string',
-      },
-    },
-  })
-  refreshTokens(@Body() token: Record<string, any>) {
-    return this.authService.refreshTokens(token.refreshToken);
   }
 }
