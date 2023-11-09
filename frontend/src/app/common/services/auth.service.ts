@@ -51,6 +51,11 @@ export class AuthService {
     localStorage.setItem('refresh_token', authResult.refreshToken);
   }
 
+  clearSession() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+  }
+
   logout() {
     return this.http.get<any>(`${environment.apiHost}/auth/logout`, {});
   }

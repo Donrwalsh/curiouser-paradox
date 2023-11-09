@@ -35,8 +35,7 @@ export class LoginComponent {
   logout() {
     this.authService.logout().subscribe(() => {
       console.log('Successfully logged out!');
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
+      this.authService.clearSession();
     });
   }
 

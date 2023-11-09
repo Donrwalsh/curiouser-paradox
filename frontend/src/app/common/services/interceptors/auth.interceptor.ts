@@ -29,8 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!req.url.includes('auth/refresh')) {
       if (access_token) {
         if (this.isTokenExpired(access_token)) {
-          await lastValueFrom(this.authService.refresh(refresh_token!));
-          access_token = localStorage.getItem('access_token');
+          if (refresh_token && !this.isTokenExpired(refresh_token)) {
+            await lastValueFrom(this.authService.refresh(refresh_token!));
+            access_token = localStorage.getItem('access_token');
+          } else {
+            this.authService.clearSession();
+            return await lastValueFrom(next.handle(req));
+          }
         }
         const cloned = req.clone({
           headers: req.headers.set('Authorization', 'Bearer ' + access_token),
