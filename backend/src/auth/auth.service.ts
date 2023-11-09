@@ -30,7 +30,9 @@ export class AuthService {
   }
 
   async signOut(accessToken: string) {
-    const decoded = await this.jwtService.verifyAsync(accessToken);
+    const decoded = await this.jwtService.verifyAsync(accessToken, {
+      secret: process.env.ACCESS_SECRET,
+    });
     this.usersService.clearRefreshHash(decoded.sub);
   }
 
@@ -53,7 +55,7 @@ export class AuthService {
           username,
         },
         {
-          secret: process.env.JWT_SECRET,
+          secret: process.env.ACCESS_SECRET,
           expiresIn: '5m',
         },
       ),
@@ -63,7 +65,7 @@ export class AuthService {
           username,
         },
         {
-          secret: process.env.JWT_SECRET,
+          secret: process.env.REFRESH_SECRET,
           expiresIn: '2h',
         },
       ),
@@ -74,7 +76,9 @@ export class AuthService {
 
   async refreshTokens(refreshToken: string) {
     try {
-      const decoded = await this.jwtService.verifyAsync(refreshToken);
+      const decoded = await this.jwtService.verifyAsync(refreshToken, {
+        secret: process.env.REFRESH_SECRET,
+      });
       const user = await this.usersService.findOne(decoded.username);
       const match = await bcrypt.compareSync(refreshToken, user?.refreshHash);
       if (!match) {

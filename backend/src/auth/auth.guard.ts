@@ -18,7 +18,9 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token);
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.ACCESS_SECRET,
+      });
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       request['user'] = payload;
@@ -33,3 +35,8 @@ export class AuthGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
+
+// {
+//   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjAsInVzZXJuYW1lIjoiRG9uIiwiaWF0IjoxNjk5NTQ0MDQyLCJleHAiOjE2OTk1NDQzNDJ9.8yeSo3O41S5khNQJKLoPuEv6uZ9Sr-47uBfP3Qxq0kE",
+//   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjAsInVzZXJuYW1lIjoiRG9uIiwiaWF0IjoxNjk5NTQ0MDQyLCJleHAiOjE2OTk1NTEyNDJ9.QkiYYLkGQH7GEsjq5qXnYKZeSHNIKBVA--31plbEOtU"
+// }

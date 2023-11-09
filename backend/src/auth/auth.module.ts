@@ -12,10 +12,6 @@ import { UsersModule } from 'src/users/users.module';
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '60s' },
-      // https://github.com/nestjs/jwt#secret--encryption-key-options
-      secretOrKeyProvider: () => {
-        return process.env.JWT_SECRET;
-      },
     }),
   ],
   controllers: [AuthController],

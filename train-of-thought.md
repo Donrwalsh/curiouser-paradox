@@ -279,6 +279,10 @@ Alrighty, I got it working. Ultimately the interceptor was fairly simple. The as
 
 - [ ] Just do an overall pass looking for consistency in this pile of work from today.
 
+It occurred to me last night that if I use the same secret for both access and refresh tokens that I am really just creating a super-powerful access_token and naming it a refresh token haha. So I worked today first off on separating those to have a different secret. This caused some confusion when refresh tokens were still being accepted after I had taken care of (what I thought was) introducing purpose-specific secrets. It's working now, which is great!
+
+- [ ] Note that if the app starts up without the JWT signing secrets, it won't complain until it tries to sign/verify something at which point, nothing will work
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
