@@ -289,6 +289,14 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] Consider moving the hash-time endpoint out of the Auth Controller and into ~something else~
 
+- [ ] Consider doing something fancy with the Comic Responses types. One per endpoint is a bit much.
+
+- [ ] 404 page has the random button
+
+- [ ] Using a generic approach to CoreComicResponseDTO works like a charm for custom types, but not for Number which is bewildering.
+
+- [ ] 500 error on specific comic when providing a non-number id.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -354,3 +362,4 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 - https://jasonwatmore.com/post/2021/09/24/angular-http-interceptor-to-set-auth-header-for-api-requests-if-user-logged-in
 - https://stackoverflow.com/questions/69359599/best-way-to-check-jwt-token-expire-status-if-stored-in-localstorage
 - https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X#apioperation
+- https://aalonso.dev/blog/how-to-generate-generics-dtos-with-nestjsswagger-422g

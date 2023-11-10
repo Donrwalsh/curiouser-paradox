@@ -1,25 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 @Schema()
 export class Comic {
+  @ApiProperty()
   @Prop()
   state: string;
 
+  @ApiProperty()
   @Prop()
   title: string;
 
+  @ApiProperty()
   @Prop()
   altText: string;
 
+  @ApiProperty()
   @Prop()
   layout: string;
 
+  @ApiProperty()
   @Prop()
   path: string;
 
+  @ApiProperty()
   @Prop()
   index: number;
 
+  @ApiProperty()
   prevIndex: number;
+
+  @ApiProperty()
   nextIndex: number;
 }
 export const ComicSchema = SchemaFactory.createForClass(Comic);

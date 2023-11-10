@@ -6,8 +6,20 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import {
+  ComicIndexesResponseDTO,
+  ComicsResponseDTO,
+  SingleComicResponseDTO,
+} from 'src/comics/comics.model';
 import { ComicsService } from 'src/comics/comics.service';
 
 @ApiTags('comics')
@@ -15,22 +27,15 @@ import { ComicsService } from 'src/comics/comics.service';
 export class ComicsController {
   constructor(private readonly comicsService: ComicsService) {}
 
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth()
-  @Get('admin/all')
-  async getAllComicsAdmin(@Res() response) {
-    try {
-      const allAdminComics = await this.comicsService.getAllComics();
-      return response.status(HttpStatus.OK).json({
-        message: 'All Comics obtained successfully',
-        payload: allAdminComics,
-      });
-    } catch (err) {
-      return response.status(err.status).json(err.response);
-    }
-  }
-
   @Get('all')
+  @ApiOperation({
+    summary: 'Obtain all published comics',
+  })
+  @ApiOkResponse({
+    description: 'Published Comics obtained successfully.',
+    type: ComicsResponseDTO,
+  })
+  // @ApiOkResponseGenericArray(Comic, 'Published Comics obtained successfully.')
   async getAllComics(@Res() response) {
     try {
       const allComics = await this.comicsService.getAllPublishedComics();
@@ -44,11 +49,18 @@ export class ComicsController {
   }
 
   @Get('/indexes')
+  @ApiOperation({
+    summary: 'Obtain indexes of all published comics',
+  })
+  @ApiOkResponse({
+    description: 'Published Comic Indexes obtained successfully.',
+    type: ComicIndexesResponseDTO,
+  })
   async getAllIndexes(@Res() response) {
     try {
       const allIndexes = await this.comicsService.getAllIndexes();
       return response.status(HttpStatus.OK).json({
-        message: 'Comic Indexes obtained successfully',
+        message: 'Published Comic Indexes obtained successfully',
         payload: allIndexes,
       });
     } catch (err) {
@@ -57,11 +69,18 @@ export class ComicsController {
   }
 
   @Get('/latest')
+  @ApiOperation({
+    summary: 'Obtain latest published comic',
+  })
+  @ApiOkResponse({
+    description: 'Latest Published Comic obtained successfully.',
+    type: SingleComicResponseDTO,
+  })
   async getLatest(@Res() response) {
     try {
       const latestComic = await this.comicsService.getLatest();
       return response.status(HttpStatus.OK).json({
-        message: 'Comic obtained successfully',
+        message: 'Latest Published Comic obtained successfully',
         payload: latestComic,
       });
     } catch (err) {
@@ -70,12 +89,48 @@ export class ComicsController {
   }
 
   @Get('/:id')
+  @ApiOperation({
+    summary: 'Obtain specific published comic',
+  })
+  @ApiOkResponse({
+    description: 'Comic obtained successfully.',
+    type: SingleComicResponseDTO,
+  })
+  @ApiNotFoundResponse({
+    description: 'Invalid id.',
+  })
   async getSpecific(@Res() response, @Param('id') id: string) {
     try {
       const specificComic = await this.comicsService.getById(parseInt(id));
       return response.status(HttpStatus.OK).json({
         message: 'Comic obtained successfully',
         payload: specificComic,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
+  @Get('admin/all')
+  @ApiTags('admin')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Obtain all comics',
+  })
+  @ApiOkResponse({
+    description: 'All Comics obtained successfully.',
+    type: ComicsResponseDTO,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid password.',
+  })
+  async getAllComicsAdmin(@Res() response) {
+    try {
+      const allAdminComics = await this.comicsService.getAllComics();
+      return response.status(HttpStatus.OK).json({
+        message: 'All Comics obtained successfully',
+        payload: allAdminComics,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);

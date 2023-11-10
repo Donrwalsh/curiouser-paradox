@@ -3,11 +3,13 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AppService } from 'src/app.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiTags('core')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -16,7 +18,7 @@ export class AppController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Hello World',
+    summary: 'Hello World!',
     description: 'A basic auth-guarded endpoint for diagnostic usage.',
   })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
