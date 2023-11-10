@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { ComicModule } from './comic/comic.module';
 import { FooterModule } from './footer/footer.module';
 import { ComicService } from './common/services/comic.service';
-import { AuthInterceptor } from 'src/app/common/services/interceptors/auth.interceptor';
+import { AuthInterceptor } from 'src/app/common/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],

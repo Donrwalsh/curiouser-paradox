@@ -20,6 +20,13 @@ export interface AuthResult {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  isSignedIn() {
+    return !(
+      localStorage.getItem('access_token') === null &&
+      localStorage.getItem('refresh_token') === null
+    );
+  }
+
   tryItOut() {
     return this.http
       .get(`${environment.apiHost}/comics/admin/all`)
@@ -56,7 +63,7 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
   }
 
-  logout() {
+  signOut() {
     return this.http.get<any>(`${environment.apiHost}/auth/sign-out`, {});
   }
 }

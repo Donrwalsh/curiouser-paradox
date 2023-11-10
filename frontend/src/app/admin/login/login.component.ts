@@ -22,6 +22,10 @@ export class LoginComponent {
     });
   }
 
+  isSignedIn() {
+    return this.authService.isSignedIn();
+  }
+
   login() {
     const val = this.form.value;
 
@@ -30,13 +34,6 @@ export class LoginComponent {
         console.log('Successfully logged in!');
       });
     }
-  }
-
-  logout() {
-    this.authService.logout().subscribe(() => {
-      console.log('Successfully logged out!');
-      this.authService.clearSession();
-    });
   }
 
   tryItOut() {

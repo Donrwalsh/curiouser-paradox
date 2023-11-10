@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ComicService } from '../../common/services/comic.service';
 import { Comic, ComicDTO } from '../comic.model';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-all-comics',
@@ -14,11 +15,27 @@ export class AllComicsComponent {
 
   comics = [] as Comic[];
 
-  constructor(private comicService: ComicService) {}
+  constructor(
+    private authService: AuthService,
+    private comicService: ComicService
+  ) {}
 
   ngOnInit() {
-    this.comicService.getAllComics().subscribe((data) => {
+    (this.authService.isSignedIn()
+      ? this.comicService.getAllComicsAdmin()
+      : this.comicService.getAllComics()
+    ).subscribe((data) => {
       this.comics = (data as ComicDTO).payload;
     });
+
+    // if (this.authService.isSignedIn()) {
+    //   this.comicService.getAllComicsAdmin().subscribe((data) => {
+    //     this.comics = (data as ComicDTO).payload;
+    //   });
+    // } else {
+    //   this.comicService.getAllComics().subscribe((data) => {
+    //     this.comics = (data as ComicDTO).payload;
+    //   });
+    // }
   }
 }

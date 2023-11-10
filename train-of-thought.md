@@ -297,6 +297,12 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] 500 error on specific comic when providing a non-number id.
 
+- [ ] Have poll.js run Docker command if it sees that the containers aren't running (problematic in the case of intervening run)
+
+- [ ] what to do when signing out on a page that would prefer to reload the page (all/gallery is an example)
+
+- [ ] On the all/gallery page, specify if a comic is published or not
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

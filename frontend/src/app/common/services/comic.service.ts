@@ -15,6 +15,12 @@ export class ComicService {
       .pipe(map((res) => res));
   }
 
+  getAllComicsAdmin() {
+    return this.http
+      .get(`${environment.apiHost}/comics/admin/all`)
+      .pipe(map((res) => res));
+  }
+
   getIndexes() {
     return this.http
       .get(`${environment.apiHost}/comics/indexes`)

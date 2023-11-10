@@ -17,22 +17,27 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/all"
-            ><span style="font-weight: bold">All</span></a
+          <a class="nav-link" href="/admin"
+            ><span class="nav-text">Admin</span></a
           >
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="/all"><span class="nav-text">All</span></a>
         </li>
+        <li *ngIf="isSignedIn()" class="nav-item">
+          <a class="nav-link" href="javascript:void(0);" (click)="signOut()"
+            ><span class="nav-text">Sign Out</span></a
+          >
+        </li>
+        <!-- 
+
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li> -->
+        </li>
+        -->
       </ul>
     </div>
   </div>
