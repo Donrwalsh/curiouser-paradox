@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div *ngIf="isSignedIn()">Logged In</div>
   <form [formGroup]="form">
     <div class="form-field mt-3 col-md-4 mx-auto">
@@ -31,9 +31,4 @@
       </button>
     </div>
   </form>
-  <div class="text-center mb-4">
-    <button (click)="tryItOut()" class="btn btn-primary mt-3 mx-auto">
-      Try it out
-    </button>
-  </div>
 </div>

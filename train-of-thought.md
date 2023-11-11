@@ -303,6 +303,10 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] On the all/gallery page, specify if a comic is published or not
 
+- [ ] Automatic deploy woes: failed to solve: node:18: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/18": dial tcp: lookup registry-1.docker.io on 192.168.1.1:53: dial udp 192.168.1.1:53: connect: network is unreachable
+
+- [ ] poll.js should not take down the database
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
