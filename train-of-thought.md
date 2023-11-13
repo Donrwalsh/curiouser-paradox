@@ -303,9 +303,9 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] On the all/gallery page, specify if a comic is published or not
 
-- [ ] Automatic deploy woes: failed to solve: node:18: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/18": dial tcp: lookup registry-1.docker.io on 192.168.1.1:53: dial udp 192.168.1.1:53: connect: network is unreachable
+- [x] Automatic deploy woes: failed to solve: node:18: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/18": dial tcp: lookup registry-1.docker.io on 192.168.1.1:53: dial udp 192.168.1.1:53: connect: network is unreachable
 
-^ this happened again, so I added 2x nameservers to the Pi's `/etc/resolv.conf` to see if it fixes it.
+^ this happened again, so I added 2x nameservers to the Pi's `/etc/resolv.conf` to see if it fixes it. Last commit went through just fine, so I'm going to mark it as complete for now but keep an eye on it (It's super easy to notice)
 
 - [ ] poll.js should not take down the database
 
