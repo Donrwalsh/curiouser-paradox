@@ -305,6 +305,8 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] Automatic deploy woes: failed to solve: node:18: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/18": dial tcp: lookup registry-1.docker.io on 192.168.1.1:53: dial udp 192.168.1.1:53: connect: network is unreachable
 
+^ this happened again, so I added 2x nameservers to the Pi's `/etc/resolv.conf` to see if it fixes it.
+
 - [ ] poll.js should not take down the database
 
 Working on doing some password reset stuff, and it has become apparent that I have a huge problem with refresh tokens. Any refresh token that is generated with the valid secret for the environment will always pass the check, and that's not what I want. So I need to fix it and I have an idea that I want to vet:
@@ -385,3 +387,4 @@ Cool, so the password reset endpoint works and the frontend is pretty bad about 
 - https://stackoverflow.com/questions/69359599/best-way-to-check-jwt-token-expire-status-if-stored-in-localstorage
 - https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X#apioperation
 - https://aalonso.dev/blog/how-to-generate-generics-dtos-with-nestjsswagger-422g
+- https://stackoverflow.com/questions/47580528/error-response-from-daemon-get-https-registry-1-docker-io-v2-dial-tcp-look
