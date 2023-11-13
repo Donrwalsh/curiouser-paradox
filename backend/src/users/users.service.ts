@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { IUser } from 'src/users/schema';
+import { IUser, User } from 'src/users/schema';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -19,48 +24,14 @@ export class UsersService {
     return user;
   }
 
-  async updatePasswordHash(userId: number, passwordHash: string) {
-    const user = await this.userModel.findOneAndUpdate(
-      { userId: { $eq: userId } },
-      {
-        passwordHash,
-      },
-    );
-
-    if (!user) {
+  async updateUser(payload: Partial<User>) {
+    if (payload.userId === undefined) {
       throw new NotFoundException('User not found!');
     }
 
-    return user;
-  }
-
-  async updateRefreshHash(userId: number, refreshHash: string) {
     const user = await this.userModel.findOneAndUpdate(
-      { userId: { $eq: userId } },
-      {
-        refreshHash,
-      },
+      { userId: { $eq: payload.userId } },
+      payload,
     );
-
-    if (!user) {
-      throw new NotFoundException('User not found!');
-    }
-
-    return user;
-  }
-
-  async clearRefreshHash(userId: number) {
-    const user = await this.userModel.findOneAndUpdate(
-      { userId: { $eq: userId } },
-      {
-        refreshHash: '',
-      },
-    );
-
-    if (!user) {
-      throw new NotFoundException('User not found!');
-    }
-
-    return user;
   }
 }

@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -26,7 +30,10 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
-    this.usersService.updatePasswordHash(user.userId, newPasswordHash);
+    await this.usersService.updateUser({
+      userId: user.userId,
+      passwordHash: newPasswordHash,
+    });
   }
 
   async signIn(username: string, pass: string): Promise<any> {
@@ -38,10 +45,11 @@ export class AuthService {
 
     const tokens = await this.getTokens(user.userId, user.username);
 
-    //Store active refresh token in database here
-
     const hashedRefreshToken = bcrypt.hashSync(tokens.refreshToken, saltRounds);
-    this.usersService.updateRefreshHash(user.userId, hashedRefreshToken);
+    await this.usersService.updateUser({
+      userId: user.userId,
+      refreshHash: hashedRefreshToken,
+    });
 
     return tokens;
   }
@@ -50,7 +58,10 @@ export class AuthService {
     const decoded = await this.jwtService.verifyAsync(accessToken, {
       secret: process.env.ACCESS_SECRET,
     });
-    this.usersService.clearRefreshHash(decoded.sub);
+    await this.usersService.updateUser({
+      userId: decoded.sub,
+      refreshHash: '',
+    });
   }
 
   async hashTime(password: string, saltRounds: number) {
