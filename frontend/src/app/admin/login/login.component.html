@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <div *ngIf="isSignedIn()">Logged In</div>
+  <ng-content></ng-content>
   <form [formGroup]="form">
     <div class="form-field mt-3 col-md-4 mx-auto">
       <label for="usernameInput">Username</label>

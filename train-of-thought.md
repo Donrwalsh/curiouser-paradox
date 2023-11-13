@@ -325,7 +325,9 @@ I'm listening to this Udemy course on Angular like a podcast, pausing whenever s
 
 - [ ] Consider making 'play' a module rather than a sub-component of admin, if there are enough reasons to do so.
 
-- [ ] Also, the password reset form should be its own dedicated component. It is a bit sloppy as it is right now, being part of the main admin component.
+- [x] Also, the password reset form should be its own dedicated component. It is a bit sloppy as it is right now, being part of the main admin component.
+
+^ Doing this next and leveraging ng-content for the title because it's cool
 
 # Couldn't Have Done it Without You
 
