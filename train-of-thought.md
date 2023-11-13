@@ -321,6 +321,12 @@ Cool, so the password reset endpoint works and the frontend is pretty bad about 
 
 - [ ] It might be worth cycling refreshTokens when resetting a password.
 
+I'm listening to this Udemy course on Angular like a podcast, pausing whenever something comes up that I'm not familiar with. First thing that really caught my eye is the @ViewChild() decorator which I don't believe I've ever used. So I tinkered with it on the main-admin component (password reset form) and then decided that I actually want to retain some of this work, so I spun up a 'play' component that is kinda guarded behind signing in and so I can durdle with stuff like this and keep it around for reference.
+
+- [ ] Consider making 'play' a module rather than a sub-component of admin, if there are enough reasons to do so.
+
+- [ ] Also, the password reset form should be its own dedicated component. It is a bit sloppy as it is right now, being part of the main admin component.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -388,3 +394,4 @@ Cool, so the password reset endpoint works and the frontend is pretty bad about 
 - https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X#apioperation
 - https://aalonso.dev/blog/how-to-generate-generics-dtos-with-nestjsswagger-422g
 - https://stackoverflow.com/questions/47580528/error-response-from-daemon-get-https-registry-1-docker-io-v2-dial-tcp-look
+- https://stackoverflow.com/questions/49699067/property-has-no-initializer-and-is-not-definitely-assigned-in-the-construc

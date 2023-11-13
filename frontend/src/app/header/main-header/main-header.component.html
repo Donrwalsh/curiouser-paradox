@@ -21,6 +21,11 @@
             ><span class="nav-text">Admin</span></a
           >
         </li>
+        <li *ngIf="isSignedIn()" class="nav-item">
+          <a class="nav-link" href="/admin/play"
+            ><span class="nav-text">Play</span></a
+          >
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/all"><span class="nav-text">All</span></a>
         </li>
