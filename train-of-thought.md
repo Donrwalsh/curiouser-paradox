@@ -275,7 +275,7 @@ Dang, this is ending up being a pretty big undertaking. I am planning on working
 
 Alrighty, I got it working. Ultimately the interceptor was fairly simple. The async http calls not firing was a big hassle, but once that was solved things fell nicely into place. There needs to be a logout option that wipes the refresh token from the database. Cool, I made that. So at this point, the roundtrip operation of {logging in and receiving 2x tokens > then http interceptor handles application of access_token to the request > UNLESS access_token is expired, then interceptor handles refreshing the access_token before handling the application of access_token to the request > user can logout to invalidate existing refreshToken} seems to work great! I imagine there are some issues with error handling and such because of how hyper-focused I was on getting the core functionality in place, but for now this is a great win.
 
-- [ ] `password` should be `passwordHash` in the database
+- [x] `password` should be `passwordHash` in the database
 
 - [ ] Just do an overall pass looking for consistency in this pile of work from today.
 
@@ -311,7 +311,7 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 Working on doing some password reset stuff, and it has become apparent that I have a huge problem with refresh tokens. Any refresh token that is generated with the valid secret for the environment will always pass the check, and that's not what I want. So I need to fix it and I have an idea that I want to vet:
 
-- [ ] Introduce a 'last-signed-in' value into the database and use it in the generation and validation of refreshTokens.
+- [x] Introduce a 'last-signed-in' value into the database and use it in the generation and validation of refreshTokens. (marked as complete, but didn't actually do what this task says. Issue was that the length of the refreshToken was pushing the unique characters out of consideration)
 
 Cool, so the password reset endpoint works and the frontend is pretty bad about it ~ silently succeeding and such. It also remembers the values input in the password reset form after signing out and signing back in (to confirm the reset working properly, which it does, and that's awesome). Anyway:
 
@@ -328,6 +328,8 @@ I'm listening to this Udemy course on Angular like a podcast, pausing whenever s
 - [x] Also, the password reset form should be its own dedicated component. It is a bit sloppy as it is right now, being part of the main admin component.
 
 ^ Doing this next and leveraging ng-content for the title because it's cool
+
+Well, that was an absolute TRIP. I decided to sit down and work on the TODO from above where I make it so refreshTokens are limited in some capacity to handle that odd behavior that I saw where I would refresh the token and then the previous token would still work (this was because I missed updating the database with the newly generated token), but the new token would ALSO work. This was confusing to me, and I came up with all sorts of theories that made sense for a little bit, but it wasn't until messing with things today that it clicked: See, I added a 'lastSignedIn' timestamp into the database temporarily and appended that to the end of the refreshToken and then hashed that -> no change, same problems. Ok, easy enough, let's add it to the front of the string -> no change. This broke my brain, but also made it immediately obvious that the full text of the refreshToken was NOT being considered because if it were, then one of those two approaches should have yielded the desired results. Did some research and it looks like bcrypt caps out at 72 characters, and so the solution that came to mind immediately is to just reverse the refreshToken and hash that. Boom, now it all works exactly the way I want it to without having to store additional data. Fun problem to solve! Oh yeah, I also added code that updates the database with the newly generated refreshToken when that happens. Only reason this wasn't causing issues is because of the stuff discussed above.
 
 # Couldn't Have Done it Without You
 

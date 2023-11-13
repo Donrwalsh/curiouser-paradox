@@ -45,7 +45,10 @@ export class AuthService {
 
     const tokens = await this.getTokens(user.userId, user.username);
 
-    const hashedRefreshToken = bcrypt.hashSync(tokens.refreshToken, saltRounds);
+    const hashedRefreshToken = bcrypt.hashSync(
+      [...tokens.refreshToken].reverse().join(''),
+      saltRounds,
+    );
     await this.usersService.updateUser({
       userId: user.userId,
       refreshHash: hashedRefreshToken,
@@ -108,11 +111,22 @@ export class AuthService {
         secret: process.env.REFRESH_SECRET,
       });
       const user = await this.usersService.findOne(decoded.username);
-      const match = await bcrypt.compareSync(refreshToken, user?.refreshHash);
+      const match = await bcrypt.compareSync(
+        [...refreshToken].reverse().join(''),
+        user?.refreshHash,
+      );
       if (!match) {
         throw new UnauthorizedException();
       }
       const tokens = await this.getTokens(decoded.sub, decoded.username);
+      const hashedRefreshToken = bcrypt.hashSync(
+        [...tokens.refreshToken].reverse().join(''),
+        saltRounds,
+      );
+      await this.usersService.updateUser({
+        userId: user.userId,
+        refreshHash: hashedRefreshToken,
+      });
       return tokens;
     } catch {
       throw new UnauthorizedException();
