@@ -65,9 +65,10 @@ export class MainAdminComponent {
     this.submitted = true;
     this.inputFieldUpdate();
     if (this.form.valid) {
-      console.log("Looks good, let's submit the form:");
       console.log(this.form.value);
-      console.log('TODO: Submit this data and handle it on the backend');
+      this.authService.resetPassword(this.form.value).subscribe((data: any) => {
+        console.log(data);
+      });
     }
   }
 }

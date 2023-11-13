@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs';
+import { ResetPasswordDTO } from 'src/app/common/models/auth.model';
 
 export interface User {
   username: string;
@@ -43,6 +44,14 @@ export class AuthService {
         tap((data: AuthResult) => this.setSession(data)),
         shareReplay()
       );
+  }
+
+  resetPassword(resetPasswordDTO: ResetPasswordDTO) {
+    return this.http
+      .post(`${environment.apiHost}/auth/reset-password`, {
+        ...resetPasswordDTO,
+      })
+      .pipe(tap((data: any) => console.log(data)));
   }
 
   refresh(token: string) {

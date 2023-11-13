@@ -2,11 +2,13 @@ db.users.insertMany([
   {
     userId: 0,
     username: "Don",
-    password: "changeme",
+    passwordHash: "changeme",
+    refreshHash: "some value",
   },
   {
     userId: 1,
     username: "Laura",
-    password: "changeme",
+    passwordHash: "changeme",
+    refreshHash: "some value",
   },
 ]);

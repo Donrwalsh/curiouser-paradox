@@ -28,3 +28,14 @@ export class HashTimeDTO {
   @ApiProperty()
   saltRounds: number;
 }
+
+export class ResetPasswordDTO {
+  @ApiProperty()
+  oldPassword: string;
+
+  @ApiProperty()
+  newPasswordOne: string;
+
+  @ApiProperty()
+  newPasswordTwo: string;
+}

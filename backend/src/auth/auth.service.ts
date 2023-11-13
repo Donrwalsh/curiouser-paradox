@@ -12,9 +12,26 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async resetPassword(
+    accessToken: string,
+    oldPassword: string,
+    newPassword: string,
+  ) {
+    const decoded = await this.jwtService.verifyAsync(accessToken, {
+      secret: process.env.ACCESS_SECRET,
+    });
+    const user = await this.usersService.findOne(decoded.username);
+    const match = await bcrypt.compareSync(oldPassword, user?.passwordHash);
+    if (!match) {
+      throw new UnauthorizedException();
+    }
+    const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
+    this.usersService.updatePasswordHash(user.userId, newPasswordHash);
+  }
+
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-    const match = await bcrypt.compareSync(pass, user?.password);
+    const match = await bcrypt.compareSync(pass, user?.passwordHash);
     if (!match) {
       throw new UnauthorizedException();
     }

@@ -22,7 +22,7 @@ describe('AuthController', () => {
                 Promise.resolve({
                   userId: -1,
                   username: 'potato',
-                  password: 'secret-potato',
+                  passwordHash: 'hashed-potato',
                   refreshHash: '',
                 }),
               ),

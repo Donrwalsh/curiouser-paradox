@@ -9,7 +9,7 @@ export class User {
   username: string;
 
   @Prop()
-  password: string;
+  passwordHash: string;
 
   @Prop()
   refreshHash: string;
@@ -20,7 +20,7 @@ import { Document } from 'mongoose';
 export interface IUser extends Document {
   readonly userId: number;
   readonly username: string;
-  readonly password: string;
+  readonly passwordHash: string;
   readonly refreshHash: string;
 }
 

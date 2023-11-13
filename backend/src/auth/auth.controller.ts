@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -18,7 +19,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { HashTimeDTO, SignInDTO, TokenDTO, Tokens } from 'src/auth/auth.model';
+import {
+  HashTimeDTO,
+  ResetPasswordDTO,
+  SignInDTO,
+  TokenDTO,
+  Tokens,
+} from 'src/auth/auth.model';
 import { AuthService } from 'src/auth/auth.service';
 
 @ApiTags('auth')
@@ -61,6 +68,32 @@ export class AuthController {
   signOut(@Req() req: Request) {
     const accessToken = req.headers['authorization'].split(' ')[1];
     this.authService.signOut(accessToken);
+  }
+
+  @Post('reset-password')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @ApiOkResponse({
+    description: 'Password reset successfully.',
+  })
+  @HttpCode(HttpStatus.OK)
+  resetPassword(
+    @Res() response,
+    @Req() req: Request,
+    @Body() resetDTO: ResetPasswordDTO,
+  ) {
+    const accessToken = req.headers['authorization'].split(' ')[1];
+    this.authService.resetPassword(
+      accessToken,
+      resetDTO.oldPassword,
+      resetDTO.newPasswordOne,
+    );
+    return response.status(HttpStatus.OK).json({
+      message: 'Password reset successfully.',
+    });
   }
 
   @Post('refresh')

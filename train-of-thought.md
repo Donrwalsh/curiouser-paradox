@@ -307,6 +307,18 @@ After a very minor amount of consideration, I'm going to go with kebab-case as a
 
 - [ ] poll.js should not take down the database
 
+Working on doing some password reset stuff, and it has become apparent that I have a huge problem with refresh tokens. Any refresh token that is generated with the valid secret for the environment will always pass the check, and that's not what I want. So I need to fix it and I have an idea that I want to vet:
+
+- [ ] Introduce a 'last-signed-in' value into the database and use it in the generation and validation of refreshTokens.
+
+Cool, so the password reset endpoint works and the frontend is pretty bad about it ~ silently succeeding and such. It also remembers the values input in the password reset form after signing out and signing back in (to confirm the reset working properly, which it does, and that's awesome). Anyway:
+
+- [ ] Introduce some sort of mechanism to indicate if the form submission was successful or not.
+
+- [ ] Have the password reset form forget data when signing out (which doesn't actually kill the component);
+
+- [ ] It might be worth cycling refreshTokens when resetting a password.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
