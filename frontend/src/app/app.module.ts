@@ -16,6 +16,7 @@ import { ComicModule } from './comic/comic.module';
 import { FooterModule } from './footer/footer.module';
 import { ComicService } from './common/services/comic.service';
 import { AuthInterceptor } from 'src/app/common/interceptors/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { AuthInterceptor } from 'src/app/common/interceptors/auth.interceptor';
     HeaderModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     ComicService,

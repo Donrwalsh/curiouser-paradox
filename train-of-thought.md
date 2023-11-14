@@ -331,6 +331,12 @@ I'm listening to this Udemy course on Angular like a podcast, pausing whenever s
 
 Well, that was an absolute TRIP. I decided to sit down and work on the TODO from above where I make it so refreshTokens are limited in some capacity to handle that odd behavior that I saw where I would refresh the token and then the previous token would still work (this was because I missed updating the database with the newly generated token), but the new token would ALSO work. This was confusing to me, and I came up with all sorts of theories that made sense for a little bit, but it wasn't until messing with things today that it clicked: See, I added a 'lastSignedIn' timestamp into the database temporarily and appended that to the end of the refreshToken and then hashed that -> no change, same problems. Ok, easy enough, let's add it to the front of the string -> no change. This broke my brain, but also made it immediately obvious that the full text of the refreshToken was NOT being considered because if it were, then one of those two approaches should have yielded the desired results. Did some research and it looks like bcrypt caps out at 72 characters, and so the solution that came to mind immediately is to just reverse the refreshToken and hash that. Boom, now it all works exactly the way I want it to without having to store additional data. Fun problem to solve! Oh yeah, I also added code that updates the database with the newly generated refreshToken when that happens. Only reason this wasn't causing issues is because of the stuff discussed above.
 
+I am putting some thought into how to upload images as part of this app. There's a common approach for uploading images showcased [here](https://stackoverflow.com/questions/66199633/how-to-access-image-from-uploaded-on-nestjs-server) and [here](https://levelup.gitconnected.com/the-easiest-way-to-upload-your-files-to-nestjs-70a70b95f856) and that seems all well and good. The images get added to the `backend/public` folder that's on the Docker image itself, which is not ideal. But it [seems](https://stackoverflow.com/questions/42877801/how-to-sync-code-between-container-and-host-using-docker-compose) [to](https://stackoverflow.com/questions/18878216/docker-how-to-live-sync-host-folder-with-container-folder) [be](https://docs.docker.com/storage/volumes/) [possible](https://docs.docker.com/compose/file-watch/). Musn't forget image minification either: https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser, this to: https://imagekit.io/blog/image-compression-techniques-in-javascript/
+
+ngx-toastr is great!
+
+- [ ] configure it
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -399,3 +405,6 @@ Well, that was an absolute TRIP. I decided to sit down and work on the TODO from
 - https://aalonso.dev/blog/how-to-generate-generics-dtos-with-nestjsswagger-422g
 - https://stackoverflow.com/questions/47580528/error-response-from-daemon-get-https-registry-1-docker-io-v2-dial-tcp-look
 - https://stackoverflow.com/questions/49699067/property-has-no-initializer-and-is-not-definitely-assigned-in-the-construc
+- https://www.npmjs.com/package/ngx-toastr
+- https://stackoverflow.com/questions/62915060/nullinjectorerror-no-provider-for-injectiontoken-toastconfig-in-jasmine-spec-f
+- https://stackoverflow.com/questions/72472011/subscribenext-null-undefined-error-error-any-void-complete

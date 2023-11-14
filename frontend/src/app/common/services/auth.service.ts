@@ -28,12 +28,6 @@ export class AuthService {
     );
   }
 
-  tryItOut() {
-    return this.http
-      .get(`${environment.apiHost}/comics/admin/all`)
-      .pipe(map((res) => res));
-  }
-
   login(username: string, password: string) {
     return this.http
       .post<AuthResult>(`${environment.apiHost}/auth/sign-in`, {

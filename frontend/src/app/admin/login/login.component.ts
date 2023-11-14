@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private toastr: ToastrService
   ) {
     this.form = this.fb.group({
       username: ['', Validators.required],
@@ -30,15 +30,18 @@ export class LoginComponent {
     const val = this.form.value;
 
     if (val.username && val.password) {
-      this.authService.login(val.username, val.password).subscribe(() => {
-        console.log('Successfully logged in!');
+      this.authService.login(val.username, val.password).subscribe({
+        next: (response) => {
+          this.toastr.success('You did it!', 'Sign in successful', {
+            timeOut: 3000,
+          });
+        },
+        error: (error) => {
+          this.toastr.error('You did not do it 🙁', 'Sign in unsuccessful', {
+            timeOut: 30000,
+          });
+        },
       });
     }
-  }
-
-  tryItOut() {
-    this.authService.tryItOut().subscribe(() => {
-      console.log('It worked!');
-    });
   }
 }
