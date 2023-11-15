@@ -337,6 +337,8 @@ ngx-toastr is great!
 
 - [ ] configure it
 
+Moved some physical hardware around which somehow resulted in the Pi getting a new ip address (and perhaps finally adhering to the static ip I had set aside for it) which requires a change of the in-code angular environment details. Would love that in a .env somewhere, and I'm pretty sure I have that as a todo elsewhere in this doc.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
