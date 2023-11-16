@@ -339,6 +339,10 @@ ngx-toastr is great!
 
 Moved some physical hardware around which somehow resulted in the Pi getting a new ip address (and perhaps finally adhering to the static ip I had set aside for it) which requires a change of the in-code angular environment details. Would love that in a .env somewhere, and I'm pretty sure I have that as a todo elsewhere in this doc.
 
+- [ ] Single field-match validator that takes in a boolean declaring if they should or shouldn't match.
+
+Spent some time starting the new comic form. Went a little deep on the indexes input and landed on what feels like a much cleaner forms approach that I'd like to bring over to the password reset form. I'm also interested in checking my field-match validators to see if I can handle them better, because comparing them to the one I'm using in the new comic component, they feel very much like overkill.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

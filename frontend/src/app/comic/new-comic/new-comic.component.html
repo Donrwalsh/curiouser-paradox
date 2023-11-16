@@ -1,0 +1,144 @@
+<div class="container mt-5">
+  <ng-content></ng-content>
+  <form
+    id="newComicForm"
+    [formGroup]="newComicForm"
+    class="needs-validation"
+    novalidate
+  >
+    <div class="row align-items-center">
+      <div class="col-1">
+        <label for="index" class="col-form-label">Comic Index</label>
+      </div>
+      <div class="col-auto">
+        <input
+          type="number"
+          id="index"
+          [ngClass]="{
+            'is-valid': controls['index'].valid && controls['index'].dirty,
+            'is-invalid': controls['index'].invalid && controls['index'].dirty
+          }"
+          class="form-control"
+          formControlName="index"
+          aria-describedby="indexHelpInline"
+        />
+      </div>
+      <div class="col-auto">
+        <span id="indexHelpInline" class="form-text">
+          Must be a positive and unique integer.
+        </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['index'].invalid && controls['index'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['index'].hasError('required')">
+          This field is required.
+        </div>
+        <div *ngIf="controls['index'].hasError('indexTaken')">
+          That index is already taken.
+        </div>
+        <!-- <div
+        *ngIf="controls['index'].hasError('fieldsMatch')"
+      >
+        New Password cannot match Old Password
+      </div> -->
+      </div>
+    </div>
+    <!-- <div class="form-field mt-3 col-md-4 mx-auto">
+      <label for="oldPassword">Old Password</label>
+      <input
+        (input)="inputFieldUpdate()"
+        type="password"
+        class="form-control"
+        formControlName="oldPassword"
+        id="oldPassword"
+      />
+    </div>
+    <div *ngIf="submitted" class="col-md-4 mt-1 mx-auto text-danger">
+      <div
+        *ngIf="passwordResetFormControls['oldPassword'].hasError('required')"
+      >
+        This field is required.
+      </div>
+      <div
+        *ngIf="passwordResetFormControls['oldPassword'].hasError('fieldsMatch')"
+      >
+        New Password cannot match Old Password
+      </div>
+    </div>
+
+    <div class="form-field mt-3 col-md-4 mx-auto">
+      <label for="newPasswordOne">New Password</label>
+      <input
+        (input)="inputFieldUpdate()"
+        type="password"
+        class="form-control"
+        formControlName="newPasswordOne"
+        id="newPasswordOne"
+        required
+      />
+    </div>
+    <div *ngIf="submitted" class="col-md-4 mt-1 mx-auto text-danger">
+      <div
+        *ngIf="passwordResetFormControls['newPasswordOne'].hasError('required')"
+      >
+        This field is required.
+      </div>
+      <div
+        *ngIf="
+          passwordResetFormControls['newPasswordOne'].hasError('fieldsMatch')
+        "
+      >
+        New Password cannot match Old Password
+      </div>
+      <div
+        *ngIf="
+          passwordResetFormControls['newPasswordOne'].hasError(
+            'fieldsDoNotMatch'
+          )
+        "
+      >
+        New Passwords must be identical
+      </div>
+    </div>
+    <div class="form-field mt-3 col-md-4 mx-auto">
+      <label for="newPasswordTwo">New Password Again</label>
+      <input
+        (input)="inputFieldUpdate()"
+        type="password"
+        class="form-control"
+        formControlName="newPasswordTwo"
+        id="newPasswordTwo"
+        required
+      />
+    </div>
+    <div *ngIf="submitted" class="col-md-4 mt-1 mx-auto text-danger">
+      <div
+        *ngIf="passwordResetFormControls['newPasswordTwo'].hasError('required')"
+      >
+        This field is required.
+      </div>
+      <div
+        *ngIf="
+          passwordResetFormControls['newPasswordTwo'].hasError(
+            'fieldsDoNotMatch'
+          )
+        "
+      >
+        New Passwords must be identical
+      </div>
+    </div>  -->
+    <div class="text-center mb-4">
+      <button
+        (click)="submit()"
+        type="submit"
+        class="btn btn-primary mt-3 mx-auto"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>

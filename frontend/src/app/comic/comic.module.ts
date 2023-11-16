@@ -6,15 +6,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { MainComicComponent } from './main-comic/main-comic.component';
 import { AllComicsComponent } from './all-comics/all-comics.component';
+import { NewComicComponent } from './new-comic/new-comic.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [MainComicComponent, AllComicsComponent],
+  declarations: [MainComicComponent, AllComicsComponent, NewComicComponent],
   imports: [
     CommonModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [],
 })
