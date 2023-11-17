@@ -339,9 +339,11 @@ ngx-toastr is great!
 
 Moved some physical hardware around which somehow resulted in the Pi getting a new ip address (and perhaps finally adhering to the static ip I had set aside for it) which requires a change of the in-code angular environment details. Would love that in a .env somewhere, and I'm pretty sure I have that as a todo elsewhere in this doc.
 
-- [ ] Single field-match validator that takes in a boolean declaring if they should or shouldn't match.
+- [x] Single field-match validator that takes in a boolean declaring if they should or shouldn't match.
 
 Spent some time starting the new comic form. Went a little deep on the indexes input and landed on what feels like a much cleaner forms approach that I'd like to bring over to the password reset form. I'm also interested in checking my field-match validators to see if I can handle them better, because comparing them to the one I'm using in the new comic component, they feel very much like overkill.
+
+I went ahead and made some updates to the password reset form. I removed the 'submitted' tracker and just went with a more generic isDirty check and then mark all the fields as dirty upon submission attempt. Furthermore, I got rid of the awkward function call that handled all the different validation checks and applications and went with a basic `.valid` (or `.invalid`) and `.dirty` check and then turned it into a generic function that just performs the same check based on the fieldName. Pretty pleased with that one, and then I can also use that as the check to see if I should be showing any errors! Awesome. Also, I went ahead and combined the two field-match validators into a single validator that takes in a boolean which toggles the type of comparison that is being checked for. I'm pretty pleased with that one, not gonna lie. I was even able to get rid of the awkward exit condition checking the other field by preventing the event from emitting.
 
 # Couldn't Have Done it Without You
 

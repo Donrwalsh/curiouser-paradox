@@ -7,10 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ComicDTO } from 'src/app/comic/comic.model';
-import { AuthService } from 'src/app/common/services/auth.service';
 import { ComicService } from 'src/app/common/services/comic.service';
-import { FieldMatchValidator } from 'src/app/common/validators/field-match.validator';
-import { FieldsDontMatchValidator } from 'src/app/common/validators/fields-dont-match.validator';
 
 @Component({
   selector: 'app-new-comic',
