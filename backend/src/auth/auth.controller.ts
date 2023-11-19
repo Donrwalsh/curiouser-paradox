@@ -73,6 +73,9 @@ export class AuthController {
   @Post('reset-password')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: "Reset password for current session's user",
+  })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized.',
   })

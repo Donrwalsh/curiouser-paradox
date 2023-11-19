@@ -12,6 +12,10 @@ export class Comic {
 
   @ApiProperty()
   @Prop()
+  series: string;
+
+  @ApiProperty()
+  @Prop()
   altText: string;
 
   @ApiProperty()
@@ -38,6 +42,7 @@ import { Document } from 'mongoose';
 export interface IComic extends Document {
   readonly state: string;
   readonly title: string;
+  readonly series: string;
   readonly altText: string;
   readonly layout: string;
   readonly path: string;

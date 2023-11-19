@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComicService } from '../../common/services/comic.service';
-import { Comic, ComicDTO, initialComic, notFoundComic } from '../comic.model';
+import {
+  Comic,
+  ComicDTO,
+  initialComic,
+  notFoundComic,
+} from '../../common/models/comic.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -23,6 +23,14 @@ export class ComicIndexesResponseDTO {
   payload: number[];
 }
 
+export class ComicSeriesNamesResponseDTO {
+  @ApiProperty()
+  message: string;
+
+  @ApiProperty({ type: [String] })
+  payload: string[];
+}
+
 export class SingleComicResponseDTO {
   @ApiProperty()
   message: string;

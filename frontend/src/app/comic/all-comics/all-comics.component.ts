@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ComicService } from '../../common/services/comic.service';
-import { Comic, ComicDTO } from '../comic.model';
+import { Comic, ComicDTO } from '../../common/models/comic.model';
 import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({

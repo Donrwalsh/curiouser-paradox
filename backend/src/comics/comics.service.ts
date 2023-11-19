@@ -3,27 +3,45 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IComic } from 'src/comics/schema';
 
+const PUBLISHED_FILTER = {
+  state: { $eq: 'published' },
+};
+
 @Injectable()
 export class ComicsService {
   constructor(@InjectModel('Comic') private comicModel: Model<IComic>) {}
 
-  async getAllComics(): Promise<IComic[]> {
-    const allComics = await this.comicModel.find({});
+  async getAllPublishedComics() {
+    return this.getAllComics(true);
+  }
+
+  async getAllComics(onlyPub: boolean = false): Promise<IComic[]> {
+    const allComics = await this.comicModel.find(
+      onlyPub ? PUBLISHED_FILTER : {},
+    );
     return allComics;
   }
 
-  async getAllPublishedComics(): Promise<IComic[]> {
-    const allPublishedComics = await this.comicModel.find({
-      state: { $eq: 'published' },
-    });
-    return allPublishedComics;
+  async getPublishedIndexes() {
+    return this.getIndexes(true);
   }
 
-  async getAllIndexes(): Promise<number[]> {
+  async getIndexes(onlyPub: boolean = false): Promise<number[]> {
     const indexes = await this.comicModel
-      .find({ state: { $eq: 'published' } })
+      .find(onlyPub ? PUBLISHED_FILTER : {})
       .distinct('index');
     return indexes;
+  }
+
+  async getPublishedSeriesNames() {
+    return this.getSeriesNames(true);
+  }
+
+  async getSeriesNames(onlyPub: boolean = false): Promise<string[]> {
+    const seriesNames = await this.comicModel
+      .find(onlyPub ? PUBLISHED_FILTER : {})
+      .distinct('series');
+    return seriesNames;
   }
 
   async getLatest(): Promise<IComic> {

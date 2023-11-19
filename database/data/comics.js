@@ -20,6 +20,7 @@ db.comics.insertMany(
     {
       state: "published",
       title: "Creatures I",
+      series: "Creatures",
       altText:
         "Unsurprisingly, Mark Sinclair declined to comment (he was not contacted).",
       layout: "wide",
@@ -29,6 +30,7 @@ db.comics.insertMany(
     {
       state: "published",
       title: "Words I",
+      series: "Words",
       altText: "Last chance to lose control - Context: Absolution",
       layout: "tall",
       path: "hysteria.png",

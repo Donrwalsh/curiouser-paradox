@@ -345,6 +345,16 @@ Spent some time starting the new comic form. Went a little deep on the indexes i
 
 I went ahead and made some updates to the password reset form. I removed the 'submitted' tracker and just went with a more generic isDirty check and then mark all the fields as dirty upon submission attempt. Furthermore, I got rid of the awkward function call that handled all the different validation checks and applications and went with a basic `.valid` (or `.invalid`) and `.dirty` check and then turned it into a generic function that just performs the same check based on the fieldName. Pretty pleased with that one, and then I can also use that as the check to see if I should be showing any errors! Awesome. Also, I went ahead and combined the two field-match validators into a single validator that takes in a boolean which toggles the type of comparison that is being checked for. I'm pretty pleased with that one, not gonna lie. I was even able to get rid of the awkward exit condition checking the other field by preventing the event from emitting.
 
+Mid-stream on adding series support for comics. Need backend to retrieve a list of existing series for dropdown and somehow add ability to add a new comic with series in single swoop. Been working on this this morning and am noticing a few things. First off, the indexes call only grabs for published comics, and I'm using it as part of creation which should actually consider unpublished comics too:
+
+- [x] split /indexes call to all indexes and then all published indexes
+
+Same consideration for series-names too, since concievably you could have a select-by-series ui element or something. Also the admin endpoint that I have inside the comics module is listed twice in swagger, yuck. I had, for a while, a new Admin module that I did away with because really this is all comics consideration, so I'm working now with two different comic controllers: pub and admin. On the service side, the core method is shared between the two of them, but there's a basic passthrough method for the public version that hits the core method with a non-descript boolean (hence the 2nd method in each case, that way the controller doesn't hold onto some magic boolean value).
+
+- [ ] Continue this pattern for the remaining comics controller calls ~ if an admin hits the homepage, they should see the latest of all comics, including unpublished. Cool.
+
+I have the series names coming from the backend and populating the dropdown select on the page, but I'm not really pleased with how it looks, so I think I'll shop around for some different options. To be more explicit, the thing I'm considering here is I want to enable selecting a series name from the list of ones that exist (perhaps with some indication of which position in the sequence it would be when this happens) but then also offer the option to generate and declare a new series name as part of the creation process. This is an interesting challenge to chew on because there's a lot of ways to do it.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ComicsController } from 'src/comics/comics.controller';
+import { AdminComicsController } from 'src/comics/comics-admin.controller';
+import { PublicComicsController } from 'src/comics/comics-public.controller';
 import { ComicsService } from 'src/comics/comics.service';
 import { ComicSchema } from 'src/comics/schema';
 
@@ -8,7 +9,7 @@ import { ComicSchema } from 'src/comics/schema';
   imports: [
     MongooseModule.forFeature([{ name: 'Comic', schema: ComicSchema }]),
   ],
-  controllers: [ComicsController],
+  controllers: [AdminComicsController, PublicComicsController],
   providers: [ComicsService],
 })
 export class ComicsModule {}

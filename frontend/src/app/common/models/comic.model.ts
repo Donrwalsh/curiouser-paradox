@@ -1,6 +1,7 @@
 export interface Comic {
   state: 'draft' | 'published';
   title: string;
+  series?: string;
   altText: string;
   layout:
     | 'square' // 1280x1280
@@ -10,6 +11,14 @@ export interface Comic {
   index: number;
   prevIndex: number | null;
   nextIndex: number | null;
+}
+
+// maybe?
+export interface ComicNav {
+  prevIndex: number | null;
+  nextIndex: number | null;
+  prevSeriesIndex: number | null;
+  nextSeriesIndex: number | null;
 }
 
 export interface ComicDTO {

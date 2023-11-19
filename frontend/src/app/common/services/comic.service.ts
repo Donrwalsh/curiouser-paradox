@@ -27,6 +27,18 @@ export class ComicService {
       .pipe(map((res) => res));
   }
 
+  getIndexesAdmin() {
+    return this.http
+      .get(`${environment.apiHost}/admin/comics/indexes`)
+      .pipe(map((res) => res));
+  }
+
+  getSeriesNamesAdmin() {
+    return this.http
+      .get(`${environment.apiHost}/admin/comics/series-names`)
+      .pipe(map((res) => res));
+  }
+
   getLatest() {
     return this.http
       .get(`${environment.apiHost}/comics/latest`)
