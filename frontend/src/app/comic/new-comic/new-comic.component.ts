@@ -21,7 +21,8 @@ export class NewComicComponent {
   constructor(private fb: FormBuilder, private comicService: ComicService) {
     this.newComicForm = this.fb.group(
       {
-        index: ['', [Validators.required]],
+        index: ['', [Validators.required, Validators.min(0)]],
+        title: ['', [Validators.required]],
         // newPasswordOne: ['', Validators.required],
         // newPasswordTwo: ['', Validators.required],
       },
@@ -45,6 +46,15 @@ export class NewComicComponent {
 
   get controls() {
     return this.newComicForm.controls;
+  }
+
+  inputFieldValidity(fieldName: string) {
+    return {
+      'is-valid':
+        this.controls[fieldName].valid && this.controls[fieldName].dirty,
+      'is-invalid':
+        this.controls[fieldName].invalid && this.controls[fieldName].dirty,
+    };
   }
 
   submit() {
