@@ -355,6 +355,8 @@ Same consideration for series-names too, since concievably you could have a sele
 
 I have the series names coming from the backend and populating the dropdown select on the page, but I'm not really pleased with how it looks, so I think I'll shop around for some different options. To be more explicit, the thing I'm considering here is I want to enable selecting a series name from the list of ones that exist (perhaps with some indication of which position in the sequence it would be when this happens) but then also offer the option to generate and declare a new series name as part of the creation process. This is an interesting challenge to chew on because there's a lot of ways to do it.
 
+Working on some updates to the README. Got the Frontend spot looking nice, but as part of my work here I ran into the awkwardness I had with Angular environments and `docker` actually being `dev` without any real docker environment to speak of. Doing a commit now to see if I got it right.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
