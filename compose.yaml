@@ -28,7 +28,7 @@ services:
       - data-network
     restart: unless-stopped
     depends_on:
-      - mongo
+      - database
 
   database:
     ports:
