@@ -17,7 +17,7 @@ export class ComicService {
 
   getAllComicsAdmin() {
     return this.http
-      .get(`${environment.apiHost}/comics/admin/all`)
+      .get(`${environment.apiHost}/admin/comics/all`)
       .pipe(map((res) => res));
   }
 
