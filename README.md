@@ -23,15 +23,19 @@ If you're interested in running this project on your local device, then this sec
 
 This section will talk through the necessary considerations for standing up and running a local or containerized copy of each of the big 3 primary parts of this project. These three parts (Frontend, Backend and Database) combine together to create the entire website itself. If only a subset of them are running or any of them are misconfigured then the website will not work properly.
 
-### Frontend
+### Prerequisites
 
-**Decision Point**: Are you planning on running the Frontend locally or in a container?
+Each of the big 3 can be run locally or as a container. For development, I prefer running the Frontend and Backend locally with the database running as a container. (I actually use the dev-server's database, more on that later.)
+
+If you intend to use a **Local Setup** for either the Frontend or the Backend, then you'll need [NodeJS](https://nodejs.org/en/) installed on your system. I'm using `v18.15.0`. In addition, you're going to want the Node Package Manager or [npm](https://www.npmjs.com/) as well, and I'm using `v9.5.0`
+
+If you intend to use a **Containerized Setup** for any of the big 3, then you'll need [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). I'm using versions `24.0.6` and `2.23.0` respectively, but that shouldn't matter a whole lot.
+
+### Frontend
 
 #### Local Setup
 
-In order to run the Frontend locally, you'll need [NodeJS](https://nodejs.org/en/) installed on your system. I'm using `v18.15.0`. In addition, you're going to want the Node Package Manager or [npm](https://www.npmjs.com/) as well, and I'm using `v9.5.0`
-
-With npm available you can now run two important commands:
+With npm available on your system, you can run two important commands:
 
 - \>`npm install` _(This populates the `node_modules` folder based on the project's `package.json` file)_
 - \>`npm run start` _(This runs the frontend application using `ng serve` which rebuilds on file changes)_
@@ -42,51 +46,49 @@ The Frontend code needs to know where to find the Backend API, and it manages th
 
 #### Containerized Setup
 
-In order to run the Frontend in a container, you'll need [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). I'm using versions `24.0.6` and `2.23.0` respectively, but that shouldn't matter a whole lot.
+With Docker and Docker Compose available on your system, you can fire up the containerized Frontend via:
 
-- \>`docker compose up -d frontend --no-deps` _(Run the frontend application as a docker container)_
-  - Note that `--no-deps` is only used here to illustrate how to work with the Frontend contianer alone. It depends on both of the other big 3 and doesn't make much sense outside of initial setup.
+- \>`docker compose up -d frontend --no-deps`
+  - Note that `--no-deps` is only used here to illustrate how to work with the Frontend container alone. It depends on both of the other big 3 and doesn't make much sense outside of initial setup.
 
 What happens in response to this command is dictated by the [docker compose file](compose.yaml) and the Frontend-specific [Dockerfile](frontend/Dockerfile). Now you can visit the frontend application at <http://localhost:8080> but you'll be greeted with a minimal website and many console errors unless the Backend and Database are running as well.
 
-# Progress Marker, continue from here
+### Backend
 
-On a machine with Docker installed, the idea is you can run `>docker compose up -d` in the root directory and moments later the app is running as a set of three containers.
+The Backend application uses a `.env` file to manage environment variables. Some of those variables (specifically the `CONNECTION_STRING` variable) are critical to the operation of the backend. The `.env` file itself is .gitignore'd so you'll want to make a copy of it following the template described by the `.env.sample` file that is held in SCM.
 
-Through routine development, the most helpful command I've found is `>docker compose down -v frontend backend && docker compose up -d frontend backend --build` which restarts everything except the database, which usually doesn't need to be touched.
+This step is required for both Local and Containerized Setups.
 
-|          | Local                            | Containerized               |
-| -------- | -------------------------------- | --------------------------- |
-| Frontend | <http://localhost:4200>          | <http://localhost:8080>     |
-| Backend  | <http://localhost:3000/api>      | <http://localhost:3333/api> |
-| Database | ~~<mongodb://127.0.0.1:27017/>~~ | <mongodb://mongo:27017/>    |
+#### Local Setup
 
-## Backend
+After you've setup the `.env` file and on a system that has npm available you can now run the Backend project via:
 
-(NestJS)
+- \>`npm install` _(This populates the `node_modules` folder based on the project's `package.json` file)_
+- \>`npm run start:dev` _(This runs the backend application using `nest start --watch` which rebuilds on file changes)_
 
-### Local
+At this point you can visit the backend's Swagger interface at <http://localhost:3000/api>, being sure to replace `3000` with whatever `PORT` you specified in the `.env` file you created. Furthermore, if the database connection is failing, the Swagger interface won't load. Look to the console output for details as to what might have gone wrong.
 
-Use `>npm install` if necessary, then `>npm run start:dev` and access the Swagger interface at <http://localhost:3000/api>.
+#### Containerized Setup
 
-### Docker
+After you've setup the `.env` file and on a system that has Docker and Docker Compose available you can now run the Backend project via:
 
-Individually manage the `backend` container as follows: `>docker compose down -v backend` and `>docker compose up -d backend`. Access the containerized app at <http://localhost:8080>
+- \>`docker compose up -d backend --no-deps`
+  - Note that `--no-deps` is only used here once again to illustrate how to work with the Backend contianer alone. Omitting this flag will result in the Database container being ran as well.
 
-## Database
+What happens in response to this command is dictated by the [docker compose file](compose.yaml) and the Backend-specific [Dockerfile](backend/Dockerfile). Now you can visit the backend's Swagger interface at <http://localhost:3000/api>, being sure to replace `3000` with whatever `PORT` you specified in the `.env` file you created. Furthermore, if the database connection is failing, the Swagger interface won't load. Look to the console output for details as to what might have gone wrong.
 
-MongoDB Database. Running locally on my Windows machine as a monolith for now.
+### Database
 
-## Frontend
+#### Local Setup
 
-(Angular)
+I no longer personally run the database locally, so I don't have a lot of guidance to give here. Overall, the details won't differ a whole lot from the containerized setup, as long as you can establish the Backend to Database connection appropriately.
 
-### Local
+#### Containerized Setup
 
-Use `>npm install` if necessary, then `>npm run start` and access at <http://localhost:4200>.
+Running the database in a container is quite similar to running both the Frontend and Backend in containers:
 
-### Docker
+- \>`docker compose up -d database`
 
-Individually manage the `frontend` container as follows: `>docker compose down -v frontend` and `>docker compose up -d frontend`. Access the containerized app at <http://localhost:8080>
+The first time you run the database image, it will not contain any data. The contents of the [database/data](database/data) folder are a representation of decent starter data that you'll want to populate your database with.
 
-## Server
+The [docker compose file](compose.yaml) is configured to maintain a copy of the database's contents within the device that is running the container within the [database/docker-data](database/docker-data) folder. This data is used to rehydrate the database every time it is run, and so you can safely bring down and stand up the database image without data being discarded.

@@ -30,7 +30,7 @@ services:
     depends_on:
       - mongo
 
-  mongo:
+  database:
     ports:
       - 27017:27017
     volumes:
