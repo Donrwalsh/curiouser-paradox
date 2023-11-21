@@ -5,3 +5,21 @@
     }
   }
 }
+
+.navbar-brand {
+  .big-banner {
+    max-width: 750px;
+    display: none;
+    @media (min-width: 768px) {
+      display: inline;
+    }
+  }
+
+  .small-banner {
+    height: 57px;
+    display: inline;
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+}
