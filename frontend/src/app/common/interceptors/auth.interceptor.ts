@@ -1,5 +1,6 @@
 import {
   HttpClient,
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -30,7 +31,14 @@ export class AuthInterceptor implements HttpInterceptor {
       if (access_token) {
         if (this.isTokenExpired(access_token)) {
           if (refresh_token && !this.isTokenExpired(refresh_token)) {
-            await lastValueFrom(this.authService.refresh(refresh_token!));
+            await lastValueFrom(this.authService.refresh(refresh_token!)).catch(
+              (error: HttpErrorResponse) => {
+                console.log('error: ', error);
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                return 'an error has occured';
+              }
+            );
             access_token = localStorage.getItem('access_token');
           } else {
             this.authService.clearSession();
