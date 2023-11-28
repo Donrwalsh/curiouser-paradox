@@ -127,6 +127,7 @@
           [ngClass]="inputFieldValidity('comic')"
           class="form-control"
           formControlName="comic"
+          aria-describedby="comicThumbnailHelpInline"
           readonly
         />
       </div>
@@ -157,7 +158,37 @@
         </div>
       </div>
     </div>
-    <section></section>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="comicUpload" class="col-form-label">Thumbnail</label>
+      </div>
+      <div class="col-2">
+        <input
+          type="text"
+          id="thumbnail"
+          [ngClass]="inputFieldValidity('thumbnail')"
+          class="form-control"
+          formControlName="thumbnail"
+          aria-describedby="comicThumbnailHelpInline"
+          readonly
+        />
+      </div>
+      <div class="col-auto">
+        <span id="comicThumbnailHelpInline" class="form-text">
+          (uploading an image populates comic and thumbnail)
+        </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['thumbnail'].invalid && controls['thumbnail'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['thumbnail'].hasError('required')">
+          A thumbnail is required.
+        </div>
+      </div>
+    </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
         <label for="size" class="col-form-label">Size</label>

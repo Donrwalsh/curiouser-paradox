@@ -40,6 +40,7 @@ export class NewComicComponent {
         title: ['', [Validators.required]],
         altText: ['', [Validators.required]],
         comic: ['', [Validators.required]],
+        thumbnail: ['', [Validators.required]],
         size: ['', [Validators.required]],
         isSeries: [false],
         existingSeries: [''],
@@ -82,11 +83,11 @@ export class NewComicComponent {
         console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
 
         this.imageCompress
-          .compressFile(image, orientation, 75, 50)
+          .compressFile(image, orientation, 75, 75)
           .then((result: DataUrl) => {
             this.imgResultAfterCompress = result;
             console.warn(
-              `Compressed: ${result.substring(0, 50)}... (${
+              `{Comic} Compressed: ${result.substring(0, 50)}... (${
                 result.length
               } characters)`
             );
@@ -97,11 +98,29 @@ export class NewComicComponent {
             this.controls['comic'].setValue(result);
             this.controls['comic'].markAsDirty();
           });
+
+        this.imageCompress
+          .compressFile(image, orientation, 25, 25)
+          .then((result: DataUrl) => {
+            this.imgResultAfterCompress = result;
+            console.warn(
+              `{Thumbnail} Compressed: ${result.substring(0, 50)}... (${
+                result.length
+              } characters)`
+            );
+            console.warn(
+              'Size in bytes is now:',
+              this.imageCompress.byteCount(result)
+            );
+            this.controls['thumbnail'].setValue(result);
+            this.controls['thumbnail'].markAsDirty();
+          });
       });
   }
 
   clearFile() {
     this.controls['comic'].setValue('');
+    this.controls['thumbnail'].setValue('');
   }
 
   inputFieldValidity(fieldName: string) {
