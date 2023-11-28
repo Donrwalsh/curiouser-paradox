@@ -210,28 +210,31 @@
     </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
-        <label for="size" class="col-form-label">Size</label>
+        <label for="layout" class="col-form-label">Layout</label>
       </div>
       <div class="col-2">
         <select
-          id="size"
-          [ngClass]="inputFieldValidity('size')"
-          formControlName="size"
+          id="layout"
+          [ngClass]="inputFieldValidity('layout')"
+          formControlName="layout"
           class="form-select"
         >
-          <option value="" hidden selected disabled>Select a Size</option>
-          <option *ngFor="let imageSize of imageSizes" [value]="imageSize">
-            {{ imageSize }}
+          <option value="" hidden selected disabled>Select a Layout</option>
+          <option
+            *ngFor="let imageLayout of imageLayouts"
+            [value]="imageLayout"
+          >
+            {{ imageLayout }}
           </option>
         </select>
       </div>
     </div>
     <div class="row align-items-center">
       <div
-        *ngIf="controls['size'].invalid && controls['size'].dirty"
+        *ngIf="controls['layout'].invalid && controls['layout'].dirty"
         class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
       >
-        <div *ngIf="controls['size'].hasError('required')">
+        <div *ngIf="controls['layout'].hasError('required')">
           This field is required.
         </div>
       </div>

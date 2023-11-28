@@ -26,7 +26,7 @@ export class NewComicComponent {
   newComicForm: FormGroup;
   indexes = [];
   seriesNames = [];
-  imageSizes = ['square', 'tall', 'wide'];
+  imageLayouts = ['square', 'tall', 'wide'];
   isSeries = false;
 
   constructor(
@@ -42,7 +42,7 @@ export class NewComicComponent {
         cardText: [''],
         image: ['', [Validators.required]],
         thumbnail: ['', [Validators.required]],
-        size: ['', [Validators.required]],
+        layout: ['', [Validators.required]],
         isSeries: [false],
         existingSeries: [''],
         newSeries: [''],
@@ -94,7 +94,7 @@ export class NewComicComponent {
     Object.keys(this.controls).forEach((key) => {
       this.controls[key].markAsDirty();
     });
-    this.controls['size'].setValue('Square');
+    this.controls['layout'].setValue('square');
   }
 
   compressFile() {
@@ -165,8 +165,23 @@ export class NewComicComponent {
       this.controls[key].markAsDirty();
     });
 
-    console.log(this.newComicForm.value);
-    console.log(this.newComicForm.controls['index']);
+    let createDTO = {
+      index: this.controls['index'].getRawValue(),
+      title: this.controls['title'].getRawValue(),
+      altText: this.controls['altText'].getRawValue(),
+      cardText: this.controls['cardText'].getRawValue(),
+      layout: this.controls['layout'].getRawValue(),
+      image: this.controls['image'].getRawValue(),
+      thumbnail: this.controls['thumbnail'].getRawValue(),
+      state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
+      // series: something~
+    };
+
+    this.comicService
+      .createComic(this.newComicForm.value)
+      .subscribe((data: any) => {
+        console.log(data);
+      });
   }
 
   notInArrayValidator(array: any[]) {
