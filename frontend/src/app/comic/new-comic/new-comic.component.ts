@@ -39,7 +39,7 @@ export class NewComicComponent {
         index: ['', [Validators.required, Validators.min(0)]],
         title: ['', [Validators.required]],
         altText: ['', [Validators.required]],
-        comic: ['', [Validators.required]],
+        image: ['', [Validators.required]],
         thumbnail: ['', [Validators.required]],
         size: ['', [Validators.required]],
         isSeries: [false],
@@ -95,8 +95,8 @@ export class NewComicComponent {
               'Size in bytes is now:',
               this.imageCompress.byteCount(result)
             );
-            this.controls['comic'].setValue(result);
-            this.controls['comic'].markAsDirty();
+            this.controls['image'].setValue(result);
+            this.controls['image'].markAsDirty();
           });
 
         this.imageCompress
@@ -119,7 +119,7 @@ export class NewComicComponent {
   }
 
   clearFile() {
-    this.controls['comic'].setValue('');
+    this.controls['image'].setValue('');
     this.controls['thumbnail'].setValue('');
   }
 

@@ -3,9 +3,9 @@
   <!-- <This is the worst and needs to go away> -->
   <div class="float-end" style="position: relative">
     <img
-      *ngIf="controls['comic'].value"
+      *ngIf="controls['image'].value"
       id="imagePreview"
-      src="{{ controls['comic'].value }}"
+      src="{{ controls['image'].value }}"
       style="
         position: absolute;
         max-width: 500px;
@@ -27,7 +27,7 @@
 
     <div class="row align-items-center">
       <div class="col-1">
-        <label for="index" class="col-form-label">Comic Index</label>
+        <label for="index" class="col-form-label">Index</label>
       </div>
       <div class="col-2">
         <input
@@ -63,7 +63,7 @@
     </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
-        <label for="title" class="col-form-label">Comic Title</label>
+        <label for="title" class="col-form-label">Title</label>
       </div>
       <div class="col-2">
         <input
@@ -118,31 +118,33 @@
     </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
-        <label for="comicUpload" class="col-form-label">Comic</label>
+        <label for="image" class="col-form-label">Image</label>
       </div>
       <div class="col-2">
         <input
           type="text"
-          id="comic"
-          [ngClass]="inputFieldValidity('comic')"
+          id="image"
+          [ngClass]="inputFieldValidity('image')"
           class="form-control"
-          formControlName="comic"
-          aria-describedby="comicThumbnailHelpInline"
+          formControlName="image"
+          aria-describedby="imagesHelpInline"
           readonly
         />
       </div>
       <div class="col-3">
         <button
-          *ngIf="!controls['comic'].value"
+          *ngIf="!controls['image'].value"
           (click)="compressFile()"
           class="btn btn-primary"
         >
           <i class="bi bi-upload"></i>
         </button>
         <button
-          *ngIf="controls['comic'].value"
+          *ngIf="controls['image'].value"
           class="btn btn-danger"
-          (click)="controls['comic'].setValue('')"
+          (click)="
+            controls['image'].setValue(''); controls['thumbnail'].setValue('')
+          "
         >
           <i class="bi bi-trash2"></i>
         </button>
@@ -150,10 +152,10 @@
     </div>
     <div class="row align-items-center">
       <div
-        *ngIf="controls['comic'].invalid && controls['comic'].dirty"
+        *ngIf="controls['image'].invalid && controls['image'].dirty"
         class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
       >
-        <div *ngIf="controls['comic'].hasError('required')">
+        <div *ngIf="controls['image'].hasError('required')">
           A comic is required.
         </div>
       </div>
