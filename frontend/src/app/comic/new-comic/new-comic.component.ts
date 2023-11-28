@@ -26,7 +26,7 @@ export class NewComicComponent {
   newComicForm: FormGroup;
   indexes = [];
   seriesNames = [];
-  imageSizes = ['Square', 'Tall', 'Wide'];
+  imageSizes = ['square', 'tall', 'wide'];
   isSeries = false;
 
   constructor(

@@ -1,15 +1,18 @@
 export interface Comic {
-  state: 'draft' | 'published';
+  index: number;
   title: string;
-  series?: string;
   altText: string;
+  cardText: string;
   layout:
     | 'square' // 1280x1280
     | 'wide' // 1748x1181
     | 'tall'; // 1240x1754
-  path: string;
-  index: number;
-  image?: string;
+  image: string;
+  thumbnail: string;
+  series?: string;
+  state: 'draft' | 'published';
+
+  //Synthetic attributes
   prevIndex: number | null;
   nextIndex: number | null;
 }
@@ -31,8 +34,10 @@ export const initialComic: Comic = {
   state: 'published',
   title: '',
   altText: '',
+  cardText: '',
   layout: 'square',
-  path: '',
+  image: '',
+  thumbnail: '',
   index: 0,
   prevIndex: null,
   nextIndex: null,
@@ -42,8 +47,10 @@ export const notFoundComic: Comic = {
   state: 'published',
   title: 'Not Found',
   altText: `Saying there's no content to find while displaying content; A paradox.`,
+  cardText: `Lorem Ipsum? I hardly knowum!`,
   layout: 'square',
-  path: 'not_found.png',
+  image: '',
+  thumbnail: '',
   index: -1,
   prevIndex: null,
   nextIndex: null,
