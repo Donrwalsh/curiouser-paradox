@@ -1,16 +1,30 @@
-import { Controller, Get, HttpStatus, Res, UseGuards } from '@nestjs/common';
 import {
+  Controller,
+  Get,
+  Post,
+  HttpStatus,
+  Res,
+  UseGuards,
+  Body,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
 import {
   ComicIndexesResponseDTO,
   ComicSeriesNamesResponseDTO,
   ComicsResponseDTO,
+  CreateComicDTO,
+  SingleComicResponseDTO,
 } from 'src/comics/comics.model';
 import { ComicsService } from 'src/comics/comics.service';
 
@@ -86,6 +100,52 @@ export class AdminComicsController {
       return response.status(HttpStatus.OK).json({
         message: 'Published Comic Series Names obtained successfully',
         payload: allSeriesNames,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
+  @Post('comics/new')
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Submit new comic data.',
+  })
+  @ApiCreatedResponse({
+    description: 'New comic submitted successfully.',
+    type: Number,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
+  @ApiBody({
+    schema: {
+      example: {
+        // Consider how to make dynamic, as this is a POST
+        // and indexes are unique in the database
+        index: 0,
+        title: 'test',
+        altText: 'this is a test',
+        cardText: 'this is a test',
+        layout: 'square',
+        image: 'base64 test',
+        thumbnail: 'this is a test',
+        series: 'this is a test',
+        state: 'draft',
+      },
+    },
+  })
+  async submitComic(@Res() response, @Body() body: CreateComicDTO) {
+    try {
+      // Submit comic using unbuilt service method
+      return response.status(HttpStatus.CREATED).json({
+        message: 'Added comic to database.',
+        // Payload will be ID of added comic
+        payload: body.index,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);

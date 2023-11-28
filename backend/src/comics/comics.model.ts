@@ -39,6 +39,20 @@ export class SingleComicResponseDTO {
   payload: Comic;
 }
 
+export interface CreateComicDTO {
+  index: number;
+  title: string;
+  altText: string;
+  cardText: string;
+  layout:
+    | 'square' // 1280x1280
+    | 'wide' // 1748x1181
+    | 'tall'; // 1240x1754
+  image: string;
+  thumbnail: string;
+  series?: string;
+  state: 'draft' | 'published';
+}
 // export class CoreComicResponseDTO<T> {
 //   @ApiProperty()
 //   message: string;
