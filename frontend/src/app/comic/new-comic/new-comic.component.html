@@ -118,6 +118,23 @@
     </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
+        <label for="cardText" class="col-form-label">Card Text</label>
+      </div>
+      <div class="col-2">
+        <textarea
+          id="cardText"
+          [ngClass]="inputFieldValidity('cardText')"
+          class="form-control"
+          formControlName="cardText"
+          aria-describedby="cardTextHelpInline"
+        ></textarea>
+      </div>
+      <div class="col-auto">
+        <span id="cardTextHelpInline" class="form-text"> (optional) </span>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
         <label for="image" class="col-form-label">Image</label>
       </div>
       <div class="col-2">
@@ -300,6 +317,15 @@
           }}</label>
         </div>
       </div>
+    </div>
+    <div class="text-center mb-4">
+      <button
+        (click)="populate()"
+        type="submit"
+        class="btn btn-primary mt-3 mx-auto"
+      >
+        Populate
+      </button>
     </div>
     <div class="text-center mb-4">
       <button

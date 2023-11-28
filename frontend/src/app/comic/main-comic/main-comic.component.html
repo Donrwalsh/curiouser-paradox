@@ -5,11 +5,20 @@
 
 <div *ngIf="comic.path" class="d-flex justify-content-center mt-4">
   <img
+    *ngIf="comic.index != -1; else notFound"
     id="comic"
     class="{{ comic.layout }}"
     src="{{ comic.image }}"
     title="{{ comic.altText }}"
   />
+  <ng-template #notFound>
+    <img
+      id="comic"
+      class="{{ comic.layout }}"
+      src="{{ apiHost }}/not_found.png"
+      title="{{ comic.altText }}"
+    />
+  </ng-template>
 </div>
 
 <div
