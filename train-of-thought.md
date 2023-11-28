@@ -357,7 +357,9 @@ I have the series names coming from the backend and populating the dropdown sele
 
 Working on some updates to the README. Got the Frontend spot looking nice, but as part of my work here I ran into the awkwardness I had with Angular environments and `docker` actually being `dev` without any real docker environment to speak of. Doing a commit now to see if I got it right. Wrapped up work on the README and changed the name of the `mongo` container to be the more descriptive and better `database`. It failed to startup automatically because I neglected to change the backend's depends_on value and then it failed again which I'm not sure about. Manually it built just fine, but this commit is going to test if that was a fluke.
 
-Lots of work today on the New Comic form using the guiding principle of "Why don't I just put images in the database despite what the internet says?!" to excellent results!
+Lots of work today on the New Comic form using the guiding principle of "Why don't I just put images in the database despite what the internet says?!" to excellent results! Some of the code I'm committing here is aware of this change, but mostly this is just the stuff that will assist with this endeavor indirectly. Oh, this was supposed to go with the last commit. Oh well.
+
+There's this thing going on where the refreshToken provided by the backend upon refreshing doesn't seem to be retained properly. I am out of time to look into it now, but it should be obvious that something's happening when sessions only last 10min. Unless something else is going on. Anyway, I made a quick update to the interceptor to use an existing clearSession method that I forgot I had made.
 
 # Couldn't Have Done it Without You
 
