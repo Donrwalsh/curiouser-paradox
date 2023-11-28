@@ -80,15 +80,23 @@
                   "with": "src/environments/environment.docker.ts"
                 }
               ]
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "local": {
-              "browserTarget": "frontend:build"
+              "browserTarget": "frontend:build:local"
             },
             "production": {
               "browserTarget": "frontend:build:production"

@@ -357,6 +357,8 @@ I have the series names coming from the backend and populating the dropdown sele
 
 Working on some updates to the README. Got the Frontend spot looking nice, but as part of my work here I ran into the awkwardness I had with Angular environments and `docker` actually being `dev` without any real docker environment to speak of. Doing a commit now to see if I got it right. Wrapped up work on the README and changed the name of the `mongo` container to be the more descriptive and better `database`. It failed to startup automatically because I neglected to change the backend's depends_on value and then it failed again which I'm not sure about. Manually it built just fine, but this commit is going to test if that was a fluke.
 
+Lots of work today on the New Comic form using the guiding principle of "Why don't I just put images in the database despite what the internet says?!" to excellent results!
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -428,3 +430,4 @@ Working on some updates to the README. Got the Frontend spot looking nice, but a
 - https://www.npmjs.com/package/ngx-toastr
 - https://stackoverflow.com/questions/62915060/nullinjectorerror-no-provider-for-injectiontoken-toastconfig-in-jasmine-spec-f
 - https://stackoverflow.com/questions/72472011/subscribenext-null-undefined-error-error-any-void-complete
+- https://stackoverflow.com/questions/42482951/converting-an-image-to-base64-in-angular-2

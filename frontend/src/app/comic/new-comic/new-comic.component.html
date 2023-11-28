@@ -1,11 +1,30 @@
 <div class="container mt-5">
   <ng-content></ng-content>
+  <!-- <This is the worst and needs to go away> -->
+  <div class="float-end" style="position: relative">
+    <img
+      *ngIf="controls['comic'].value"
+      id="imagePreview"
+      src="data:image/png;base64,{{ controls['comic'].value }}"
+      style="
+        position: absolute;
+        max-width: 500px;
+        max-height: 500px;
+        left: -50vh;
+      "
+    />
+  </div>
   <form
     id="newComicForm"
     [formGroup]="newComicForm"
     class="needs-validation"
     novalidate
   >
+    <!-- <div class="row">
+      <div class="col-6">potato</div>
+      <div class="col-6">potato2</div>
+    </div> -->
+
     <div class="row align-items-center">
       <div class="col-1">
         <label for="index" class="col-form-label">Comic Index</label>
@@ -20,7 +39,7 @@
           aria-describedby="indexHelpInline"
         />
       </div>
-      <div class="col-auto">
+      <div class="col-3">
         <span id="indexHelpInline" class="form-text">
           (must be a positive and unique integer)
         </span>
@@ -71,6 +90,87 @@
       </div>
     </div>
     <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="altText" class="col-form-label">Alt Text</label>
+      </div>
+      <div class="col-2">
+        <textarea
+          id="altText"
+          [ngClass]="inputFieldValidity('altText')"
+          class="form-control"
+          formControlName="altText"
+          aria-describedby="altTextHelpInline"
+        ></textarea>
+      </div>
+      <div class="col-auto">
+        <span id="altTextHelpInline" class="form-text"> (must also be) </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['altText'].invalid && controls['altText'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['altText'].hasError('required')">
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="comicUpload" class="col-form-label">Comic</label>
+      </div>
+      <div class="col-3">
+        <input
+          id="comicUpload"
+          [ngClass]="inputFieldValidity('comic')"
+          class="form-control"
+          accept=".png"
+          type="file"
+          (change)="onFileChanged($event)"
+        />
+        <input hidden id="comic" type="text" formControlName="comic" />
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['comic'].invalid && controls['comic'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['comic'].hasError('required')">
+          A comic is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="size" class="col-form-label">Size</label>
+      </div>
+      <div class="col-2">
+        <select
+          id="size"
+          [ngClass]="inputFieldValidity('size')"
+          formControlName="size"
+          class="form-select"
+        >
+          <option value="" hidden selected disabled>Select a Size</option>
+          <option *ngFor="let imageSize of imageSizes" [value]="imageSize">
+            {{ imageSize }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['size'].invalid && controls['size'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['size'].hasError('required')">
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
       <div class="col-3">
         <div class="form-check form-switch">
           <input
@@ -86,16 +186,70 @@
       </div>
     </div>
     <div *ngIf="controls['isSeries'].value" class="row align-items-center mt-4">
-      <div class="col-1">
+      <div class="col-1" style="position: relative">
         <label for="series" class="col-form-label">Series</label>
       </div>
       <div class="col-2">
-        <select class="form-select" aria-label="Default select example">
-          <option value="" selected disabled>Existing</option>
-          <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
-            {{ seriesName }}
-          </option>
-        </select>
+        <div style="position: relative">
+          <div style="position: absolute; left: -20px; top: 10px">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="existing"
+              id="flexRadioDefault1"
+              formControlName="whichSeries"
+            />
+          </div>
+          <select class="form-select">
+            <option value="" selected hidden disabled>Select Existing</option>
+            <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
+              {{ seriesName }}
+            </option>
+          </select>
+        </div>
+        <div style="position: relative">
+          <div style="position: absolute; left: -20px; top: 10px">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="new"
+              id="flexRadioDefault2"
+              formControlName="whichSeries"
+              checked
+            />
+          </div>
+          <input
+            type="text"
+            placeholder="New"
+            id="newSeries"
+            class="form-control mt-2"
+            formControlName="newSeries"
+            aria-describedby="seriesHelpInline"
+          />
+        </div>
+      </div>
+      <div class="col-auto">
+        <span id="titleHelpInline" class="form-text">
+          <!-- (select an existing series or create a new one) -->
+          (This doesn't work yet)
+        </span>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-3">
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="publish"
+            formControlName="publish"
+          />
+          <label class="form-check-label" for="publish">{{
+            controls["publish"].value
+              ? "Create as Published"
+              : "Create as Draft"
+          }}</label>
+        </div>
       </div>
     </div>
     <div class="text-center mb-4">
@@ -107,5 +261,6 @@
         Create
       </button>
     </div>
+    <div id="easyWayToFixTheAwkwardSpacingThing" style="height: 150px"></div>
   </form>
 </div>

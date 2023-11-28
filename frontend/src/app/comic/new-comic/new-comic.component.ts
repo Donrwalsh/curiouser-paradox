@@ -18,13 +18,22 @@ export class NewComicComponent {
   newComicForm: FormGroup;
   indexes = [];
   seriesNames = [];
+  imageSizes = ['Square', 'Tall', 'Wide'];
+  isSeries = false;
 
   constructor(private fb: FormBuilder, private comicService: ComicService) {
     this.newComicForm = this.fb.group(
       {
         index: ['', [Validators.required, Validators.min(0)]],
         title: ['', [Validators.required]],
+        altText: ['', [Validators.required]],
+        comic: ['', [Validators.required]],
+        size: ['', [Validators.required]],
         isSeries: [false],
+        existingSeries: [''],
+        newSeries: [''],
+        whichSeries: ['new'],
+        publish: [false],
       },
       {} as AbstractControlOptions
     );
@@ -45,6 +54,25 @@ export class NewComicComponent {
 
   get controls() {
     return this.newComicForm.controls;
+  }
+
+  _handleReaderLoaded(readerEvt: any) {
+    var binaryString = readerEvt.target.result;
+    this.controls['comic'].setValue(btoa(binaryString));
+  }
+
+  async onFileChanged(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    const file = files[0];
+
+    if (files && file) {
+      var reader = new FileReader();
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    } else {
+      this.controls['comic'].setValue('');
+    }
   }
 
   inputFieldValidity(fieldName: string) {
