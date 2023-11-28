@@ -11,7 +11,7 @@ import {
   NgxImageCompressService,
   UploadResponse,
 } from 'ngx-image-compress';
-import { ComicDTO } from 'src/app/common/models/comic.model';
+import { ComicDTO, CreateComicDTO } from 'src/app/common/models/comic.model';
 import { ComicService } from 'src/app/common/services/comic.service';
 
 @Component({
@@ -175,13 +175,11 @@ export class NewComicComponent {
       thumbnail: this.controls['thumbnail'].getRawValue(),
       state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
       // series: something~
-    };
+    } as CreateComicDTO;
 
-    this.comicService
-      .createComic(this.newComicForm.value)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+    this.comicService.createComic(createDTO).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   notInArrayValidator(array: any[]) {

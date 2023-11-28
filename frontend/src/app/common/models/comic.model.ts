@@ -43,8 +43,6 @@ export interface CreateComicDTO {
   thumbnail: string;
   series?: string;
   state: 'draft' | 'published';
-  published: string;
-  updated: string;
 }
 
 export const initialComic: Comic = {
