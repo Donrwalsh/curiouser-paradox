@@ -5,7 +5,7 @@
     <img
       *ngIf="controls['comic'].value"
       id="imagePreview"
-      src="data:image/png;base64,{{ controls['comic'].value }}"
+      src="{{ controls['comic'].value }}"
       style="
         position: absolute;
         max-width: 500px;
@@ -120,16 +120,31 @@
       <div class="col-1">
         <label for="comicUpload" class="col-form-label">Comic</label>
       </div>
-      <div class="col-3">
+      <div class="col-2">
         <input
-          id="comicUpload"
+          type="text"
+          id="comic"
           [ngClass]="inputFieldValidity('comic')"
           class="form-control"
-          accept=".png"
-          type="file"
-          (change)="onFileChanged($event)"
+          formControlName="comic"
+          readonly
         />
-        <input hidden id="comic" type="text" formControlName="comic" />
+      </div>
+      <div class="col-3">
+        <button
+          *ngIf="!controls['comic'].value"
+          (click)="compressFile()"
+          class="btn btn-primary"
+        >
+          <i class="bi bi-upload"></i>
+        </button>
+        <button
+          *ngIf="controls['comic'].value"
+          class="btn btn-danger"
+          (click)="controls['comic'].setValue('')"
+        >
+          <i class="bi bi-trash2"></i>
+        </button>
       </div>
     </div>
     <div class="row align-items-center">
@@ -142,6 +157,7 @@
         </div>
       </div>
     </div>
+    <section></section>
     <div class="row align-items-center mt-4">
       <div class="col-1">
         <label for="size" class="col-form-label">Size</label>

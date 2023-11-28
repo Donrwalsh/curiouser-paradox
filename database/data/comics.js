@@ -8,6 +8,8 @@ db.comics.insertMany(
       layout: "square",
       path: "so_long.png",
       index: 0,
+      image:
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAAAMzckjAAAA…",
     },
     {
       state: "published",
@@ -16,9 +18,11 @@ db.comics.insertMany(
       layout: "square",
       path: "kids.png",
       index: 1,
+      image:
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAAAMzckjAAAA…",
     },
     {
-      state: "published",
+      state: "draft",
       title: "Creatures I",
       series: "Creatures",
       altText:
@@ -35,6 +39,8 @@ db.comics.insertMany(
       layout: "tall",
       path: "hysteria.png",
       index: 3,
+      image:
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6IAAAUjCAYAAADcxJjAAAAA…",
     },
     {
       state: "draft",

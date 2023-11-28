@@ -361,6 +361,8 @@ Lots of work today on the New Comic form using the guiding principle of "Why don
 
 There's this thing going on where the refreshToken provided by the backend upon refreshing doesn't seem to be retained properly. I am out of time to look into it now, but it should be obvious that something's happening when sessions only last 10min. Unless something else is going on. Anyway, I made a quick update to the interceptor to use an existing clearSession method that I forgot I had made.
 
+I made some improvements to the image upload form to take advantage of this excellent package called ngx-image-compress which neatly does all the things I want to do with options to customize available. I had to change around slightly the input form to not use the native file upload and instead bind it to a button, but I'm ok with how it turned out. The input is readonly and makes it super easy to copy-paste the output, which is helpful because the form isn't wired into the backend yet, that's the next step. I updated the data files to represent what I'm doing with this. The image strings themselves are too large to actually put into those files and also the Pecarry.png image is just too big to work with in general. I'm going to opt to avoid files that large for now and plan to come up with a better approach to handle them if that's a strict necessity. This commit also includes some original js work in the server project that I found helpful in building this out.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

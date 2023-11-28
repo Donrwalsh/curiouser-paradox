@@ -9,6 +9,7 @@ export interface Comic {
     | 'tall'; // 1240x1754
   path: string;
   index: number;
+  image?: string;
   prevIndex: number | null;
   nextIndex: number | null;
 }

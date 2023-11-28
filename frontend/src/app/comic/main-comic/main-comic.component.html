@@ -7,7 +7,20 @@
   <img
     id="comic"
     class="{{ comic.layout }}"
-    src="{{ apiHost }}/{{ comic.path }}"
+    src="{{ comic.image }}"
+    title="{{ comic.altText }}"
+  />
+</div>
+
+<div
+  *ngIf="!comic.path"
+  class="d-flex justify-content-center mt-4"
+  style="height: 671px"
+>
+  <img
+    id="comic"
+    class="tall"
+    src="{{ apiHost }}/loading.png"
     title="{{ comic.altText }}"
   />
 </div>

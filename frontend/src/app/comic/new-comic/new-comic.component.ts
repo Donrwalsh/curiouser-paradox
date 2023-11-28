@@ -6,6 +6,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  DataUrl,
+  NgxImageCompressService,
+  UploadResponse,
+} from 'ngx-image-compress';
 import { ComicDTO } from 'src/app/common/models/comic.model';
 import { ComicService } from 'src/app/common/services/comic.service';
 
@@ -15,13 +20,20 @@ import { ComicService } from 'src/app/common/services/comic.service';
   styleUrls: ['./new-comic.component.scss'],
 })
 export class NewComicComponent {
+  imgResultBeforeCompress: DataUrl = '';
+  imgResultAfterCompress: DataUrl = '';
+
   newComicForm: FormGroup;
   indexes = [];
   seriesNames = [];
   imageSizes = ['Square', 'Tall', 'Wide'];
   isSeries = false;
 
-  constructor(private fb: FormBuilder, private comicService: ComicService) {
+  constructor(
+    private fb: FormBuilder,
+    private comicService: ComicService,
+    private imageCompress: NgxImageCompressService
+  ) {
     this.newComicForm = this.fb.group(
       {
         index: ['', [Validators.required, Validators.min(0)]],
@@ -56,23 +68,40 @@ export class NewComicComponent {
     return this.newComicForm.controls;
   }
 
-  _handleReaderLoaded(readerEvt: any) {
-    var binaryString = readerEvt.target.result;
-    this.controls['comic'].setValue(btoa(binaryString));
+  compressFile() {
+    //From https://www.npmjs.com/package/ngx-image-compress stackblitz example. Includes useful info in console
+    return this.imageCompress
+      .uploadFile()
+      .then(({ image, orientation, fileName }: UploadResponse) => {
+        this.imgResultBeforeCompress = image;
+        console.warn('File Name:', fileName);
+        console.warn(orientation);
+        console.warn(
+          `Original: ${image.substring(0, 50)}... (${image.length} characters)`
+        );
+        console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+
+        this.imageCompress
+          .compressFile(image, orientation, 75, 50)
+          .then((result: DataUrl) => {
+            this.imgResultAfterCompress = result;
+            console.warn(
+              `Compressed: ${result.substring(0, 50)}... (${
+                result.length
+              } characters)`
+            );
+            console.warn(
+              'Size in bytes is now:',
+              this.imageCompress.byteCount(result)
+            );
+            this.controls['comic'].setValue(result);
+            this.controls['comic'].markAsDirty();
+          });
+      });
   }
 
-  async onFileChanged(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-    const file = files[0];
-
-    if (files && file) {
-      var reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(file);
-    } else {
-      this.controls['comic'].setValue('');
-    }
+  clearFile() {
+    this.controls['comic'].setValue('');
   }
 
   inputFieldValidity(fieldName: string) {
