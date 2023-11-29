@@ -29,7 +29,12 @@ import { ToastrModule } from 'ngx-toastr';
     HeaderModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      extendedTimeOut: 500,
+      positionClass: 'toast-top-right',
+      closeButton: true,
+    }),
   ],
   providers: [
     ComicService,
