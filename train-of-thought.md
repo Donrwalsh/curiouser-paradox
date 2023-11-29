@@ -367,6 +367,19 @@ In mongo shell, running the command `load("database/data/comics.js")` resets the
 
 Woo, I figured out what was going on with the refresh token stuff. When you're hitting a comic page, the app dispatches multiple requests at the same time (for example `latest` and `indexes`) and so then _both_ of them incur the refresh operation essentially simultaneously. This results in the tokens being refreshed twice, which is fine for the access token side of things since they are both valid for the however long. On the refresh token side of things though this is a big problem because the new token gets stored in the browser and the database and they have to match. So now there's a race condition where the database and the browser both juggle two possible values and only when they happen to select the same value will things work ~ which is to say the next time a refresh is attempted it might fail the comparison. Cool. I fixed it by rearranging the interceptor to be more readable for one (though functionality mostly didn't change) and then handling the refresh operation in a particular way so that the call is dispatched only when necessary (storing an observable on the service that is then shared if possible) and adding conditional logic to avoid invoking the modidification of localStorage unless values have changed. This last bit isn't really necessary but I didn't like the duplicate console.logs haha. Really cool problem to solve.
 
+Alrighty, I'm securing the database and it's a doozie. First off, I want to add authentication to the database itself. That's as simple as using a couple of built in environment variables in the docker compose file: `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD`. I don't want to expose either the username or password for this, so I'm going to use docker secrets to obfuscate those values. That's not enough though, because it just creates an admin user that can only access the admin database, so as part of setup I run the following commands:
+
+`use curiouserParadox`
+`db.createUser( { user: "DB_USERNAME", pwd: "DB_PASSWORD", roles: [ { role: "readWrite", db: "curiouserParadox"} ] } )`
+
+Where `DB_USERNAME` and `DB_PASSWORD` are a separate set of credentials that are known by the backend (for mongoose authentication) and the newly created database setup script that builds on the basic scripts that I had in place before. This script deletes the comics collection entirely and replaces it with the starter 3 and does the same for users if users are not present (and so the users data now includes 'starter' password hashes for convenience). This script is hella slow, probably because of the size of the insertMany statements that include multiple images as text.
+
+The trickiest part of all this is that I have to purge the `docker-data` folder in order for the database to forget admin credentials that were established before, hence the clearing of all other data troubles. This shouldn't be necessary more than just this last time as I undo the ususal admin:password credential pair. Because I have a lot of .env values and such to provide the deployment server now, I'm committing it in two steps to see if it builds correctly.
+
+First two tries failed. I missed a part of the secret registration within the YAML file (and I also did it wrong, woo) but then also I'm seeing some chatter online that there is a specific `_FILE` version of the environment values that I should be using due to the fact that I'm supplying the secret in file form. Really hoping this does it. IT DID.
+
+So the key bits to remember here are by default a new database is created with an admin user based on the compose file, but I don't want to use that user for app-related stuff. So I manually create an app-specific user and then am able to run the setup.js file using that user to seed the database. From here, either the admin or app user can be used to access the database via compass or whatever. If you're setting up a new environment, these are the steps that are necessary to setup the database. Now let's commit this arbitrary change and see if everything is retained on a fresh reload.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -440,3 +453,10 @@ Woo, I figured out what was going on with the refresh token stuff. When you're h
 - https://stackoverflow.com/questions/72472011/subscribenext-null-undefined-error-error-any-void-complete
 - https://stackoverflow.com/questions/42482951/converting-an-image-to-base64-in-angular-2
 - https://stackoverflow.com/questions/50864978/angular-rxjs-6-how-to-prevent-duplicate-http-requests
+- https://medium.com/@leonfeng/set-up-a-secured-mongodb-container-e895807054bd
+- https://stackoverflow.com/questions/37372684/mongodb-3-2-authentication-failed
+- https://www.mongodb.com/community/forums/t/connecting-to-mongodb-with-authentication/152801
+- https://stackoverflow.com/questions/60394290/mongo-db-docker-image-authentication-failed
+- https://stackoverflow.com/questions/37423659/how-to-create-user-in-mongodb-with-docker-compose
+- https://docs.docker.com/compose/use-secrets/
+- https://stackoverflow.com/questions/40112200/docker-compose-create-mongo-container-with-username-and-password
