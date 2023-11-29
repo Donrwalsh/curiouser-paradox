@@ -37,6 +37,9 @@ services:
       - ./database/docker-data:/data/db
     restart: always
     image: mongo:4.4.8
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: /run/secrets/db_root_user
+      MONGO_INITDB_ROOT_PASSWORD: /run/secrets/db_root_password
     networks:
       - data-network
     healthcheck:
@@ -44,6 +47,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+secrets:
+  db_root_password:
+    file: db_root_password.txt
+  db_root_user:
+    file: db_root_user.txt
 
 networks:
   app-network:
