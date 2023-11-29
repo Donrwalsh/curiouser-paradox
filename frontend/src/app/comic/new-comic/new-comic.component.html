@@ -1,14 +1,33 @@
 <div class="container mt-5">
   <ng-content></ng-content>
+  <!-- <This is the worst and needs to go away> -->
+  <div class="float-end" style="position: relative">
+    <img
+      *ngIf="controls['image'].value"
+      id="imagePreview"
+      src="{{ controls['image'].value }}"
+      style="
+        position: absolute;
+        max-width: 500px;
+        max-height: 500px;
+        left: -50vh;
+      "
+    />
+  </div>
   <form
     id="newComicForm"
     [formGroup]="newComicForm"
     class="needs-validation"
     novalidate
   >
+    <!-- <div class="row">
+      <div class="col-6">potato</div>
+      <div class="col-6">potato2</div>
+    </div> -->
+
     <div class="row align-items-center">
       <div class="col-1">
-        <label for="index" class="col-form-label">Comic Index</label>
+        <label for="index" class="col-form-label">Index</label>
       </div>
       <div class="col-2">
         <input
@@ -20,7 +39,7 @@
           aria-describedby="indexHelpInline"
         />
       </div>
-      <div class="col-auto">
+      <div class="col-3">
         <span id="indexHelpInline" class="form-text">
           (must be a positive and unique integer)
         </span>
@@ -44,7 +63,7 @@
     </div>
     <div class="row align-items-center mt-4">
       <div class="col-1">
-        <label for="title" class="col-form-label">Comic Title</label>
+        <label for="title" class="col-form-label">Title</label>
       </div>
       <div class="col-2">
         <input
@@ -71,6 +90,156 @@
       </div>
     </div>
     <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="altText" class="col-form-label">Alt Text</label>
+      </div>
+      <div class="col-2">
+        <textarea
+          id="altText"
+          [ngClass]="inputFieldValidity('altText')"
+          class="form-control"
+          formControlName="altText"
+          aria-describedby="altTextHelpInline"
+        ></textarea>
+      </div>
+      <div class="col-auto">
+        <span id="altTextHelpInline" class="form-text"> (must also be) </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['altText'].invalid && controls['altText'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['altText'].hasError('required')">
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="cardText" class="col-form-label">Card Text</label>
+      </div>
+      <div class="col-2">
+        <textarea
+          id="cardText"
+          [ngClass]="inputFieldValidity('cardText')"
+          class="form-control"
+          formControlName="cardText"
+          aria-describedby="cardTextHelpInline"
+        ></textarea>
+      </div>
+      <div class="col-auto">
+        <span id="cardTextHelpInline" class="form-text"> (optional) </span>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="image" class="col-form-label">Image</label>
+      </div>
+      <div class="col-2">
+        <input
+          type="text"
+          id="image"
+          [ngClass]="inputFieldValidity('image')"
+          class="form-control"
+          formControlName="image"
+          aria-describedby="imagesHelpInline"
+          readonly
+        />
+      </div>
+      <div class="col-3">
+        <button
+          *ngIf="!controls['image'].value"
+          (click)="compressFile()"
+          class="btn btn-primary"
+        >
+          <i class="bi bi-upload"></i>
+        </button>
+        <button
+          *ngIf="controls['image'].value"
+          class="btn btn-danger"
+          (click)="
+            controls['image'].setValue(''); controls['thumbnail'].setValue('')
+          "
+        >
+          <i class="bi bi-trash2"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['image'].invalid && controls['image'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['image'].hasError('required')">
+          A comic is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="thumbnail" class="col-form-label">Thumbnail</label>
+      </div>
+      <div class="col-2">
+        <input
+          type="text"
+          id="thumbnail"
+          [ngClass]="inputFieldValidity('thumbnail')"
+          class="form-control"
+          formControlName="thumbnail"
+          aria-describedby="comicThumbnailHelpInline"
+          readonly
+        />
+      </div>
+      <div class="col-auto">
+        <span id="comicThumbnailHelpInline" class="form-text">
+          (uploading an image populates comic and thumbnail)
+        </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['thumbnail'].invalid && controls['thumbnail'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['thumbnail'].hasError('required')">
+          A thumbnail is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-1">
+        <label for="layout" class="col-form-label">Layout</label>
+      </div>
+      <div class="col-2">
+        <select
+          id="layout"
+          [ngClass]="inputFieldValidity('layout')"
+          formControlName="layout"
+          class="form-select"
+        >
+          <option value="" hidden selected disabled>Select a Layout</option>
+          <option
+            *ngFor="let imageLayout of imageLayouts"
+            [value]="imageLayout"
+          >
+            {{ imageLayout }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="controls['layout'].invalid && controls['layout'].dirty"
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div *ngIf="controls['layout'].hasError('required')">
+          This field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
       <div class="col-3">
         <div class="form-check form-switch">
           <input
@@ -86,17 +255,80 @@
       </div>
     </div>
     <div *ngIf="controls['isSeries'].value" class="row align-items-center mt-4">
-      <div class="col-1">
+      <div class="col-1" style="position: relative">
         <label for="series" class="col-form-label">Series</label>
       </div>
       <div class="col-2">
-        <select class="form-select" aria-label="Default select example">
-          <option value="" selected disabled>Existing</option>
-          <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
-            {{ seriesName }}
-          </option>
-        </select>
+        <div style="position: relative">
+          <div style="position: absolute; left: -20px; top: 10px">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="existing"
+              id="flexRadioDefault1"
+              formControlName="whichSeries"
+            />
+          </div>
+          <select class="form-select">
+            <option value="" selected hidden disabled>Select Existing</option>
+            <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
+              {{ seriesName }}
+            </option>
+          </select>
+        </div>
+        <div style="position: relative">
+          <div style="position: absolute; left: -20px; top: 10px">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="new"
+              id="flexRadioDefault2"
+              formControlName="whichSeries"
+              checked
+            />
+          </div>
+          <input
+            type="text"
+            placeholder="New"
+            id="newSeries"
+            class="form-control mt-2"
+            formControlName="newSeries"
+            aria-describedby="seriesHelpInline"
+          />
+        </div>
       </div>
+      <div class="col-auto">
+        <span id="titleHelpInline" class="form-text">
+          <!-- (select an existing series or create a new one) -->
+          (This doesn't work yet)
+        </span>
+      </div>
+    </div>
+    <div class="row align-items-center mt-4">
+      <div class="col-3">
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="publish"
+            formControlName="publish"
+          />
+          <label class="form-check-label" for="publish">{{
+            controls["publish"].value
+              ? "Create as Published"
+              : "Create as Draft"
+          }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <button
+        (click)="populate()"
+        type="submit"
+        class="btn btn-primary mt-3 mx-auto"
+      >
+        Populate
+      </button>
     </div>
     <div class="text-center mb-4">
       <button
@@ -107,5 +339,6 @@
         Create
       </button>
     </div>
+    <div id="easyWayToFixTheAwkwardSpacingThing" style="height: 150px"></div>
   </form>
 </div>

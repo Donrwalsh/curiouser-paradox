@@ -357,6 +357,14 @@ I have the series names coming from the backend and populating the dropdown sele
 
 Working on some updates to the README. Got the Frontend spot looking nice, but as part of my work here I ran into the awkwardness I had with Angular environments and `docker` actually being `dev` without any real docker environment to speak of. Doing a commit now to see if I got it right. Wrapped up work on the README and changed the name of the `mongo` container to be the more descriptive and better `database`. It failed to startup automatically because I neglected to change the backend's depends_on value and then it failed again which I'm not sure about. Manually it built just fine, but this commit is going to test if that was a fluke.
 
+Lots of work today on the New Comic form using the guiding principle of "Why don't I just put images in the database despite what the internet says?!" to excellent results! Some of the code I'm committing here is aware of this change, but mostly this is just the stuff that will assist with this endeavor indirectly. Oh, this was supposed to go with the last commit. Oh well.
+
+There's this thing going on where the refreshToken provided by the backend upon refreshing doesn't seem to be retained properly. I am out of time to look into it now, but it should be obvious that something's happening when sessions only last 10min. Unless something else is going on. Anyway, I made a quick update to the interceptor to use an existing clearSession method that I forgot I had made.
+
+I made some improvements to the image upload form to take advantage of this excellent package called ngx-image-compress which neatly does all the things I want to do with options to customize available. I had to change around slightly the input form to not use the native file upload and instead bind it to a button, but I'm ok with how it turned out. The input is readonly and makes it super easy to copy-paste the output, which is helpful because the form isn't wired into the backend yet, that's the next step. I updated the data files to represent what I'm doing with this. The image strings themselves are too large to actually put into those files and also the Pecarry.png image is just too big to work with in general. I'm going to opt to avoid files that large for now and plan to come up with a better approach to handle them if that's a strict necessity. This commit also includes some original js work in the server project that I found helpful in building this out.
+
+In mongo shell, running the command `load("database/data/comics.js")` resets the database to the 'starter' contents. Made some updates to the structure of the database to be more consistent with how I want to use it these days. That includes adding in thumbnail and published/updated values. Currently, these values are included in API responses for specific comic loads, but that isn't ideal. I was surprised to find that the backend just includes everything from the table! What's the purpose of the mongoose schema then? Oh well, I'll figure that out shortly. For now I'm going to wrap this up to the point where the frontend makes an API call against an endpoint that isn't there.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -428,3 +436,4 @@ Working on some updates to the README. Got the Frontend spot looking nice, but a
 - https://www.npmjs.com/package/ngx-toastr
 - https://stackoverflow.com/questions/62915060/nullinjectorerror-no-provider-for-injectiontoken-toastconfig-in-jasmine-spec-f
 - https://stackoverflow.com/questions/72472011/subscribenext-null-undefined-error-error-any-void-complete
+- https://stackoverflow.com/questions/42482951/converting-an-image-to-base64-in-angular-2

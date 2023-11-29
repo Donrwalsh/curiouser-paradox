@@ -3,10 +3,10 @@
     <div class="col-xl-3 col-lg-4 col-6 mt-3 mb-3" *ngFor="let comic of comics">
       <div class="card border-primary">
         <div class="img-holder">
-          <a href="{{ apiHost }}/{{ comic.path }}"
+          <a href="{{ comic.image }}" (click)="nav(comic.image, $event)"
             ><img
               class="card-img-top {{ comic.layout }}"
-              src="{{ apiHost }}/{{ comic.path }}"
+              src="{{ comic.thumbnail }}"
               alt="Card image cap"
           /></a>
         </div>

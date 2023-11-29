@@ -3,14 +3,37 @@
   <!-- <h1>Potato</h1> -->
 </div>
 
-<div *ngIf="comic.path" class="d-flex justify-content-center mt-4">
+<div
+  *ngIf="comic.title; else loading"
+  class="d-flex justify-content-center mt-4"
+>
   <img
+    *ngIf="comic.index != -1; else notFound"
     id="comic"
     class="{{ comic.layout }}"
-    src="{{ apiHost }}/{{ comic.path }}"
+    src="{{ comic.image }}"
     title="{{ comic.altText }}"
   />
+  <ng-template #notFound>
+    <img
+      id="comic"
+      class="{{ comic.layout }}"
+      src="{{ apiHost }}/not_found.png"
+      title="{{ comic.altText }}"
+    />
+  </ng-template>
 </div>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center mt-4" style="height: 671px">
+    <img
+      id="comic"
+      class="tall"
+      src="{{ apiHost }}/loading.png"
+      title="{{ comic.altText }}"
+    />
+  </div>
+</ng-template>
 
 <div class="d-flex justify-content-center mt-4">
   <p *ngIf="comic.index != -1">
