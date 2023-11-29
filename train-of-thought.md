@@ -365,6 +365,8 @@ I made some improvements to the image upload form to take advantage of this exce
 
 In mongo shell, running the command `load("database/data/comics.js")` resets the database to the 'starter' contents. Made some updates to the structure of the database to be more consistent with how I want to use it these days. That includes adding in thumbnail and published/updated values. Currently, these values are included in API responses for specific comic loads, but that isn't ideal. I was surprised to find that the backend just includes everything from the table! What's the purpose of the mongoose schema then? Oh well, I'll figure that out shortly. For now I'm going to wrap this up to the point where the frontend makes an API call against an endpoint that isn't there.
 
+Woo, I figured out what was going on with the refresh token stuff. When you're hitting a comic page, the app dispatches multiple requests at the same time (for example `latest` and `indexes`) and so then _both_ of them incur the refresh operation essentially simultaneously. This results in the tokens being refreshed twice, which is fine for the access token side of things since they are both valid for the however long. On the refresh token side of things though this is a big problem because the new token gets stored in the browser and the database and they have to match. So now there's a race condition where the database and the browser both juggle two possible values and only when they happen to select the same value will things work ~ which is to say the next time a refresh is attempted it might fail the comparison. Cool. I fixed it by rearranging the interceptor to be more readable for one (though functionality mostly didn't change) and then handling the refresh operation in a particular way so that the call is dispatched only when necessary (storing an observable on the service that is then shared if possible) and adding conditional logic to avoid invoking the modidification of localStorage unless values have changed. This last bit isn't really necessary but I didn't like the duplicate console.logs haha. Really cool problem to solve.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
@@ -437,3 +439,4 @@ In mongo shell, running the command `load("database/data/comics.js")` resets the
 - https://stackoverflow.com/questions/62915060/nullinjectorerror-no-provider-for-injectiontoken-toastconfig-in-jasmine-spec-f
 - https://stackoverflow.com/questions/72472011/subscribenext-null-undefined-error-error-any-void-complete
 - https://stackoverflow.com/questions/42482951/converting-an-image-to-base64-in-angular-2
+- https://stackoverflow.com/questions/50864978/angular-rxjs-6-how-to-prevent-duplicate-http-requests
