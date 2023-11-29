@@ -5,6 +5,14 @@ import {
   ApiProperty,
   getSchemaPath,
 } from '@nestjs/swagger';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 import { Comic } from 'src/comics/schema';
 
 export class ComicsResponseDTO {
@@ -39,20 +47,59 @@ export class SingleComicResponseDTO {
   payload: Comic;
 }
 
-export interface CreateComicDTO {
+export enum Layout {
+  square = 'square',
+  wide = 'wide',
+  tall = 'tall',
+}
+
+export enum State {
+  published = 'published',
+  draft = 'draft',
+}
+
+export class CreateComicDTO {
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
   index: number;
+
+  @IsNotEmpty()
+  @IsString()
   title: string;
+
+  @IsNotEmpty()
+  @IsString()
   altText: string;
+
+  @IsOptional()
+  @IsString()
   cardText: string;
+
+  @IsNotEmpty()
+  @IsEnum(Layout)
   layout:
     | 'square' // 1280x1280
     | 'wide' // 1748x1181
     | 'tall'; // 1240x1754
+
+  @IsNotEmpty()
+  @IsString()
   image: string;
+
+  @IsNotEmpty()
+  @IsString()
   thumbnail: string;
+
+  @IsOptional()
+  @IsString()
   series?: string;
+
+  @IsNotEmpty()
+  @IsEnum(State)
   state: 'draft' | 'published';
 }
+
 // export class CoreComicResponseDTO<T> {
 //   @ApiProperty()
 //   message: string;
