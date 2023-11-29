@@ -47,6 +47,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+     secrets:
+       - db_root_password
+       - db_root_user
 
 secrets:
   db_root_password:
