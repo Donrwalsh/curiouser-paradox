@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Comic {
   @ApiProperty()
   @Prop()
-  state: string;
+  index: number;
 
   @ApiProperty()
   @Prop()
@@ -20,15 +20,31 @@ export class Comic {
 
   @ApiProperty()
   @Prop()
+  cardText: string;
+
+  @ApiProperty()
+  @Prop()
   layout: string;
 
   @ApiProperty()
   @Prop()
-  path: string;
+  image: string;
 
   @ApiProperty()
   @Prop()
-  index: number;
+  thumbnail: string;
+
+  @ApiProperty()
+  @Prop()
+  state: string;
+
+  @ApiProperty()
+  @Prop({ default: todaysDate() })
+  published: string;
+
+  @ApiProperty()
+  @Prop({ default: todaysDate() })
+  updated: string;
 
   @ApiProperty()
   prevIndex: number;
@@ -40,13 +56,28 @@ export const ComicSchema = SchemaFactory.createForClass(Comic);
 
 import { Document } from 'mongoose';
 export interface IComic extends Document {
-  readonly state: string;
-  readonly title: string;
-  readonly series: string;
-  readonly altText: string;
-  readonly layout: string;
-  readonly path: string;
   readonly index: number;
+  readonly title: string;
+  readonly altText: string;
+  readonly cardText: string;
+  readonly layout: string;
+  readonly image: string;
+  readonly thumbnail: string;
+  readonly state: string;
+  readonly series: string;
+  readonly published: string;
+  readonly updated: string;
   readonly prevIndex: number;
   readonly nextIndex: number;
+}
+
+export function todaysDate() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  return (
+    yyyy + '-' + (mm < 10 ? '0' + mm : mm) + '-' + (dd < 10 ? '0' + dd : dd)
+  );
 }

@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateComicDTO } from 'src/comics/comics.model';
 import { IComic } from 'src/comics/schema';
 
 const PUBLISHED_FILTER = {
@@ -51,7 +56,7 @@ export class ComicsService {
       .lean();
 
     if (!latestComics || latestComics.length == 0) {
-      throw new NotFoundException('Latest comic not found!');
+      throw new NotFoundException('Latest comic not found.');
     }
     return {
       ...latestComics[0],
@@ -84,5 +89,19 @@ export class ComicsService {
       prevIndex: prevComic ? prevComic.index : null,
       nextIndex: nextComic ? nextComic.index : null,
     };
+  }
+
+  async create(createComicDto: CreateComicDTO) {
+    const existingComic = await this.comicModel
+      .findOne({ index: { $eq: createComicDto.index } })
+      .lean();
+
+    if (existingComic) {
+      throw new BadRequestException('Index is in use.');
+    }
+
+    // const createdComic = await this.comicModel.create()
+    const newComic = await new this.comicModel(createComicDto);
+    return newComic.save();
   }
 }
