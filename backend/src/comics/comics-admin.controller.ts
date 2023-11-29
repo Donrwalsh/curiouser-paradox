@@ -107,8 +107,8 @@ export class AdminComicsController {
   }
 
   @Post('comics/new')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Submit new comic data.',
   })
