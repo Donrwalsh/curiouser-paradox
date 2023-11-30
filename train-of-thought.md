@@ -380,6 +380,8 @@ First two tries failed. I missed a part of the secret registration within the YA
 
 So the key bits to remember here are by default a new database is created with an admin user based on the compose file, but I don't want to use that user for app-related stuff. So I manually create an app-specific user and then am able to run the setup.js file using that user to seed the database. From here, either the admin or app user can be used to access the database via compass or whatever. If you're setting up a new environment, these are the steps that are necessary to setup the database. Now let's commit this arbitrary change and see if everything is retained on a fresh reload.
 
+Hopped on after a night of sleep and the Admin page was open to me (even after a refresh) despite my refresh token being expired. This isn't a huge problem, after all any actual requests would be turned away before anything happens but I think it's cleaner if on refresh the page recognizes that I have old tokens. I added this by re-purposing the hello world endpoint to be a heartbeat endpoint that I can casually ping on pages that don't incorporate actual api calls in order to invoke the http interceptor. Did away with an unnecessary backend service too.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

@@ -9,6 +9,12 @@ import { AuthService } from 'src/app/common/services/auth.service';
 export class MainAdminComponent {
   constructor(private authService: AuthService) {}
 
+  ngOnInit() {
+    this.authService.heartbeat().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   isSignedIn() {
     return this.authService.isSignedIn();
   }

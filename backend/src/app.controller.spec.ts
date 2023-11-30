@@ -2,7 +2,6 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { AppService } from 'src/app.service';
 import { AppController } from 'src/app.controller';
 
 describe('AppController', () => {
@@ -26,15 +25,15 @@ describe('AppController', () => {
     };
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService, FakeConfigService, JwtService, AuthGuard],
+      providers: [FakeConfigService, JwtService, AuthGuard],
     }).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "Hello World"', () => {
+      expect(appController.getHello()).toBe('Hello World');
     });
   });
 });

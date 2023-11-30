@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from 'src/app.controller';
-import { AppService } from 'src/app.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { ComicsModule } from 'src/comics/comics.module';
 import { UsersModule } from 'src/users/users.module';
@@ -23,6 +22,6 @@ import { UsersModule } from 'src/users/users.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
