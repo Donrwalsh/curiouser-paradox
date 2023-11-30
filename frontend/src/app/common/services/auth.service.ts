@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { shareReplay, tap } from 'rxjs/operators';
+import { share, shareReplay, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ResetPasswordDTO } from 'src/app/common/models/auth.model';
 
 export interface User {
@@ -20,6 +20,8 @@ export interface AuthResult {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+
+  refreshObservable?: Observable<any>;
 
   isSignedIn() {
     return !(
@@ -49,16 +51,31 @@ export class AuthService {
   }
 
   refresh(token: string) {
-    return this.http
-      .post<AuthResult>(`${environment.apiHost}/auth/refresh`, {
-        refreshToken: token,
-      })
-      .pipe(tap((data: AuthResult) => this.setSession(data)));
+    if (this.refreshObservable) {
+      return this.refreshObservable;
+    } else {
+      this.refreshObservable = this.http
+        .post<AuthResult>(`${environment.apiHost}/auth/refresh`, {
+          refreshToken: token,
+        })
+        .pipe(
+          share(),
+          tap((data: AuthResult) => this.setSession(data))
+        );
+    }
+
+    return this.refreshObservable;
   }
 
   setSession(authResult: AuthResult) {
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('refresh_token', authResult.refreshToken);
+    if (
+      authResult.accessToken !== localStorage.getItem('access_token') &&
+      authResult.refreshToken !== localStorage.getItem('refresh_token')
+    ) {
+      console.log('setting session data');
+      localStorage.setItem('access_token', authResult.accessToken);
+      localStorage.setItem('refresh_token', authResult.refreshToken);
+    }
   }
 
   clearSession() {

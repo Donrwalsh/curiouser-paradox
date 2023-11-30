@@ -1,1 +1,3 @@
 docker-data/
+setup/node_modules
+setup/.env

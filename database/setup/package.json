@@ -1,0 +1,10 @@
+{
+  "name": "database_setup",
+  "version": "0.0.0",
+  "main": "setup.js",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^6.3.0"
+  }
+}
