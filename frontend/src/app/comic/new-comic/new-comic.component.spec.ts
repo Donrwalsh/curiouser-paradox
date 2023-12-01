@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NewComicComponent } from './new-comic.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { NewComicComponent } from './new-comic.component';
 
 describe('NewComicComponent', () => {
   let component: NewComicComponent;
@@ -11,7 +11,11 @@ describe('NewComicComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [NewComicComponent],
-      imports: [HttpClientTestingModule, ReactiveFormsModule],
+      imports: [
+        ToastrModule.forRoot(),
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+      ],
     });
     fixture = TestBed.createComponent(NewComicComponent);
     component = fixture.componentInstance;

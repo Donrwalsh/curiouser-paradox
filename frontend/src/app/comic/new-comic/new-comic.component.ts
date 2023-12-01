@@ -11,6 +11,7 @@ import {
   NgxImageCompressService,
   UploadResponse,
 } from 'ngx-image-compress';
+import { ToastrService } from 'ngx-toastr';
 import { ComicDTO, CreateComicDTO } from 'src/app/common/models/comic.model';
 import { ComicService } from 'src/app/common/services/comic.service';
 
@@ -32,7 +33,8 @@ export class NewComicComponent {
   constructor(
     private fb: FormBuilder,
     private comicService: ComicService,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private toastr: ToastrService
   ) {
     this.newComicForm = this.fb.group(
       {
@@ -161,25 +163,50 @@ export class NewComicComponent {
   }
 
   submit() {
-    Object.keys(this.controls).forEach((key) => {
-      this.controls[key].markAsDirty();
-    });
+    // Scroll to top of page to make any toastr easy to identify
+    window.scrollTo(0, 0);
 
-    let createDTO = {
-      index: this.controls['index'].getRawValue(),
-      title: this.controls['title'].getRawValue(),
-      altText: this.controls['altText'].getRawValue(),
-      cardText: this.controls['cardText'].getRawValue(),
-      layout: this.controls['layout'].getRawValue(),
-      image: this.controls['image'].getRawValue(),
-      thumbnail: this.controls['thumbnail'].getRawValue(),
-      state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
-      // series: something~
-    } as CreateComicDTO;
+    if (this.newComicForm.invalid) {
+      this.toastr.warning(
+        'See highlighted fields on form.',
+        'Form input is invalid.'
+      );
+      console.warn('Form input is invalid.');
+      // Mark invalid fields as dirty
+      Object.keys(this.controls).forEach((key) => {
+        this.controls[key].markAsDirty();
+      });
+    } else {
+      let createDTO = {
+        index: this.controls['index'].getRawValue(),
+        title: this.controls['title'].getRawValue(),
+        altText: this.controls['altText'].getRawValue(),
+        cardText: this.controls['cardText'].getRawValue(),
+        layout: this.controls['layout'].getRawValue(),
+        image: this.controls['image'].getRawValue(),
+        thumbnail: this.controls['thumbnail'].getRawValue(),
+        state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
+        // series: something~
+      } as CreateComicDTO;
 
-    this.comicService.createComic(createDTO).subscribe((data: any) => {
-      console.log(data);
-    });
+      this.comicService.createComic(createDTO).subscribe({
+        next: (data: any) => {
+          this.toastr.success(
+            `New comic ID: ${data.payload} `,
+            'New comic creation successful.'
+          );
+          console.log(data);
+          this.newComicForm.reset();
+        },
+        error: (data: any) => {
+          this.toastr.error(
+            'Error creating comic 🙁',
+            'New comic creation unsuccessful'
+          );
+          console.error(data);
+        },
+      });
+    }
   }
 
   notInArrayValidator(array: any[]) {
