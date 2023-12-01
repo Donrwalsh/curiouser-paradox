@@ -139,7 +139,7 @@ export class AdminComicsController {
       },
     },
   })
-  async submitComic(@Body() body: CreateComicDTO) {
+  async submitComic(@Res() response, @Body() body: CreateComicDTO) {
     try {
       // Submit comic using unbuilt service method
       const newComic = await this.comicsService.create(body);
