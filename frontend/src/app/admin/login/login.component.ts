@@ -32,14 +32,10 @@ export class LoginComponent {
     if (val.username && val.password) {
       this.authService.login(val.username, val.password).subscribe({
         next: (response) => {
-          this.toastr.success('You did it!', 'Sign in successful', {
-            timeOut: 3000,
-          });
+          this.toastr.success('You did it!', 'Sign in successful');
         },
         error: (error) => {
-          this.toastr.error('You did not do it 🙁', 'Sign in unsuccessful', {
-            timeOut: 30000,
-          });
+          this.toastr.error('You did not do it 🙁', 'Sign in unsuccessful');
         },
       });
     }
