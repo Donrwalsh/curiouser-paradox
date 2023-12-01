@@ -386,6 +386,8 @@ Messing with backend stuff today. The `CreateComicDTO` class wasn't showing up i
 
 Other interesting stuff: There doesn't appear to be a built-in 'these two fields must match' validator, but I'm actually not sure how to verify that. NestJS + Swagger docs are really tricky to peruse, but I did find a custom validator that I mercilessly copied and duplicated in negative form to handle the necessary password reset validation (furthermore, I overrode the default messages to be more password-resety). Changed some class names to better describe what they are. I had completely missed making functions and service calls on the `auth.controller` as async/await which is really surprising to me. Overall, the various DTOs are annotated up and down with validation requirements so the backend should turn away anything that can't be dealt with during request processing. Haha oh yeah, I changed the `User not found` exception to use a full-stop instead of an exclamation point. It seemed odd that the backend was so excited when it couldn't find a user. Lastly, I updated the `TokensDTO` to be `TokensResponseDTO` establishing a convention where all response DTOs include `Response` in their name, otherwise the only way to tell was by the absent of validation annotations and that's messy. The Existing ResponseDTOs are kinda wild, not sure where to go with them just yet though.
 
+Pretty sure it has always been unnecessary to take down the containers when I'm doing a redeploy. I removed that command from `poll.js` and then while testing crashed the Pi which caused a bunch of weird stuff to happen. With this commit I'm going to watch what's up and see if this new plan works.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/
