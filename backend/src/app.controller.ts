@@ -6,24 +6,22 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AppService } from 'src/app.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('core')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor() {}
 
-  @Get()
+  @Get('/heartbeat')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Hello World!',
-    description: 'A basic auth-guarded endpoint for diagnostic usage.',
+    summary: 'Auth-guarded Hello World endpoint',
   })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  @ApiOkResponse({ description: 'Hello World!' })
+  @ApiOkResponse({ description: 'Hello World' })
   getHello(): string {
-    return this.appService.getHello();
+    return 'Hello World';
   }
 }

@@ -1,4 +1,14 @@
 <div class="form-field mt-3 col-md-4 mx-auto">
+  <p appCustomHighlightPlay>
+    Highlight me using custom directive (Hover for color change)
+  </p>
+  <p
+    appCustomHighlightPlay
+    [defaultColor]="'purple'"
+    [highlightColor]="'orange'"
+  >
+    Highlight me using custom directive (custom colors)
+  </p>
   <label for="viewChild">ViewChild()</label>
   <input
     type="text"
@@ -13,6 +23,6 @@
     type="submit"
     class="btn btn-primary mt-3 mx-auto"
   >
-    ViewChild() Play
+    ViewChild() Spin
   </button>
 </div>

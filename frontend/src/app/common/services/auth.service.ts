@@ -42,6 +42,12 @@ export class AuthService {
       );
   }
 
+  heartbeat() {
+    return this.http
+      .get(`${environment.apiHost}/heartbeat`)
+      .pipe(map((res) => res));
+  }
+
   resetPassword(resetPasswordDTO: ResetPasswordDTO) {
     return this.http
       .post(`${environment.apiHost}/auth/reset-password`, {
