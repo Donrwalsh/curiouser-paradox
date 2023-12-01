@@ -388,6 +388,8 @@ Other interesting stuff: There doesn't appear to be a built-in 'these two fields
 
 Pretty sure it has always been unnecessary to take down the containers when I'm doing a redeploy. I removed that command from `poll.js` and then while testing crashed the Pi which caused a bunch of weird stuff to happen. With this commit I'm going to watch what's up and see if this new plan works.
 
+Started working on the edit comic endpoint and wasted some time considering how I might create two separate DTOs, one for create and one for edit thinking that the difference between the two of them would be the inclusion or exclusion of the index field. Well, that's not really correct because ideally the index would be editable just like the other fields, so I really want to use the same DTO for both. I stashed (with no intent to retrieve again) my work on this because, yeah.
+
 # Couldn't Have Done it Without You
 
 - https://www.markdownguide.org/extended-syntax/

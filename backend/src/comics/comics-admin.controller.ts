@@ -3,7 +3,10 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
+  Put,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -17,13 +20,13 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
 import {
   ComicIndexesResponseDTO,
   ComicSeriesNamesResponseDTO,
   ComicsResponseDTO,
-  CreateComicDTO,
+  ComicDTO,
+  SingleComicResponseDTO,
 } from 'src/comics/comics.model';
 import { ComicsService } from 'src/comics/comics.service';
 
@@ -105,6 +108,38 @@ export class AdminComicsController {
     }
   }
 
+  @Put('comics/update/:index')
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Update existing comic data.',
+  })
+  @ApiOkResponse({
+    description: 'Comic updated successfully.',
+    type: SingleComicResponseDTO,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
+  async updateComic(
+    @Res() response,
+    @Body() body: ComicDTO,
+    @Param('index', ParseIntPipe) index: number,
+  ) {
+    try {
+      const updatedComic = await this.comicsService.update(index, body);
+      return response.status(HttpStatus.OK).json({
+        message: 'Successfully updated comic.',
+        payload: updatedComic,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
   @Post('comics/create')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
@@ -122,7 +157,7 @@ export class AdminComicsController {
     description: 'Bad request.',
   })
   @ApiBody({
-    type: CreateComicDTO,
+    type: ComicDTO,
     schema: {
       example: {
         // Consider how to make dynamic, as this is a POST
@@ -139,13 +174,11 @@ export class AdminComicsController {
       },
     },
   })
-  async submitComic(@Res() response, @Body() body: CreateComicDTO) {
+  async submitComic(@Res() response, @Body() body: ComicDTO) {
     try {
-      // Submit comic using unbuilt service method
       const newComic = await this.comicsService.create(body);
       return response.status(HttpStatus.CREATED).json({
         message: 'Added comic to database.',
-        // Payload will be ID of added comic
         payload: newComic.index,
       });
     } catch (err) {

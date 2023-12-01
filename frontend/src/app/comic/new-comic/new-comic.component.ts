@@ -12,7 +12,7 @@ import {
   UploadResponse,
 } from 'ngx-image-compress';
 import { ToastrService } from 'ngx-toastr';
-import { ComicDTO, CreateComicDTO } from 'src/app/common/models/comic.model';
+import { ResponseDTO, ComicDTO } from 'src/app/common/models/comic.model';
 import { ComicService } from 'src/app/common/services/comic.service';
 
 @Component({
@@ -57,14 +57,14 @@ export class NewComicComponent {
 
   ngOnInit() {
     this.comicService.getIndexesAdmin().subscribe((data) => {
-      this.indexes = (data as ComicDTO).payload;
+      this.indexes = (data as ResponseDTO).payload;
       this.newComicForm
         .get('index')
         ?.addValidators(this.notInArrayValidator(this.indexes));
     });
 
     this.comicService.getSeriesNamesAdmin().subscribe((data) => {
-      this.seriesNames = (data as ComicDTO).payload;
+      this.seriesNames = (data as ResponseDTO).payload;
     });
   }
 
@@ -187,7 +187,7 @@ export class NewComicComponent {
         thumbnail: this.controls['thumbnail'].getRawValue(),
         state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
         // series: something~
-      } as CreateComicDTO;
+      } as ComicDTO;
 
       this.comicService.createComic(createDTO).subscribe({
         next: (data: any) => {

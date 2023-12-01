@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateComicDTO } from 'src/comics/comics.model';
+import { ComicDTO } from 'src/comics/comics.model';
 import { IComic } from 'src/comics/schema';
 
 const PUBLISHED_FILTER = {
@@ -91,17 +91,36 @@ export class ComicsService {
     };
   }
 
-  async create(createComicDto: CreateComicDTO) {
+  async create(comicDto: ComicDTO) {
     const existingComic = await this.comicModel
-      .findOne({ index: { $eq: createComicDto.index } })
+      .findOne({ index: { $eq: comicDto.index } })
       .lean();
 
     if (existingComic) {
       throw new BadRequestException('Index is in use.');
     }
 
-    // const createdComic = await this.comicModel.create()
-    const newComic = await new this.comicModel(createComicDto);
-    return newComic.save();
+    const newComic = new this.comicModel(comicDto);
+    return await newComic.save();
+  }
+
+  async update(index: number, comicDto: ComicDTO) {
+    if (index !== comicDto.index) {
+      const existingComic = await this.comicModel
+        .findOne({ index: { $eq: comicDto.index } })
+        .lean();
+
+      if (existingComic) {
+        throw new BadRequestException('Target index is already in use.');
+      }
+    }
+
+    const updatedComic = await this.comicModel
+      .findOneAndUpdate({ index: { $eq: index } }, comicDto, {
+        returnOriginal: false,
+      })
+      .lean();
+
+    return updatedComic;
   }
 }

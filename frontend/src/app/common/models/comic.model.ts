@@ -25,12 +25,12 @@ export interface ComicNav {
   nextSeriesIndex: number | null;
 }
 
-export interface ComicDTO {
+export interface ResponseDTO {
   message: string;
   payload: any;
 }
 
-export interface CreateComicDTO {
+export interface ComicDTO {
   index: number;
   title: string;
   altText: string;

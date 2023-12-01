@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ComicService } from '../../common/services/comic.service';
 import {
   Comic,
-  ComicDTO,
+  ResponseDTO,
   initialComic,
   notFoundComic,
 } from '../../common/models/comic.model';
@@ -32,7 +32,7 @@ export class MainComicComponent {
     this.obtainComicInfo(this.route.snapshot.paramMap.get('id'));
 
     this.comicService.getIndexes().subscribe((data) => {
-      this.indexes = (data as ComicDTO).payload;
+      this.indexes = (data as ResponseDTO).payload;
     });
   }
 
@@ -41,7 +41,7 @@ export class MainComicComponent {
       this.id = id;
       this.comicService.getSpecific(this.id).subscribe({
         next: (success: any) => {
-          const comicDto = success as ComicDTO;
+          const comicDto = success as ResponseDTO;
           this.comic = comicDto.payload as Comic;
         },
         error: (error: any) => (this.comic = notFoundComic),
