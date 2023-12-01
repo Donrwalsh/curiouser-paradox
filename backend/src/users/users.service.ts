@@ -18,7 +18,7 @@ export class UsersService {
       .lean();
 
     if (!user) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException('User not found.');
     }
 
     return user;
@@ -26,7 +26,7 @@ export class UsersService {
 
   async updateUser(payload: Partial<User>) {
     if (payload.userId === undefined) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException('User not found.');
     }
 
     const user = await this.userModel.findOneAndUpdate(

@@ -10,8 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -23,8 +25,8 @@ import {
   HashTimeDTO,
   ResetPasswordDTO,
   SignInDTO,
-  TokenDTO,
-  Tokens,
+  RefreshTokenDTO,
+  TokensDTO,
 } from 'src/auth/auth.model';
 import { AuthService } from 'src/auth/auth.service';
 
@@ -39,17 +41,23 @@ export class AuthController {
   })
   @ApiOkResponse({
     description: 'Sign in was successful.',
-    type: Tokens,
+    type: TokensDTO,
   })
-  @ApiNotFoundResponse({
-    description: 'Invalid user.',
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
   })
   @ApiUnauthorizedResponse({
     description: 'Invalid password.',
   })
+  @ApiNotFoundResponse({
+    description: 'User not found.',
+  })
   @HttpCode(HttpStatus.OK)
-  signIn(@Body() signInDto: SignInDTO) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  async signIn(@Body() signInDto: SignInDTO) {
+    return await this.authService.signIn(
+      signInDto.username,
+      signInDto.password,
+    );
   }
 
   @Get('sign-out')
@@ -65,9 +73,9 @@ export class AuthController {
     description: 'Unauthorized.',
   })
   @HttpCode(HttpStatus.OK)
-  signOut(@Req() req: Request) {
+  async signOut(@Req() req: Request) {
     const accessToken = req.headers['authorization'].split(' ')[1];
-    this.authService.signOut(accessToken);
+    await this.authService.signOut(accessToken);
   }
 
   @Post('reset-password')
@@ -76,6 +84,9 @@ export class AuthController {
   @ApiOperation({
     summary: "Reset password for current session's user",
   })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized.',
   })
@@ -83,13 +94,13 @@ export class AuthController {
     description: 'Password reset successfully.',
   })
   @HttpCode(HttpStatus.OK)
-  resetPassword(
+  async resetPassword(
     @Res() response,
     @Req() req: Request,
     @Body() resetDTO: ResetPasswordDTO,
   ) {
     const accessToken = req.headers['authorization'].split(' ')[1];
-    this.authService.resetPassword(
+    await this.authService.resetPassword(
       accessToken,
       resetDTO.oldPassword,
       resetDTO.newPasswordOne,
@@ -101,10 +112,23 @@ export class AuthController {
 
   @Post('refresh')
   @ApiOperation({
-    summary: 'End an existing user session',
+    summary: 'Refresh access token of a current session',
   })
-  refreshTokens(@Body() token: TokenDTO) {
-    return this.authService.refreshTokens(token.refreshToken);
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized.',
+  })
+  @ApiNotFoundResponse({
+    description: 'User not found.',
+  })
+  @ApiCreatedResponse({
+    description: 'Session successfully refreshed.',
+  })
+  @HttpCode(HttpStatus.CREATED)
+  async refreshTokens(@Body() token: RefreshTokenDTO) {
+    return await this.authService.refreshTokens(token.refreshToken);
   }
 
   @Post('hash-time')
@@ -115,6 +139,9 @@ export class AuthController {
   })
   @ApiOkResponse({
     description: 'Hash-Time was successful.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
   })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized.',
@@ -129,8 +156,8 @@ export class AuthController {
       },
     },
   })
-  hashTime(@Body() passwordDto: HashTimeDTO) {
-    return this.authService.hashTime(
+  async hashTime(@Body() passwordDto: HashTimeDTO) {
+    return await this.authService.hashTime(
       passwordDto.password,
       passwordDto.saltRounds,
     );
