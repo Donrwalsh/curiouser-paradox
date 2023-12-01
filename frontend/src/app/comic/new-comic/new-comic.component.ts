@@ -168,15 +168,14 @@ export class NewComicComponent {
 
     if (this.newComicForm.invalid) {
       this.toastr.warning(
-        'Invalid input. See highlighted fields on form.',
-        'Form input error.'
+        'See highlighted fields on form.',
+        'Form input is invalid.'
       );
       console.warn('Form input is invalid.');
       // Mark invalid fields as dirty
       Object.keys(this.controls).forEach((key) => {
         this.controls[key].markAsDirty();
       });
-      return;
     } else {
       let createDTO = {
         index: this.controls['index'].getRawValue(),
