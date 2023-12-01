@@ -135,15 +135,12 @@ async function main() {
       console.log(stdout);
     });
 
-    exec(
-      "docker compose down -v && docker compose up -d --build",
-      (error, stdout, stderr) => {
-        error && cmdFailure(error.message, "error");
-        stderr && cmdFailure(stderr, "stderr");
+    exec("docker compose up -d --build", (error, stdout, stderr) => {
+      error && cmdFailure(error.message, "error");
+      stderr && cmdFailure(stderr, "stderr");
 
-        console.log(stdout);
-      }
-    );
+      console.log(stdout);
+    });
 
     // exec("docker compose up -d --build", (error, stdout, stderr) => {
     //   error && cmdFailure(error.message, "error");
