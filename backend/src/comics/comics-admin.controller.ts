@@ -1,11 +1,11 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
   HttpStatus,
+  Post,
   Res,
   UseGuards,
-  Body,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -24,7 +24,6 @@ import {
   ComicSeriesNamesResponseDTO,
   ComicsResponseDTO,
   CreateComicDTO,
-  SingleComicResponseDTO,
 } from 'src/comics/comics.model';
 import { ComicsService } from 'src/comics/comics.service';
 
@@ -107,8 +106,8 @@ export class AdminComicsController {
   }
 
   @Post('comics/create')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Submit new comic data.',
   })
@@ -123,6 +122,7 @@ export class AdminComicsController {
     description: 'Bad request.',
   })
   @ApiBody({
+    type: CreateComicDTO,
     schema: {
       example: {
         // Consider how to make dynamic, as this is a POST
@@ -139,7 +139,7 @@ export class AdminComicsController {
       },
     },
   })
-  async submitComic(@Res() response, @Body() body: CreateComicDTO) {
+  async submitComic(@Body() body: CreateComicDTO) {
     try {
       // Submit comic using unbuilt service method
       const newComic = await this.comicsService.create(body);

@@ -1,10 +1,4 @@
-import { Type, applyDecorators } from '@nestjs/common';
-import {
-  ApiExtraModels,
-  ApiOkResponse,
-  ApiProperty,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
   IsNotEmpty,
@@ -48,9 +42,9 @@ export class SingleComicResponseDTO {
 }
 
 export enum Layout {
-  square = 'square',
-  wide = 'wide',
-  tall = 'tall',
+  square = 'square', // 1280x1280
+  wide = 'wide', // 1748x1181
+  tall = 'tall', // 1240x1754
 }
 
 export enum State {
@@ -59,45 +53,51 @@ export enum State {
 }
 
 export class CreateComicDTO {
+  @ApiProperty({ type: Number, minimum: 0 })
   @IsNotEmpty()
   @IsNumber()
   @Min(0)
   index: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   title: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   altText: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   cardText: string;
 
+  @ApiProperty({ enum: Layout, enumName: 'Layout' })
   @IsNotEmpty()
   @IsEnum(Layout)
-  layout:
-    | 'square' // 1280x1280
-    | 'wide' // 1748x1181
-    | 'tall'; // 1240x1754
+  layout: Layout;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   image: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   thumbnail: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   series?: string;
 
+  @ApiProperty({ enum: State, enumName: 'State' })
   @IsNotEmpty()
   @IsEnum(State)
-  state: 'draft' | 'published';
+  state: State;
 }
 
 // export class CoreComicResponseDTO<T> {
