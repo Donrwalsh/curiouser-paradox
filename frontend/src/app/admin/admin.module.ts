@@ -7,9 +7,16 @@ import { LoginComponent } from './login/login.component';
 import { MainAdminComponent } from './main-admin/main-admin.component';
 import { PlayComponent } from './play/play.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { CustomHighlightPlayDirective } from 'src/app/common/directives/custom-highlight-play.directive';
 
 @NgModule({
-  declarations: [LoginComponent, MainAdminComponent, PlayComponent, PasswordResetComponent],
+  declarations: [
+    LoginComponent,
+    MainAdminComponent,
+    PlayComponent,
+    PasswordResetComponent,
+    CustomHighlightPlayDirective,
+  ],
   imports: [
     CommonModule,
     MatSnackBarModule,

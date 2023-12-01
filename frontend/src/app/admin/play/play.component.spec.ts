@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlayComponent } from './play.component';
+import { CustomHighlightPlayDirective } from 'src/app/common/directives/custom-highlight-play.directive';
 
 describe('PlayComponent', () => {
   let component: PlayComponent;
@@ -8,7 +9,7 @@ describe('PlayComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PlayComponent]
+      declarations: [PlayComponent, CustomHighlightPlayDirective],
     });
     fixture = TestBed.createComponent(PlayComponent);
     component = fixture.componentInstance;
