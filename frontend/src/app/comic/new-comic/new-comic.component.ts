@@ -58,9 +58,9 @@ export class NewComicComponent {
   ngOnInit() {
     this.comicService.getIndexesAdmin().subscribe((data) => {
       this.indexes = (data as ComicDTO).payload;
-      this.newComicForm
-        .get('index')
-        ?.addValidators(this.notInArrayValidator(this.indexes));
+      this.controls['index'].addValidators(
+        this.notInArrayValidator(this.indexes)
+      );
     });
 
     this.comicService.getSeriesNamesAdmin().subscribe((data) => {
@@ -211,11 +211,15 @@ export class NewComicComponent {
 
   notInArrayValidator(array: any[]) {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
+      console.log(typeof control.value);
+      console.log(array);
       if (control.value !== null && array.includes(control.value)) {
+        console.log('sup');
         return {
           indexTaken: true,
         };
       } else {
+        console.log('wtf');
         return null;
       }
     };

@@ -1,0 +1,57 @@
+<div class="row align-items-center mt-4">
+  <div class="col-1">
+    <label for="{{ transformFieldName(true) }}" class="col-form-label">{{
+      transformFieldName()
+    }}</label>
+  </div>
+  <div class="col-2">
+    <!-- Without doing this *ngIf dance based on type, angular will output string values for a dynamic number input. Wild -->
+    <input
+      *ngIf="fieldType === 'number'"
+      type="number"
+      id="{{ transformFieldName(true) }}"
+      [ngClass]="inputFieldValidity()"
+      class="form-control"
+      formControlName="{{ transformFieldName(true) }}"
+      [attr.aria-describedby]="transformFieldName(true) + 'HelpInline'"
+    />
+    <input
+      *ngIf="fieldType === 'text'"
+      type="text"
+      id="{{ transformFieldName(true) }}"
+      [ngClass]="inputFieldValidity()"
+      class="form-control"
+      formControlName="{{ transformFieldName(true) }}"
+      [attr.aria-describedby]="transformFieldName(true) + 'HelpInline'"
+    />
+    <textarea
+      *ngIf="fieldType === 'textarea'"
+      id="{{ transformFieldName(true) }}"
+      [ngClass]="inputFieldValidity()"
+      class="form-control"
+      formControlName="{{ transformFieldName(true) }}"
+      [attr.aria-describedby]="transformFieldName(true) + 'HelpInline'"
+    ></textarea>
+  </div>
+  <div class="col-3">
+    <span
+      *ngIf="helpText"
+      id="{{ transformFieldName(true) }}HelpInline"
+      class="form-text"
+    >
+      ({{ helpText }})
+    </span>
+  </div>
+</div>
+<div class="row align-items-center">
+  <div
+    *ngIf="control.invalid && control.dirty"
+    class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+  >
+    <div *ngIf="control.hasError('required')">This field is required.</div>
+    <div *ngIf="control.hasError('indexTaken')">
+      That index is already taken.
+    </div>
+    <div *ngIf="control.hasError('min')">Index must be positive.</div>
+  </div>
+</div>
