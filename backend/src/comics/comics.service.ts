@@ -60,6 +60,7 @@ export class ComicsService {
     }
     return {
       ...latestComics[0],
+      // TODO: This causes issues when there is only a single published comic
       prevIndex: latestComics[1].index,
       nextIndex: null,
     };
