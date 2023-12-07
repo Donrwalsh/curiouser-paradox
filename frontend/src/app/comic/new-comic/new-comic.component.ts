@@ -4,6 +4,8 @@ import {
   AbstractControlOptions,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import {
@@ -60,6 +62,13 @@ export class NewComicComponent {
   }
 
   ngOnInit() {
+    this.controls['existingSeries'].setValidators(
+      this.seriesValidator(this.newComicForm, 'existing')
+    );
+    this.controls['newSeries'].setValidators(
+      this.seriesValidator(this.newComicForm, 'new')
+    );
+
     this.comicService.getIndexesAdmin().subscribe((data) => {
       this.indexes = (data as ComicDTO).payload;
       this.controls['index'].addValidators(notInArrayValidator(this.indexes));
@@ -72,6 +81,16 @@ export class NewComicComponent {
 
   get controls() {
     return this.newComicForm.controls;
+  }
+
+  seriesRadioChange(newValue?: string) {
+    if (newValue) {
+      this.existingSeriesChecked = newValue === 'existing';
+      this.newSeriesChecked = newValue === 'new';
+      this.controls['whichSeries'].setValue(newValue);
+    }
+    this.controls['existingSeries'].updateValueAndValidity();
+    this.controls['newSeries'].updateValueAndValidity();
   }
 
   //diagnostic for quickly filling out the form
@@ -180,15 +199,22 @@ export class NewComicComponent {
       });
     } else {
       let createDTO = {
-        index: this.controls['index'].getRawValue(),
-        title: this.controls['title'].getRawValue(),
-        altText: this.controls['altText'].getRawValue(),
-        cardText: this.controls['cardText'].getRawValue(),
-        layout: this.controls['layout'].getRawValue(),
-        image: this.controls['image'].getRawValue(),
-        thumbnail: this.controls['thumbnail'].getRawValue(),
-        state: this.controls['publish'].getRawValue() ? 'published' : 'draft',
-        // series: something~
+        index: this.controls['index'].value,
+        title: this.controls['title'].value,
+        altText: this.controls['altText'].value,
+        cardText: this.controls['cardText'].value,
+        layout: this.controls['layout'].value,
+        image: this.controls['image'].value,
+        thumbnail: this.controls['thumbnail'].value,
+        state: this.controls['publish'].value ? 'published' : 'draft',
+        ...(this.controls['isSeries'].value
+          ? {
+              series:
+                this.controls['whichSeries'].value === 'existing'
+                  ? this.controls['existingSeries'].value
+                  : this.controls['newSeries'].value,
+            }
+          : {}),
       } as CreateComicDTO;
 
       this.comicService.createComic(createDTO).subscribe({
@@ -209,5 +235,19 @@ export class NewComicComponent {
         },
       });
     }
+  }
+
+  // Is there a way to do this without passing in the string arg?
+  seriesValidator(form: FormGroup, compareAgainstToggle: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isSeries = form.get('isSeries')?.value;
+      const selfValue = control.value;
+      const whichSeries = form.get('whichSeries')?.value;
+      if (isSeries && whichSeries === compareAgainstToggle && !selfValue) {
+        return { series: true };
+      } else {
+        return null;
+      }
+    };
   }
 }

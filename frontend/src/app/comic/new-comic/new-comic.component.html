@@ -165,16 +165,20 @@
           <input
             class="form-check-input"
             type="checkbox"
-            id="flexSwitchCheckChecked"
+            id="isSeriesCheckbox"
             formControlName="isSeries"
+            (change)="seriesRadioChange()"
           />
-          <label class="form-check-label" for="flexSwitchCheckChecked"
+          <label class="form-check-label" for="isSeriesCheckbox"
             >This comic is part of a series</label
           >
         </div>
       </div>
     </div>
-    <div *ngIf="controls['isSeries'].value" class="row align-items-center mt-4">
+    <div
+      [hidden]="!controls['isSeries'].value"
+      class="row align-items-center mt-4"
+    >
       <div class="col-1" style="position: relative">
         <label for="series" class="col-form-label">Series</label>
       </div>
@@ -188,11 +192,14 @@
               id="existingSeriesRadio"
               [checked]="existingSeriesChecked"
               formControlName="whichSeries"
+              (change)="seriesRadioChange('existing')"
             />
           </div>
           <select
             class="form-select"
-            (change)="existingSeriesChecked = true; newSeriesChecked = false"
+            (change)="seriesRadioChange('existing')"
+            [ngClass]="inputFieldValidity('existingSeries')"
+            formControlName="existingSeries"
           >
             <option value="" selected hidden disabled>Select Existing</option>
             <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
@@ -209,7 +216,7 @@
               id="newSeriesRadio"
               [checked]="newSeriesChecked"
               formControlName="whichSeries"
-              checked
+              (change)="seriesRadioChange('new')"
             />
           </div>
           <input
@@ -218,16 +225,35 @@
             id="newSeries"
             class="form-control mt-2"
             formControlName="newSeries"
-            (keypress)="existingSeriesChecked = false; newSeriesChecked = true"
+            [ngClass]="inputFieldValidity('newSeries')"
+            (keypress)="seriesRadioChange('new')"
             aria-describedby="seriesHelpInline"
           />
         </div>
       </div>
       <div class="col-auto">
         <span id="titleHelpInline" class="form-text">
-          <!-- (select an existing series or create a new one) -->
-          (This doesn't work yet)
+          (select an existing series or create a new one)
         </span>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div
+        *ngIf="
+          (controls['existingSeries'].invalid &&
+            controls['existingSeries'].dirty) ||
+          (controls['newSeries'].invalid && controls['newSeries'].dirty)
+        "
+        class="row g-2 offset-md-1 col-md-4 mt-1 text-danger"
+      >
+        <div
+          *ngIf="
+            controls['existingSeries'].hasError('series') ||
+            controls['newSeries'].hasError('series')
+          "
+        >
+          A series is required.
+        </div>
       </div>
     </div>
     <div class="row align-items-center mt-4">
