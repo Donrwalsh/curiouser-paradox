@@ -185,11 +185,15 @@
               class="form-check-input"
               type="radio"
               value="existing"
-              id="flexRadioDefault1"
+              id="existingSeriesRadio"
+              [checked]="existingSeriesChecked"
               formControlName="whichSeries"
             />
           </div>
-          <select class="form-select">
+          <select
+            class="form-select"
+            (change)="existingSeriesChecked = true; newSeriesChecked = false"
+          >
             <option value="" selected hidden disabled>Select Existing</option>
             <option *ngFor="let seriesName of seriesNames" [value]="seriesName">
               {{ seriesName }}
@@ -202,7 +206,8 @@
               class="form-check-input"
               type="radio"
               value="new"
-              id="flexRadioDefault2"
+              id="newSeriesRadio"
+              [checked]="newSeriesChecked"
               formControlName="whichSeries"
               checked
             />
@@ -213,6 +218,7 @@
             id="newSeries"
             class="form-control mt-2"
             formControlName="newSeries"
+            (keypress)="existingSeriesChecked = false; newSeriesChecked = true"
             aria-describedby="seriesHelpInline"
           />
         </div>
