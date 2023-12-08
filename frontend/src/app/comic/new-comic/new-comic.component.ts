@@ -27,9 +27,6 @@ export class NewComicComponent {
   imgResultBeforeCompress: DataUrl = '';
   imgResultAfterCompress: DataUrl = '';
 
-  existingSeriesChecked = false;
-  newSeriesChecked = true;
-
   newComicForm: FormGroup;
   indexes = [];
   seriesNames = [];
@@ -85,8 +82,6 @@ export class NewComicComponent {
 
   seriesRadioChange(newValue?: string) {
     if (newValue) {
-      this.existingSeriesChecked = newValue === 'existing';
-      this.newSeriesChecked = newValue === 'new';
       this.controls['whichSeries'].setValue(newValue);
     }
     this.controls['existingSeries'].updateValueAndValidity();
@@ -225,6 +220,7 @@ export class NewComicComponent {
           );
           console.log(data);
           this.newComicForm.reset();
+          this.controls['whichSeries'].setValue('new');
         },
         error: (data: any) => {
           this.toastr.error(

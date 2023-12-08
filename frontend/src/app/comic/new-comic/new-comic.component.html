@@ -190,7 +190,6 @@
               type="radio"
               value="existing"
               id="existingSeriesRadio"
-              [checked]="existingSeriesChecked"
               formControlName="whichSeries"
               (change)="seriesRadioChange('existing')"
             />
@@ -214,9 +213,9 @@
               type="radio"
               value="new"
               id="newSeriesRadio"
-              [checked]="newSeriesChecked"
               formControlName="whichSeries"
               (change)="seriesRadioChange('new')"
+              checked
             />
           </div>
           <input
