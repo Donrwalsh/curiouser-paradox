@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center mt-4">
-  <h1 class="mt-3">{{ comic.title }}</h1>
+  <h1>{{ comic.title }}</h1>
   <!-- <h1>Potato</h1> -->
 </div>
 
@@ -37,7 +37,6 @@
 
 <div class="d-flex justify-content-center mt-4">
   <p *ngIf="comic.index != -1">
-    PERMALINK FOR '{{ comic.title }}':
     <a href="{{ selfHost }}/{{ comic.index }}"
       >{{ selfHost }}/{{ comic.index }}</a
     >
@@ -46,22 +45,23 @@
 
 <div class="d-flex justify-content-center mt-4 mb-4">
   <div class="navigate">
-    <a
+    <i
+      id="latest-nav-button"
       *ngIf="comic.nextIndex != null; else dividerLL"
-      class="icon-link"
-      href="{{ selfHost }}"
-      ><i class="bi bi-caret-left-square-fill nav-button"></i
-    ></a>
+      routerLink="/"
+      class="bi bi-caret-left-square-fill nav-button"
+    ></i>
     <ng-template #dividerLL><div class="divider"></div></ng-template>
   </div>
 
   <div class="navigate">
-    <a
+    <i
+      id="next-nav-button"
       *ngIf="comic.nextIndex != null; else dividerL"
-      class="icon-link"
-      href="{{ selfHost }}/{{ comic.nextIndex }}"
-      ><i class="bi bi-caret-left-fill nav-button"></i
-    ></a>
+      class="bi bi-caret-left-fill nav-button"
+      routerLink="/{{ comic.nextIndex }}"
+      (click)="obtainComicInfo(comic.nextIndex.toString())"
+    ></i>
     <ng-template #dividerL><div class="divider"></div></ng-template>
   </div>
 
@@ -73,22 +73,24 @@
   </div>
 
   <div class="navigate">
-    <a
+    <i
+      id="prev-nav-button"
       *ngIf="comic.prevIndex != null; else dividerR"
-      class="icon-link"
-      href="{{ selfHost }}/{{ comic.prevIndex }}"
-      ><i class="bi bi-caret-right-fill nav-button"></i
-    ></a>
+      class="bi bi-caret-right-fill nav-button"
+      routerLink="/{{ comic.prevIndex }}"
+      (click)="obtainComicInfo(comic.prevIndex.toString())"
+    ></i>
     <ng-template #dividerR><div class="divider"></div></ng-template>
   </div>
 
   <div class="navigate">
-    <a
+    <i
+      id="first-nav-button"
       *ngIf="comic.prevIndex != null; else dividerRR"
-      class="icon-link"
-      href="{{ selfHost }}/0"
-      ><i class="bi bi-caret-right-square-fill nav-button"></i
-    ></a>
+      routerLink="/0"
+      (click)="obtainComicInfo('0')"
+      class="bi bi-caret-right-square-fill nav-button"
+    ></i>
     <ng-template #dividerRR><div class="divider"></div></ng-template>
   </div>
 </div>
