@@ -20,17 +20,6 @@ export class AllComicsComponent {
     private comicService: ComicService
   ) {}
 
-  //This awkward bit of code is necessary to avoid the "Not allowed to navigate from top frame to data URL" issue
-  nav(base64Url: string, event: Event) {
-    event.preventDefault();
-    var win = window.open();
-    win!.document.write(
-      '<iframe src="' +
-        base64Url +
-        '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>'
-    );
-  }
-
   ngOnInit() {
     (this.authService.isSignedIn()
       ? this.comicService.getAllComicsAdmin()
@@ -38,15 +27,5 @@ export class AllComicsComponent {
     ).subscribe((data) => {
       this.comics = (data as ComicDTO).payload;
     });
-
-    // if (this.authService.isSignedIn()) {
-    //   this.comicService.getAllComicsAdmin().subscribe((data) => {
-    //     this.comics = (data as ComicDTO).payload;
-    //   });
-    // } else {
-    //   this.comicService.getAllComics().subscribe((data) => {
-    //     this.comics = (data as ComicDTO).payload;
-    //   });
-    // }
   }
 }
