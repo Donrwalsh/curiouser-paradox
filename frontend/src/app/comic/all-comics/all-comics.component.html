@@ -1,9 +1,12 @@
 <div class="container">
+  <h1 class="text-center mt-3">All Comics</h1>
+</div>
+<div class="container">
   <div class="row card-deck">
     <div class="col-xl-3 col-lg-4 col-6 mt-3 mb-3" *ngFor="let comic of comics">
       <div class="card border-primary">
         <div class="img-holder">
-          <a href="{{ comic.image }}" (click)="nav(comic.image, $event)"
+          <a href="{{ selfHost }}/{{ comic.index }}"
             ><img
               class="card-img-top {{ comic.layout }}"
               src="{{ comic.thumbnail }}"
@@ -12,9 +15,11 @@
         </div>
 
         <div class="card-body">
-          <h5 class="card-title text-center">{{ comic.title }}</h5>
-          <p class="card-text text-start">Lorem Ipsum? I hardly knowum!</p>
-          <p class="card-text text-end">
+          <h2 class="card-title text-center">
+            <a href="{{ selfHost }}/{{ comic.index }}">{{ comic.title }}</a>
+          </h2>
+          <p class="card-text text-center">{{ comic.cardText }}</p>
+          <p class="card-text text-center">
             <a href="{{ selfHost }}/{{ comic.index }}"
               ><small>{{ selfHost }}/{{ comic.index }}</small></a
             >
