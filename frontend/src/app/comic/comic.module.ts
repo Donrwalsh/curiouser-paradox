@@ -8,9 +8,17 @@ import { MainComicComponent } from './main-comic/main-comic.component';
 import { AllComicsComponent } from './all-comics/all-comics.component';
 import { NewComicComponent } from './new-comic/new-comic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComicInputComponent } from './comic-input/comic-input.component';
+import { FormControlPipe } from 'src/app/common/pipes/form-control';
 
 @NgModule({
-  declarations: [MainComicComponent, AllComicsComponent, NewComicComponent],
+  declarations: [
+    MainComicComponent,
+    AllComicsComponent,
+    NewComicComponent,
+    ComicInputComponent,
+    FormControlPipe,
+  ],
   imports: [
     CommonModule,
     MatIconModule,

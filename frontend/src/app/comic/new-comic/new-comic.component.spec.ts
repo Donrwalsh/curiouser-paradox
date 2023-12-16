@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { NewComicComponent } from './new-comic.component';
+import { ComicInputComponent } from 'src/app/comic/comic-input/comic-input.component';
+import { FormControlPipe } from 'src/app/common/pipes/form-control';
 
 describe('NewComicComponent', () => {
   let component: NewComicComponent;
@@ -10,7 +12,7 @@ describe('NewComicComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NewComicComponent],
+      declarations: [NewComicComponent, ComicInputComponent, FormControlPipe],
       imports: [
         ToastrModule.forRoot(),
         HttpClientTestingModule,

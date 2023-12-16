@@ -7,6 +7,7 @@
     "start:docker": "docker run -d -p 8080:80 frontend",
     "build": "ng build",
     "build:development": "ng build --configuration development",
+    "build:prod": "ng build --configuration production",
     "build:docker": "docker build -t frontend .",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
