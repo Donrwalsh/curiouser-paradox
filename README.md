@@ -14,7 +14,7 @@ Which are supported by:
 | ---------------- | ------------------------------------ | ---------------------------------------------------------------------- |
 | CI/CD            | Automatic Build/Test/Deploy pipeline | [GitHub Workflows](https://docs.github.com/en/actions/using-workflows) |
 | Containerization | Application Portability              | [Docker](https://www.docker.com/)                                      |
-| Hosting          | Application Delivery                 | [Raspberry Pi](https://www.raspberrypi.org/)                           |
+| Hosting          | Application Delivery                 |  Debian (Ubuntu)                          |
 |                  |
 
 ## Getting Started
@@ -27,9 +27,9 @@ This section will talk through the necessary considerations for standing up and 
 
 Each of the big 3 can be run locally or as a container. For development, I prefer running the Frontend and Backend locally with the database running as a container. (I actually use the dev-server's database, more on that later.)
 
-If you intend to use a **Local Setup** for either the Frontend or the Backend, then you'll need [NodeJS](https://nodejs.org/en/) installed on your system. I'm using `v18.15.0`. In addition, you're going to want the Node Package Manager or [npm](https://www.npmjs.com/) as well, and I'm using `v9.5.0`
+If you intend to use a **Local Setup** for either the Frontend or the Backend, then you'll need [NodeJS](https://nodejs.org/en/) installed on your system. we're using `v18.15.0`. In addition, you're going to want the Node Package Manager or [npm](https://www.npmjs.com/) as well, and we're using `v9.5.0`
 
-If you intend to use a **Containerized Setup** for any of the big 3, then you'll need [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). I'm using versions `24.0.6` and `2.23.0` respectively, but that shouldn't matter a whole lot.
+If you intend to use a **Containerized Setup** for any of the big 3, then you'll need [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). We're using versions `24.0.6` and `2.23.0` respectively, but that shouldn't matter a whole lot.
 
 ### Frontend
 
