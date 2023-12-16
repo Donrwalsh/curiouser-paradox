@@ -52,7 +52,7 @@ export enum State {
   draft = 'draft',
 }
 
-export class CreateComicDTO {
+export class ComicDTO {
   @ApiProperty({ type: Number, minimum: 0 })
   @IsNotEmpty()
   @IsNumber()

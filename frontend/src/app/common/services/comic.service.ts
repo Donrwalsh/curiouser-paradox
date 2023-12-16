@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CreateComicDTO } from 'src/app/common/models/comic.model';
+import { ComicDTO } from 'src/app/common/models/comic.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { CreateComicDTO } from 'src/app/common/models/comic.model';
 export class ComicService {
   constructor(private http: HttpClient) {}
 
-  createComic(createDTO: CreateComicDTO) {
+  createComic(createDTO: ComicDTO) {
     return this.http
       .post(`${environment.apiHost}/admin/comics/create`, { ...createDTO })
       .pipe(tap((data: any) => console.log(data)));

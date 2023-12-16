@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ComicService } from '../../common/services/comic.service';
-import { Comic, ComicDTO } from '../../common/models/comic.model';
+import { Comic, ResponseDTO } from '../../common/models/comic.model';
 import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class AllComicsComponent {
       ? this.comicService.getAllComicsAdmin()
       : this.comicService.getAllComics()
     ).subscribe((data) => {
-      this.comics = (data as ComicDTO).payload;
+      this.comics = (data as ResponseDTO).payload;
     });
   }
 }

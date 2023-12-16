@@ -388,6 +388,8 @@ Other interesting stuff: There doesn't appear to be a built-in 'these two fields
 
 Pretty sure it has always been unnecessary to take down the containers when I'm doing a redeploy. I removed that command from `poll.js` and then while testing crashed the Pi which caused a bunch of weird stuff to happen. With this commit I'm going to watch what's up and see if this new plan works.
 
+Started working on the edit comic endpoint and wasted some time considering how I might create two separate DTOs, one for create and one for edit thinking that the difference between the two of them would be the inclusion or exclusion of the index field. Well, that's not really correct because ideally the index would be editable just like the other fields, so I really want to use the same DTO for both. I stashed (with no intent to retrieve again) my work on this because, yeah.
+
 Took on the challenge of modularizing the comic-input concept since there is a lot of overlap. The biggest surprise is that you can't dynamically type an input field between text and number because it will always come out as a string which then messes with validation (and perhaps more). I ended up needing an `*ngIf` toggle for textarea input as well so it's not that big of a problem but the issue confused me for a bit there. Otherwise, I only took it as far as doing the simple ones leaving Image, Thumbnail, Layout and the series bits alone for now.
 
 - [ ] Handle the more complex pieces of the comic input form by enhancing the comic-input component (dropdowns) or making a custom component (image/thumbnail) or getting really clever in figuring out what to do (series stuff)
