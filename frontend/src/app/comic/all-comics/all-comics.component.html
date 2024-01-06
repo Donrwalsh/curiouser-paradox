@@ -6,7 +6,7 @@
     <div class="col-xl-3 col-lg-4 col-6 mt-3 mb-3" *ngFor="let comic of comics">
       <div class="card border-primary">
         <div class="img-holder">
-          <a href="{{ selfHost }}/{{ comic.index }}"
+          <a routerLink="/{{ comic.index }}"
             ><img
               class="card-img-top {{ comic.layout }}"
               src="{{ comic.thumbnail }}"
@@ -20,7 +20,7 @@
           </h2>
           <p class="card-text text-center">{{ comic.cardText }}</p>
           <p class="card-text text-center">
-            <a href="{{ selfHost }}/{{ comic.index }}"
+            <a routerLink="/{{ comic.index }}"
               ><small>{{ selfHost }}/{{ comic.index }}</small></a
             >
           </p>

@@ -3,9 +3,21 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from 'src/app.module';
 import { urlencoded, json } from 'express';
+import * as fs from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // const fs = require('fs');
+  // Use spread operator to supply https options or nothing
+  const app = await NestFactory.create(AppModule, {
+    ...(process.env.IS_SECURE?.toLowerCase() === 'true'
+      ? {
+          httpsOptions: {
+            key: fs.readFileSync(process.env.KEY_PATH),
+            cert: fs.readFileSync(process.env.CERT_PATH),
+          },
+        }
+      : {}),
+  });
   app.useGlobalPipes(new ValidationPipe());
 
   app.enableCors();

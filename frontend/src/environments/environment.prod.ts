@@ -1,4 +1,4 @@
 export const environment = {
-  apiHost: 'http://curiouserparadox.info:3333',
-  selfHost: 'http://curiouserparadox.info',
+  apiHost: 'https://curiouserparadox.info:3333',
+  selfHost: 'https://curiouserparadox.info',
 };
