@@ -46,12 +46,15 @@ The Frontend code needs to know where to find the Backend API, and it manages th
 
 #### Containerized Setup
 
-With Docker and Docker Compose available on your system, you can fire up the containerized Frontend via:
+With Docker and Docker Compose available on your system, you can fire up the containerized Frontend using HTTP (dev) or HTTPS (secure)
+- \>`docker compose --profile secure up -d --build`
+- OR \> `docker compose --profile dev up -d --build`
 
-- \>`docker compose up -d frontend --no-deps`
-  - Note that `--no-deps` is only used here to illustrate how to work with the Frontend container alone. It depends on both of the other big 3 and doesn't make much sense outside of initial setup.
+To work with just one of the containers:
+- \> `docker compose up -d frontend-dev --no-deps`
+  - Note that `--no-deps` is only used here to illustrate how to work with the frontend-dev container alone. It depends on both the backend and the database (by way of backend dependency on the database) and doesn't make much sense outside of initial setup.
 
-What happens in response to this command is dictated by the [docker compose file](compose.yaml) and the Frontend-specific [Dockerfile](frontend/Dockerfile). Now you can visit the frontend application at <http://localhost:8080> but you'll be greeted with a minimal website and many console errors unless the Backend and Database are running as well.
+What happens in response to this command is dictated by the [docker compose file](compose.yaml) and the Frontend-and-dev-specific [Dockerfile](frontend/Dockerfile-dev). Now you can visit the frontend application at <http://localhost:8080> but you'll be greeted with a minimal website and many console errors unless the Backend and Database are running as well.
 
 ### Backend
 
